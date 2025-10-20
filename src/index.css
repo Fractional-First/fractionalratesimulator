@@ -1,0 +1,148 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fractional First Design System */
+@layer base {
+  :root {
+    /* Fractional First Brand Colors */
+    --background: 0 0% 97.6%; /* #F9F9F9 Light Gray */
+    --foreground: 0 0% 10.2%; /* #1A1A1A Charcoal */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10.2%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10.2%;
+
+    /* Fractional Teal #449889 */
+    --primary: 167 39% 41%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 90.2%; /* #E6E6E6 Muted Gray */
+    --secondary-foreground: 0 0% 10.2%;
+
+    --muted: 0 0% 90.2%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 167 39% 41%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 90.2%; /* #E6E6E6 */
+    --input: 0 0% 90.2%;
+    --ring: 167 39% 41%;
+
+    --radius: 1rem; /* 16px rounded corners */
+
+    /* Fractional First Specific Colors */
+    --fractional-teal: 167 39% 41%; /* #449889 */
+    --warm-gradient-start: 32 100% 50%; /* #FF8A00 */
+    --warm-gradient-end: 37 100% 73%; /* #FFC27A */
+    --section-bg: 0 0% 97.6%; /* #F9F9F9 */
+    --result-highlight: 167 39% 41%; /* #449889 */
+    --result-highlight-foreground: 0 0% 98%;
+    --currency-text: 0 0% 45.1%;
+    --formula-text: 0 0% 55.1%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 167 39% 41%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 167 39% 41%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Urbanist', 'Helvetica Neue', sans-serif;
+  }
+
+  /* Fractional First Typography Scale */
+  h1 {
+    @apply text-4xl md:text-5xl font-bold leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-4xl font-semibold leading-tight;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-medium leading-normal;
+  }
+
+  .body-text {
+    @apply text-base md:text-lg font-normal leading-relaxed;
+  }
+
+  .caption {
+    @apply text-sm font-normal leading-normal;
+  }
+
+  .button-text {
+    @apply text-base font-medium leading-normal;
+  }
+}
+
+@layer utilities {
+  .warm-gradient {
+    background: linear-gradient(90deg, hsl(var(--warm-gradient-start)), hsl(var(--warm-gradient-end)));
+  }
+  
+  .teal-gradient {
+    background: linear-gradient(135deg, #449889, #52a896);
+  }
+  
+  .section-bg {
+    background-color: hsl(var(--section-bg));
+  }
+  
+  .result-highlight {
+    background-color: hsl(var(--result-highlight));
+    color: hsl(var(--result-highlight-foreground));
+  }
+  
+  .currency-text {
+    color: hsl(var(--currency-text));
+  }
+  
+  .formula-text {
+    color: hsl(var(--formula-text));
+  }
+
+  /* Mobile-first spacing */
+  .section-spacing {
+    @apply py-6 px-4 md:py-8 md:px-6;
+  }
+
+  /* Touch-friendly targets */
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px];
+  }
+}
