@@ -121,18 +121,18 @@ export const FractionalRateCalculator: React.FC = () => {
                 </TabsContent>
               </Tabs>
 
+              {/* Utilization Rate Section - Optional section for billable hours */}
+              <UtilizationRateSection 
+                inputs={inputs}
+                updateInput={updateInput}
+              />
+
               {/* Assumptions Accordion */}
               <AssumptionsAccordion 
                 inputs={inputs}
                 updateInput={updateInput}
                 selectedCountry={selectedCountry}
                 onCountryChange={handleCountryChange}
-              />
-
-              {/* Utilization Rate Section - Optional section for billable hours */}
-              <UtilizationRateSection 
-                inputs={inputs}
-                updateInput={updateInput}
               />
 
               {/* Risk Tolerance Section - Separate optional section */}
