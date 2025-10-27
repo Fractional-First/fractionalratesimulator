@@ -1,8 +1,7 @@
-
-import { FractionalRateCalculator } from "@/components/FractionalRateCalculator";
+import { JourneyContainer } from "@/components/journey/JourneyContainer";
 
 const Index = () => {
-  return <FractionalRateCalculator />;
+  return <JourneyContainer />;
 };
 
 export default Index;
