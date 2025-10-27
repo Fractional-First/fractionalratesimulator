@@ -28,10 +28,13 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   onSkip,
 }) => {
   // Calculate time allocation percentages
-  const projectWorkPct = 100 - ((inputs.nonBillablePct || 0.40) * 100);
+  const nonBillablePct = (inputs.nonBillablePct || 0.40) * 100;
+  const projectWorkPct = 100 - nonBillablePct;
+  
+  // Fixed breakdown of non-billable time
   const bdPct = 15;
   const invoicingPct = 10;
-  const adminPct = ((inputs.nonBillablePct || 0.40) * 100) - bdPct - invoicingPct;
+  const adminPct = Math.max(0, nonBillablePct - bdPct - invoicingPct);
 
   const billingRate = results.nominalHourly / (1 - (inputs.nonBillablePct || 0.40));
   const gap = billingRate - results.nominalHourly;

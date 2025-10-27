@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
-import { type Inputs } from '@/utils/calculator';
+import { type Inputs, type Results } from '@/utils/calculator';
 import { CurrencyInput } from '@/components/CurrencyInput';
 import { formatCurrencyDecimal } from '@/utils/calculator';
 
@@ -12,6 +12,7 @@ interface Stage1FoundationProps {
   isActive: boolean;
   status: StageStatus;
   inputs: Inputs;
+  results: Results;
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
@@ -21,6 +22,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   isActive,
   status,
   inputs,
+  results,
   updateInput,
   onComplete,
   onEdit,
@@ -30,13 +32,6 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   const hasFullTimeInputs = (inputs.baseSalary || 0) > 0;
   const hasFractionalInputs = (inputs.fractionalHourlyInput || 0) > 0;
   const canProceed = hasFullTimeInputs || hasFractionalInputs;
-
-  // Calculate effective rate
-  const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-  const workingDays = 52 * 5 - 50; // Rough estimate for display
-  const effectiveRate = hasFullTimeInputs
-    ? (totalComp * 1.25) / (workingDays * 8)
-    : inputs.fractionalHourlyInput || 0;
 
   return (
     <JourneyStage
@@ -83,7 +78,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                   Your Effective Rate
                 </p>
                 <div className="text-4xl font-bold text-primary mb-2">
-                  {formatCurrencyDecimal(effectiveRate)}
+                  {formatCurrencyDecimal(results.nominalHourly)}
                   <span className="text-lg font-normal text-muted-foreground">/hr</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -109,7 +104,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                     Your Effective Rate
                   </p>
                   <div className="text-4xl font-bold text-primary mb-2">
-                    {formatCurrencyDecimal(effectiveRate)}
+                    {formatCurrencyDecimal(results.nominalHourly)}
                     <span className="text-lg font-normal text-muted-foreground">/hr</span>
                   </div>
                   <p className="text-sm text-muted-foreground">

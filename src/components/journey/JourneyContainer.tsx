@@ -140,17 +140,18 @@ export const JourneyContainer: React.FC = () => {
               </p>
             </div>
 
-            <Stage1Foundation
-              isActive={journeyState.currentStage === 'foundation'}
-              status={journeyState.stageStatus.foundation}
-              inputs={journeyState.inputs}
-              updateInput={updateInput}
-              onComplete={() => {
-                completeStage('foundation');
-                goToStage('reality');
-              }}
-              onEdit={() => goToStage('foundation')}
-            />
+      <Stage1Foundation
+        isActive={journeyState.currentStage === 'foundation'}
+        status={journeyState.stageStatus.foundation}
+        inputs={journeyState.inputs}
+        results={results}
+        updateInput={updateInput}
+        onComplete={() => {
+          completeStage('foundation');
+          goToStage('reality');
+        }}
+        onEdit={() => goToStage('foundation')}
+      />
 
             <Stage2RealityCheck
               isActive={journeyState.currentStage === 'reality'}
