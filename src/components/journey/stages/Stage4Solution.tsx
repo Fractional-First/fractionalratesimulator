@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Edit2, ExternalLink, Sparkles } from 'lucide-react';
+import { ExternalLink, Sparkles } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
@@ -48,17 +48,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
         {/* Summary Cards */}
         <div className="grid md:grid-cols-3 gap-4">
           <div className="p-6 bg-primary/10 rounded-xl border border-primary/20">
-            <div className="flex justify-between items-start mb-2">
-              <p className="text-xs font-medium text-muted-foreground">Effective Rate</p>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 px-2"
-                onClick={() => onEditStage('foundation')}
-              >
-                <Edit2 className="w-3 h-3" />
-              </Button>
-            </div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">Effective Rate</p>
             <p className="text-3xl font-bold text-primary mb-1">
               {formatCurrencyDecimal(results.nominalHourly)}
               <span className="text-sm font-normal text-muted-foreground">/hr</span>
@@ -67,17 +57,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
 
           <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-500/20">
-            <div className="flex justify-between items-start mb-2">
-              <p className="text-xs font-medium text-muted-foreground">Billing Rate</p>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 px-2"
-                onClick={() => onEditStage('reality')}
-              >
-                <Edit2 className="w-3 h-3" />
-              </Button>
-            </div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">Billing Rate</p>
             <p className="text-3xl font-bold text-amber-700 dark:text-amber-400 mb-1">
               {formatCurrencyDecimal(billingRate)}
               <span className="text-sm font-normal text-muted-foreground">/hr</span>
@@ -86,17 +66,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
 
           <div className="p-6 bg-muted/30 rounded-xl border border-border">
-            <div className="flex justify-between items-start mb-2">
-              <p className="text-xs font-medium text-muted-foreground">Annual Target</p>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 px-2"
-                onClick={() => onEditStage('refinements')}
-              >
-                <Edit2 className="w-3 h-3" />
-              </Button>
-            </div>
+            <p className="text-xs font-medium text-muted-foreground mb-2">Annual Target</p>
             <p className="text-3xl font-bold text-foreground mb-1">
               {formatCurrency(results.annualCostIncludingOH)}
             </p>
@@ -143,11 +113,16 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
                   <p className="text-sm font-medium text-muted-foreground mb-1">Potential impact:</p>
-                  <p className="text-xl font-bold text-teal-700 dark:text-teal-400">
-                    {formatCurrency(Math.abs(annualImpact))}/year
-                  </p>
+                  <div className="space-y-1">
+                    <p className="text-xl font-bold text-teal-700 dark:text-teal-400">
+                      {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                    </p>
+                    <p className="text-lg font-semibold text-teal-700 dark:text-teal-400">
+                      {formatCurrency(Math.abs(annualImpact))}/year
+                    </p>
+                  </div>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {annualImpact < 0 ? 'More income' : 'Lower billing rate needed'}
+                    Lower billing rate needed
                   </p>
                 </div>
               </div>
