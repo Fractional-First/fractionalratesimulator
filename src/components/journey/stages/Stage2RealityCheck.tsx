@@ -27,22 +27,34 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   onEdit,
   onSkip,
 }) => {
-  // Calculate time allocation percentages
-  const nonBillablePct = (inputs.nonBillablePct || 0.40) * 100;
-  const projectWorkPct = 100 - nonBillablePct;
+  // Get time allocation percentages from inputs
+  const projectWorkPct = inputs.projectWorkPct ?? 60;
+  const bdPct = inputs.bdPct ?? 15;
+  const invoicingPct = inputs.invoicingPct ?? 10;
+  const adminPct = inputs.adminPct ?? 15;
   
-  // Fixed breakdown of non-billable time
-  const bdPct = 15;
-  const invoicingPct = 10;
-  const adminPct = Math.max(0, nonBillablePct - bdPct - invoicingPct);
+  // Calculate total and non-billable percentage
+  const totalPct = projectWorkPct + bdPct + invoicingPct + adminPct;
+  const nonBillablePct = (bdPct + invoicingPct + adminPct) / 100;
 
-  const billingRate = results.nominalHourly / (1 - (inputs.nonBillablePct || 0.40));
+  const billingRate = results.nominalHourly / (1 - nonBillablePct);
   const gap = billingRate - results.nominalHourly;
   const gapPercentage = results.nominalHourly > 0 ? (gap / results.nominalHourly) * 100 : 0;
 
-  const handleNonBillableChange = (value: number) => {
-    // Convert from billable % to non-billable %
-    updateInput('nonBillablePct')(1 - value / 100);
+  const handleProjectWorkChange = (value: number) => {
+    updateInput('projectWorkPct')(value);
+  };
+
+  const handleBdChange = (value: number) => {
+    updateInput('bdPct')(value);
+  };
+
+  const handleInvoicingChange = (value: number) => {
+    updateInput('invoicingPct')(value);
+  };
+
+  const handleAdminChange = (value: number) => {
+    updateInput('adminPct')(value);
   };
 
   return (
@@ -57,14 +69,14 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
       <div className="space-y-6">
         <div className="p-6 bg-muted/30 rounded-xl">
           <p className="text-sm text-muted-foreground mb-4">
-            Fractional work isn't 100% billable. You need time for business development, admin, and building relationships. Let's see what that means for your rates.
+            Fractional work isn't 100% billable. Adjust where your time goes to see the impact on your required billing rate.
           </p>
 
           <div className="space-y-4">
             <NumberInput
               label="Project Work (Billable Time)"
               value={projectWorkPct}
-              onChange={handleNonBillableChange}
+              onChange={handleProjectWorkChange}
               suffix="%"
               min={0}
               max={100}
@@ -73,18 +85,44 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div className="p-3 bg-muted/50 rounded-lg border border-border">
-                <p className="text-xs text-muted-foreground mb-1">Business Development</p>
-                <p className="text-lg font-semibold text-foreground">{bdPct}%</p>
+              <div className="space-y-2">
+                <NumberInput
+                  label="Business Development"
+                  value={bdPct}
+                  onChange={handleBdChange}
+                  suffix="%"
+                  min={0}
+                  max={100}
+                  step={5}
+                />
               </div>
-              <div className="p-3 bg-muted/50 rounded-lg border border-border">
-                <p className="text-xs text-muted-foreground mb-1">Invoicing/Finances</p>
-                <p className="text-lg font-semibold text-foreground">{invoicingPct}%</p>
+              <div className="space-y-2">
+                <NumberInput
+                  label="Invoicing/Finances"
+                  value={invoicingPct}
+                  onChange={handleInvoicingChange}
+                  suffix="%"
+                  min={0}
+                  max={100}
+                  step={5}
+                />
               </div>
-              <div className="p-3 bg-muted/50 rounded-lg border border-border">
-                <p className="text-xs text-muted-foreground mb-1">Admin/Networking</p>
-                <p className="text-lg font-semibold text-foreground">{Math.max(0, adminPct).toFixed(0)}%</p>
+              <div className="space-y-2">
+                <NumberInput
+                  label="Admin/Networking"
+                  value={adminPct}
+                  onChange={handleAdminChange}
+                  suffix="%"
+                  min={0}
+                  max={100}
+                  step={5}
+                />
               </div>
+            </div>
+
+            {/* Total validation */}
+            <div className={`text-sm ${totalPct === 100 ? 'text-muted-foreground' : 'text-amber-600 dark:text-amber-400'}`}>
+              Total: {totalPct.toFixed(0)}% {totalPct !== 100 && '(should equal 100%)'}
             </div>
           </div>
         </div>

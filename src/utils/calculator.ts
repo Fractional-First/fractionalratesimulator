@@ -11,7 +11,14 @@ export type Inputs = {
   publicHolidays?: number;       // B31 (15)
   otherLeaveDays?: number;       // B32 (10)
   trainingDays?: number;         // B33 (4)
-  nonBillablePct?: number;       // F20/G20 (0.30)
+  
+  // Time allocation breakdown (all in percentage 0-100, should sum to 100)
+  projectWorkPct?: number;       // Billable time percentage
+  bdPct?: number;                // Business development percentage
+  invoicingPct?: number;         // Invoicing/finances percentage
+  adminPct?: number;             // Admin/networking percentage
+  
+  nonBillablePct?: number;       // F20/G20 (0.30) - calculated from above
   riskTolerancePct?: number;     // F23/G23 (0.50)
 };
 
@@ -39,10 +46,16 @@ export function compute(state: Inputs): Results {
     publicHolidays: state.publicHolidays ?? 15,
     otherLeaveDays: state.otherLeaveDays ?? 10,
     trainingDays: state.trainingDays ?? 4,
-    nonBillablePct: state.nonBillablePct ?? 0.40,
+    projectWorkPct: state.projectWorkPct ?? 60,
+    bdPct: state.bdPct ?? 15,
+    invoicingPct: state.invoicingPct ?? 10,
+    adminPct: state.adminPct ?? 15,
     riskTolerancePct: state.riskTolerancePct ?? 0.50,
     fractionalHourlyInput: state.fractionalHourlyInput ?? 0,
   };
+
+  // Calculate nonBillablePct from time allocation (convert from percentage to decimal)
+  const nonBillablePct = (s.bdPct + s.invoicingPct + s.adminPct) / 100;
 
   const workingDaysPerYear = 52*5 - (s.vacationDays + s.publicHolidays + s.otherLeaveDays + s.trainingDays);
 
@@ -66,7 +79,7 @@ export function compute(state: Inputs): Results {
 
   const nominalHourly = annualCostInclOHFinal / (Math.max(1, workingDaysPerYear) * s.hoursPerDay);
   const nominalDaily = nominalHourly * s.hoursPerDay;
-  const effectiveHourly = nominalHourly * (1 - s.nonBillablePct);
+  const effectiveHourly = nominalHourly * (1 - nonBillablePct);
   const riskAdjustedHourly = effectiveHourly / s.riskTolerancePct;
 
   return {
