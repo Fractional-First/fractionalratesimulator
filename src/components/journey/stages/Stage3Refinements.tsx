@@ -31,8 +31,11 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
     setSelectedCountry(countryCode);
     const defaults = countryDefaults[countryCode] || countryDefaults['OTHER'];
     updateInput('overheadPct')(defaults.overheadPct);
+    updateInput('hoursPerDay')(defaults.hoursPerDay);
     updateInput('vacationDays')(defaults.vacationDays);
     updateInput('publicHolidays')(defaults.publicHolidays);
+    updateInput('otherLeaveDays')(defaults.otherLeaveDays);
+    updateInput('trainingDays')(defaults.trainingDays);
   };
 
   return (

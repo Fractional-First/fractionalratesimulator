@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
 interface NumberInputProps {
-  label: React.ReactNode;
+  label?: React.ReactNode;
   value: number;
   onChange: (value: number) => void;
   placeholder?: string;
@@ -15,6 +15,7 @@ interface NumberInputProps {
   min?: number;
   max?: number;
   step?: number;
+  compact?: boolean;
 }
 
 export const NumberInput: React.FC<NumberInputProps> = ({
@@ -27,7 +28,8 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   suffix,
   min,
   max,
-  step = 1
+  step = 1,
+  compact = false
 }) => {
   const isPercentage = suffix === '%';
   
@@ -60,11 +62,35 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     onChange(stateValue);
   };
 
+  if (compact) {
+    return (
+      <div className={cn("relative", className)}>
+        <Input
+          type="text"
+          value={displayValue}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className={cn(
+            "h-9 text-right transition-all duration-200 hover:border-primary/50 focus:border-primary border-border bg-background rounded-lg",
+            suffix ? "pl-2 pr-8" : "px-2"
+          )}
+        />
+        {suffix && (
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium pointer-events-none text-muted-foreground">
+            {suffix}
+          </span>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className={cn("space-y-3", className)}>
-      <Label className="text-sm font-medium text-foreground">
-        {label}
-      </Label>
+      {label && (
+        <Label className="text-sm font-medium text-foreground">
+          {label}
+        </Label>
+      )}
       <div className="relative">
         <Input
           type="text"
