@@ -27,15 +27,15 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   onEdit,
   onSkip,
 }) => {
-  // Get time allocation percentages from inputs
-  const projectWorkPct = inputs.projectWorkPct ?? 60;
-  const bdPct = inputs.bdPct ?? 15;
-  const invoicingPct = inputs.invoicingPct ?? 10;
-  const adminPct = inputs.adminPct ?? 15;
+  // Get time allocation percentages from inputs (decimals 0-1)
+  const projectWorkPct = inputs.projectWorkPct ?? 0.6;
+  const bdPct = inputs.bdPct ?? 0.15;
+  const invoicingPct = inputs.invoicingPct ?? 0.10;
+  const adminPct = inputs.adminPct ?? 0.15;
   
   // Calculate total and non-billable percentage
-  const totalPct = projectWorkPct + bdPct + invoicingPct + adminPct;
-  const nonBillablePct = (bdPct + invoicingPct + adminPct) / 100;
+  const totalPct = (projectWorkPct + bdPct + invoicingPct + adminPct) * 100;
+  const nonBillablePct = (bdPct + invoicingPct + adminPct);
 
   const billingRate = results.nominalHourly / (1 - nonBillablePct);
   const gap = billingRate - results.nominalHourly;
@@ -79,8 +79,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               onChange={handleProjectWorkChange}
               suffix="%"
               min={0}
-              max={100}
-              step={5}
+              max={1}
+              step={0.05}
               helperText="Percentage of time spent on client billable work"
             />
 
@@ -92,8 +92,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                   onChange={handleBdChange}
                   suffix="%"
                   min={0}
-                  max={100}
-                  step={5}
+                  max={1}
+                  step={0.05}
                 />
               </div>
               <div className="space-y-2">
@@ -103,8 +103,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                   onChange={handleInvoicingChange}
                   suffix="%"
                   min={0}
-                  max={100}
-                  step={5}
+                  max={1}
+                  step={0.05}
                 />
               </div>
               <div className="space-y-2">
@@ -114,8 +114,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                   onChange={handleAdminChange}
                   suffix="%"
                   min={0}
-                  max={100}
-                  step={5}
+                  max={1}
+                  step={0.05}
                 />
               </div>
             </div>

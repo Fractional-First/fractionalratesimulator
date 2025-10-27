@@ -12,13 +12,14 @@ export type Inputs = {
   otherLeaveDays?: number;       // B32 (10)
   trainingDays?: number;         // B33 (4)
   
-  // Time allocation breakdown (all in percentage 0-100, should sum to 100)
-  projectWorkPct?: number;       // Billable time percentage
-  bdPct?: number;                // Business development percentage
-  invoicingPct?: number;         // Invoicing/finances percentage
-  adminPct?: number;             // Admin/networking percentage
+  // Time allocation breakdown (decimals 0-1, should sum to 1)
+  projectWorkPct?: number;       // Billable time percentage (e.g., 0.6)
+  bdPct?: number;                // Business development percentage (e.g., 0.15)
+  invoicingPct?: number;         // Invoicing/finances percentage (e.g., 0.10)
+  adminPct?: number;             // Admin/networking percentage (e.g., 0.15)
   
-  nonBillablePct?: number;       // F20/G20 (0.30) - calculated from above
+  // Deprecated: computed from breakdown above if provided
+  nonBillablePct?: number;       // If set, used as fallback (0.30)
   riskTolerancePct?: number;     // F23/G23 (0.50)
 };
 
@@ -46,16 +47,16 @@ export function compute(state: Inputs): Results {
     publicHolidays: state.publicHolidays ?? 15,
     otherLeaveDays: state.otherLeaveDays ?? 10,
     trainingDays: state.trainingDays ?? 4,
-    projectWorkPct: state.projectWorkPct ?? 60,
-    bdPct: state.bdPct ?? 15,
-    invoicingPct: state.invoicingPct ?? 10,
-    adminPct: state.adminPct ?? 15,
+    projectWorkPct: state.projectWorkPct ?? 0.6,
+    bdPct: state.bdPct ?? 0.15,
+    invoicingPct: state.invoicingPct ?? 0.10,
+    adminPct: state.adminPct ?? 0.15,
     riskTolerancePct: state.riskTolerancePct ?? 0.50,
     fractionalHourlyInput: state.fractionalHourlyInput ?? 0,
   };
 
-  // Calculate nonBillablePct from time allocation (convert from percentage to decimal)
-  const nonBillablePct = (s.bdPct + s.invoicingPct + s.adminPct) / 100;
+  // Calculate nonBillablePct from time allocation (already decimal 0-1)
+  const nonBillablePct = (s.bdPct + s.invoicingPct + s.adminPct);
 
   const workingDaysPerYear = 52*5 - (s.vacationDays + s.publicHolidays + s.otherLeaveDays + s.trainingDays);
 

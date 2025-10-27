@@ -21,11 +21,11 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
   const showBillingRate = completedStages.includes('reality');
   const showFullBreakdown = completedStages.includes('refinements');
 
-  // Calculate non-billable percentage from time allocation
-  const bdPct = inputs.bdPct ?? 15;
-  const invoicingPct = inputs.invoicingPct ?? 10;
-  const adminPct = inputs.adminPct ?? 15;
-  const nonBillablePct = (bdPct + invoicingPct + adminPct) / 100;
+  // Calculate non-billable percentage from time allocation (decimals 0-1)
+  const bdPct = inputs.bdPct ?? 0.15;
+  const invoicingPct = inputs.invoicingPct ?? 0.10;
+  const adminPct = inputs.adminPct ?? 0.15;
+  const nonBillablePct = (bdPct + invoicingPct + adminPct);
   
   const billingRate = results.nominalHourly / (1 - nonBillablePct);
   const gap = billingRate - results.nominalHourly;
