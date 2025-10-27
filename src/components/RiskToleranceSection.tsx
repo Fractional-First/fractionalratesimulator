@@ -77,42 +77,58 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
               </p>
             </div>
 
-            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-              <div className="space-y-2">
-                <label className="text-sm font-medium flex items-center gap-2 text-foreground">
-                  Risk Adjusted Hourly Rate
-                  <InfoTooltip content={
-                    <>
-                      Your <strong>final recommended rate</strong> after adjusting for your risk tolerance. This is automatically calculated based on your inputs and risk tolerance level.
-                    </>
-                  } />
-                </label>
-                <div className="text-2xl font-bold text-primary">
-                  {new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }).format(
-                    (() => {
-                      const workingDays = 52*5 - (
-                        (inputs.vacationDays || 21) + 
-                        (inputs.publicHolidays || 15) + 
-                        (inputs.otherLeaveDays || 10) + 
-                        (inputs.trainingDays || 4)
-                      );
-                      const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                      const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
-                      const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                      const effectiveHourly = nominalHourly * (1 - (inputs.nonBillablePct || 0.30));
-                      return effectiveHourly / (inputs.riskTolerancePct || 0.50);
-                    })()
-                  )}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-muted/30 rounded-lg">
+                <h4 className="text-sm font-medium text-foreground mb-2">Your Selection</h4>
+                <div className="text-lg font-semibold text-primary">
+                  {riskToleranceOptions.find(opt => opt.value === (inputs.riskTolerancePct || 0.5))?.label}
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Your recommended rate accounting for income volatility risk
-                </p>
               </div>
+
+              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium flex items-center gap-2 text-foreground">
+                    Risk-Adjusted Billing Rate
+                    <InfoTooltip content={
+                      <>
+                        A <strong>conceptual rate</strong> that factors in income volatility risk. This helps you understand risk aversion impact but may not reflect actual market rates. Use as a reference point, not a pricing target.
+                      </>
+                    } />
+                  </label>
+                  <div className="text-2xl font-bold text-primary">
+                    {new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }).format(
+                      (() => {
+                        const workingDays = 52*5 - (
+                          (inputs.vacationDays || 21) + 
+                          (inputs.publicHolidays || 15) + 
+                          (inputs.otherLeaveDays || 10) + 
+                          (inputs.trainingDays || 4)
+                        );
+                        const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
+                        const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                        const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                        const billingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
+                        return billingRate / (inputs.riskTolerancePct || 0.50);
+                      })()
+                    )}
+                    <span className="text-sm font-normal text-muted-foreground">/hr</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Conceptual rate for understanding risk impact
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+              <p className="text-xs text-amber-700 dark:text-amber-400">
+                <strong>Note:</strong> This risk-adjusted rate is theoretical and helps you understand how risk tolerance affects pricing decisions. Market rates may differ based on industry, experience, and demand.
+              </p>
             </div>
 
             <div className="p-4 bg-muted/30 rounded-lg">

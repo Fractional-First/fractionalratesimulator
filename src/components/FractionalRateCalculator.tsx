@@ -90,8 +90,15 @@ export const FractionalRateCalculator: React.FC = () => {
             {/* Narrative explanation */}
             <div className="max-w-4xl mx-auto mb-8">
               <p className="body-text text-muted-foreground leading-relaxed">
-                This calculator helps you translate between full-time and fractional compensation. Whether you're converting a full-time salary into equivalent hourly and daily rates for fractional work or estimating what a fractional rate would look like as a full-time salary, it adjusts for benefits, flexibility, and your personal risk tolerance to give you a clear sense of your effective rate as a fractional leader.
+                This calculator helps you determine your Equivalent Full-Time Rate as a fractional professional. Enter your target full-time compensation to see your apples-to-apples <strong>Effective Rate</strong>, then refine with utilization inputs to calculate the final <strong>Billing Rate</strong> needed to achieve that target.
               </p>
+              
+              {/* Disclaimer */}
+              <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
+                  ⚠️ Garbage In, Garbage Out: This calculator's accuracy depends entirely on the quality of your inputs. Be realistic with your assumptions for meaningful results.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -155,38 +162,27 @@ export const FractionalRateCalculator: React.FC = () => {
               </div>
 
               {!showDetailedBreakdown ? (
-                // Simplified View
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Column 1: Organization Hourly Cost */}
+                // Simplified View - Shows Equivalent Full-Time Compensation
+                <div className="space-y-4">
                   <Card className="section-bg shadow-sm border-border animate-slide-in-right">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-sm text-foreground">Organization Cost</CardTitle>
+                      <CardTitle className="text-sm text-foreground flex items-center gap-2">
+                        Equivalent Full-Time Compensation
+                        <InfoTooltip content={
+                          <>
+                            If you worked <strong>full-time at your effective rate</strong>, this would be your equivalent annual compensation including all benefits and overhead.
+                          </>
+                        } />
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="text-3xl font-bold text-foreground">
-                        {formatCurrencyDecimal(results.nominalHourly * (1 + inputs.overheadPct))}
-                        <span className="text-sm font-normal text-muted-foreground">/hr</span>
+                        {formatCurrency(results.totalAnnualComp)}
+                        <span className="text-sm font-normal text-muted-foreground">/year</span>
                       </div>
                       <div className="text-xs text-muted-foreground leading-relaxed pt-2 border-t border-border">
-                        <p className="font-medium mb-1">Formula:</p>
-                        <p>(Total Compensation + Overhead) ÷ Working Days per Annum ÷ Hours per Day</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Column 2: Fractional Talent Hourly Rate */}
-                  <Card className="section-bg shadow-sm border-border animate-slide-in-right">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm text-foreground">Talent Rate</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="text-3xl font-bold text-foreground">
-                        {formatCurrencyDecimal(results.nominalHourly)}
-                        <span className="text-sm font-normal text-muted-foreground">/hr</span>
-                      </div>
-                      <div className="text-xs text-muted-foreground leading-relaxed pt-2 border-t border-border">
-                        <p className="font-medium mb-1">Formula:</p>
-                        <p>Total Compensation ÷ Working Days per Annum ÷ Hours per Day</p>
+                        <p className="font-medium mb-1">This represents:</p>
+                        <p>Your target full-time package (salary + bonus + equity) converted to fractional terms</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -308,27 +304,28 @@ export const FractionalRateCalculator: React.FC = () => {
                 </div>
               )}
 
-              {/* Effective Hourly Rate - At Bottom, Visually Separated */}
+              {/* Effective Rate (Take-Home Rate) - At Bottom, Visually Separated */}
               <Card className="bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg border-2 border-primary/30 animate-slide-in-right">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg text-primary flex items-center gap-2">
                     <TrendingUp className="h-4 w-4" />
-                    Effective Hourly Rate
+                    Effective Rate (Take-Home)
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="space-y-1">
                       <div className="text-3xl font-bold text-foreground">
-                        {formatCurrencyDecimal(results.effectiveHourly)}
+                        {formatCurrencyDecimal(results.nominalHourly)}
+                        <span className="text-sm font-normal text-muted-foreground">/hr</span>
                       </div>
                       <div className="flex items-start gap-2 text-xs text-muted-foreground">
                         <InfoTooltip content={
                           <>
-                            Your <strong>billable hour rate</strong> after accounting for non-billable time. This reflects that you can't bill <strong>100%</strong> of your time due to business development and admin work.
+                            Your <strong>apples-to-apples comparison rate</strong> - what you actually take home per hour worked, equivalent to your full-time compensation when accounting for all factors.
                           </>
                         } />
-                        <span>Your recommended billable rate</span>
+                        <span>Your equivalent full-time hourly rate</span>
                       </div>
                     </div>
                     <div className="pt-2 border-t border-primary/20">
@@ -339,6 +336,29 @@ export const FractionalRateCalculator: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+
+          {/* Fractional First Value Add Section - Separate from calculator */}
+          <div className="mt-8 p-6 bg-gradient-to-br from-teal-500/10 to-emerald-500/10 border-2 border-teal-500/30 rounded-lg">
+            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-teal-600" />
+              How Fractional First Reduces Non-Billable Hours
+            </h3>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              By connecting you with pre-qualified clients and handling administrative overhead, Fractional First helps increase your billable utilization from typical industry rates of 50-60% up to 70-85%, significantly improving your effective earnings without raising your rates.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-background/50 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-1">Typical Independent Rate</div>
+                <div className="text-xl font-bold text-foreground">50-60% Billable</div>
+                <p className="text-xs text-muted-foreground mt-2">High BD and admin overhead</p>
+              </div>
+              <div className="p-4 bg-teal-500/10 rounded-lg border border-teal-500/30">
+                <div className="text-xs text-muted-foreground mb-1">With Fractional First</div>
+                <div className="text-xl font-bold text-teal-600">70-85% Billable</div>
+                <p className="text-xs text-muted-foreground mt-2">Reduced overhead, more revenue</p>
+              </div>
             </div>
           </div>
         </div>

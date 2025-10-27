@@ -1,10 +1,10 @@
 import React from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Slider } from '@/components/ui/slider';
 import { InfoTooltip } from './InfoTooltip';
 import { Activity, ChevronDown } from 'lucide-react';
 import { type Inputs } from '@/utils/calculator';
 import { formatCurrencyDecimal } from '@/utils/calculator';
+import { NumberInput } from './NumberInput';
 
 interface UtilizationRateSectionProps {
   inputs: Inputs;
@@ -17,17 +17,22 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  // Convert nonBillablePct to utilizationRate (utilization = 1 - nonBillable)
-  const utilizationRate = 1 - (inputs.nonBillablePct || 0.30);
-  
-  const handleUtilizationChange = (value: number[]) => {
-    // Convert utilization rate back to nonBillablePct
-    const newUtilization = value[0];
-    const newNonBillable = 1 - newUtilization;
-    updateInput('nonBillablePct')(newNonBillable);
-  };
+  // Detailed breakdown of non-billable time
+  const [projectWork, setProjectWork] = React.useState(50); // Default 50%
+  const [businessDev, setBusinessDev] = React.useState(20); // Default placeholder
+  const [invoicingFinance, setInvoicingFinance] = React.useState(15); // Default placeholder
+  const [adminNetworking, setAdminNetworking] = React.useState(15); // Default placeholder
 
-  // Calculate rates for comparison
+  // Calculate total and update parent
+  const totalPercentage = projectWork + businessDev + invoicingFinance + adminNetworking;
+  const utilizationRate = projectWork / 100;
+  
+  React.useEffect(() => {
+    const newNonBillable = 1 - utilizationRate;
+    updateInput('nonBillablePct')(newNonBillable);
+  }, [projectWork, utilizationRate]);
+
+  // Calculate rates for display
   const calculateRate = (utilization: number) => {
     const workingDays = 52*5 - (
       (inputs.vacationDays || 21) + 
@@ -38,13 +43,10 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
     const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
     const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-    return nominalHourly * utilization;
+    return nominalHourly / utilization; // Billing rate needed
   };
 
-  const currentEffectiveHourly = calculateRate(utilizationRate);
-  const rate60 = calculateRate(0.60);
-  const rate85 = calculateRate(0.85);
-  const improvementPercent = ((rate85 - rate60) / rate60 * 100);
+  const billingRate = calculateRate(utilizationRate);
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
@@ -56,7 +58,7 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
             </div>
             <div className="text-left">
               <h3 className="text-sm font-semibold text-foreground">Utilization Rate</h3>
-              <p className="text-xs text-muted-foreground">Understand how billable hours impact your effective rate</p>
+              <p className="text-xs text-muted-foreground">Break down billable vs. non-billable hours</p>
             </div>
           </div>
           <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -66,87 +68,134 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
           <div className="space-y-4">
-            <div className="space-y-3">
-              <label className="text-sm font-medium flex items-center gap-2 text-foreground">
-                Target Utilization Rate
-                <InfoTooltip content={
-                  <>
-                    The <strong>percentage of your working hours that are billable</strong> to clients. Higher utilization means more of your time generates revenue. Typical fractional leaders achieve <strong>60-85% utilization</strong>, with the remaining time spent on business development, proposals, and administration.
-                  </>
-                } />
-              </label>
-              <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Allocate your working time across these categories. Your billing rate adjusts based on billable hours.
+            </p>
+
+            {/* Detailed Time Allocation */}
+            <div className="space-y-4">
+              <NumberInput
+                label={
+                  <div className="flex items-center gap-2">
+                    Project Work (Billable Time)
+                    <InfoTooltip content={
+                      <>
+                        The <strong>percentage of your working hours</strong> that are directly billable to clients. This is the time you can invoice.
+                      </>
+                    } />
+                  </div>
+                }
+                value={projectWork}
+                onChange={(val) => setProjectWork(val)}
+                min={0}
+                max={100}
+                step={5}
+                suffix="%"
+                helperText="Time spent on client billable work"
+              />
+
+              <NumberInput
+                label={
+                  <div className="flex items-center gap-2">
+                    Business Development
+                    <InfoTooltip content={
+                      <>
+                        Time spent on <strong>sales, proposals, and winning new clients</strong>. Essential but not directly billable.
+                      </>
+                    } />
+                  </div>
+                }
+                value={businessDev}
+                onChange={(val) => setBusinessDev(val)}
+                min={0}
+                max={100}
+                step={5}
+                suffix="%"
+                helperText="Sales, proposals, networking for new clients"
+                className="[&_input]:placeholder:text-muted-foreground/50"
+              />
+
+              <NumberInput
+                label={
+                  <div className="flex items-center gap-2">
+                    Invoicing & Finances
+                    <InfoTooltip content={
+                      <>
+                        Time for <strong>billing, accounting, and financial management</strong>. Necessary overhead for running your business.
+                      </>
+                    } />
+                  </div>
+                }
+                value={invoicingFinance}
+                onChange={(val) => setInvoicingFinance(val)}
+                min={0}
+                max={100}
+                step={5}
+                suffix="%"
+                helperText="Billing, accounting, financial admin"
+                className="[&_input]:placeholder:text-muted-foreground/50"
+              />
+
+              <NumberInput
+                label={
+                  <div className="flex items-center gap-2">
+                    Administration & Networking
+                    <InfoTooltip content={
+                      <>
+                        Time for <strong>general admin, professional networking, and relationship building</strong>. Builds your pipeline but isn't billable.
+                      </>
+                    } />
+                  </div>
+                }
+                value={adminNetworking}
+                onChange={(val) => setAdminNetworking(val)}
+                min={0}
+                max={100}
+                step={5}
+                suffix="%"
+                helperText="Admin tasks, networking, relationship building"
+                className="[&_input]:placeholder:text-muted-foreground/50"
+              />
+
+              {/* Total Percentage Display */}
+              <div className={`p-3 rounded-lg border ${totalPercentage === 100 ? 'bg-primary/5 border-primary/20' : 'bg-destructive/5 border-destructive/20'}`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-primary">{Math.round(utilizationRate * 100)}%</span>
-                  <span className="text-xs text-muted-foreground">
-                    {Math.round((1 - utilizationRate) * 100)}% non-billable time
+                  <span className="text-sm font-medium text-foreground">Total Allocation:</span>
+                  <span className={`text-lg font-bold ${totalPercentage === 100 ? 'text-primary' : 'text-destructive'}`}>
+                    {totalPercentage}%
                   </span>
                 </div>
-                <Slider
-                  value={[utilizationRate]}
-                  onValueChange={handleUtilizationChange}
-                  min={0.40}
-                  max={0.95}
-                  step={0.05}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>40%</span>
-                  <span>95%</span>
-                </div>
+                {totalPercentage !== 100 && (
+                  <p className="text-xs text-destructive mt-1">
+                    Total should equal 100%. Current difference: {100 - totalPercentage > 0 ? '+' : ''}{100 - totalPercentage}%
+                  </p>
+                )}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Adjust to see how different utilization rates affect your minimum required hourly rate
-              </p>
             </div>
 
-            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+            {/* Required Billing Rate */}
+            <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border border-primary/20">
               <div className="space-y-2">
                 <label className="text-sm font-medium flex items-center gap-2 text-foreground">
-                  Minimum Hourly Rate at {Math.round(utilizationRate * 100)}% Utilization
+                  Required Billing Rate
                   <InfoTooltip content={
                     <>
-                      Your <strong>minimum billable rate</strong> needed to achieve your target compensation at this utilization level. This accounts for the time you can't bill to clients.
+                      The <strong>hourly rate you must charge</strong> clients to achieve your effective rate, given your {projectWork}% billable time allocation.
                     </>
                   } />
                 </label>
                 <div className="text-2xl font-bold text-primary">
-                  {formatCurrencyDecimal(currentEffectiveHourly)}
+                  {formatCurrencyDecimal(billingRate)}
+                  <span className="text-sm font-normal text-muted-foreground">/hr</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  This is your effective hourly rate after accounting for non-billable time
+                  Book this rate with {projectWork}% utilization to achieve your target compensation
                 </p>
               </div>
             </div>
 
-            {/* Visual Impact Section */}
-            <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border border-primary/20">
-              <h4 className="text-sm font-medium text-foreground mb-3">Utilization Impact</h4>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
-                  <div>
-                    <div className="text-xs text-muted-foreground">At 60% utilization</div>
-                    <div className="text-lg font-semibold text-foreground">{formatCurrencyDecimal(rate60)}</div>
-                  </div>
-                  <div className="text-xs text-muted-foreground">Baseline</div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border border-primary/30">
-                  <div>
-                    <div className="text-xs text-muted-foreground">At 85% utilization</div>
-                    <div className="text-lg font-semibold text-primary">{formatCurrencyDecimal(rate85)}</div>
-                  </div>
-                  <div className="text-xs font-medium text-primary">
-                    +{improvementPercent.toFixed(0)}% improvement
-                  </div>
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                Increasing your utilization from 60% to 85% improves your effective hourly rate by <strong>{improvementPercent.toFixed(0)}%</strong>, meaning you can earn more even at the same nominal rate.
-              </p>
-            </div>
-
             <div className="p-4 bg-muted/30 rounded-lg">
-              <h4 className="text-sm font-medium text-foreground mb-2">Understanding Utilization</h4>
+              <h4 className="text-sm font-medium text-foreground mb-2">Understanding Time Allocation</h4>
               <ul className="space-y-2 text-xs text-muted-foreground">
                 <li className="flex gap-2">
                   <span className="text-primary">•</span>
@@ -154,15 +203,11 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
                 </li>
                 <li className="flex gap-2">
                   <span className="text-primary">•</span>
-                  <span><strong>Non-billable time:</strong> Business development, proposals, networking, admin work</span>
+                  <span><strong>Non-billable time:</strong> Essential activities that don't generate direct revenue</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="text-primary">•</span>
-                  <span><strong>Higher utilization:</strong> More revenue per hour worked, but requires strong pipeline</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary">•</span>
-                  <span><strong>Sustainable target:</strong> Most fractional leaders maintain 60-75% long-term</span>
+                  <span><strong>Realistic planning:</strong> Most fractional leaders achieve 50-70% billable time</span>
                 </li>
               </ul>
             </div>

@@ -52,40 +52,51 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
       
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
-          {/* Country Selector */}
+          {/* Country Selector with Overhead Display */}
           <div className="space-y-4 pb-6 border-b border-border">
             <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Globe className="h-4 w-4 text-primary" />
               Country Selection
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label className="text-xs text-muted-foreground">
                 Select your country to pre-fill overhead costs and working days
               </label>
-              <Select value={selectedCountry} onValueChange={onCountryChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select country" />
-                </SelectTrigger>
-                <SelectContent>
-                  {countryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-muted-foreground">
-                Values below can be manually adjusted as needed
-              </p>
+              <div className="flex gap-3 items-start">
+                <Select value={selectedCountry} onValueChange={onCountryChange}>
+                  <SelectTrigger className="flex-1">
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border z-50">
+                    {countryOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg">
+                  <div className="text-xs text-muted-foreground">Overhead</div>
+                  <div className="text-sm font-bold text-primary">{Math.round((inputs.overheadPct || 0.25) * 100)}%</div>
+                </div>
+              </div>
+              <div className="p-3 bg-muted/30 rounded-lg border border-border">
+                <p className="text-xs text-muted-foreground mb-2">
+                  <strong>Country selection pre-fills:</strong> Overhead %, Vacation Days, and Public Holidays
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  All values can be fine-tuned below after selection
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Segment 1: Overhead Benefit Costs (Numerator) */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-              Overhead Benefit Costs (Numerator components)
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold text-foreground border-b border-border pb-1">
+              Overhead Benefit Costs
             </h4>
-            <div className="grid gap-6">
+            <div className="grid gap-3">
               <NumberInput
               label={
                 <div className="flex items-center gap-2">
@@ -109,11 +120,11 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
           </div>
 
           {/* Segment 2: Number of Working Days per Annum (Denominator) */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground border-b border-border pb-2">
-              Number of Working Days per Annum (Denominator components)
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold text-foreground border-b border-border pb-1">
+              Working Days per Year
             </h4>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
               <NumberInput
               label={
                 <div className="flex items-center gap-2">
