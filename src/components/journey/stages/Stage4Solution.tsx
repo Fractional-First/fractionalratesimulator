@@ -12,6 +12,7 @@ interface Stage4SolutionProps {
   inputs: Inputs;
   results: Results;
   onEditStage: (stage: JourneyStageType) => void;
+  onReset: () => void;
 }
 
 export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
@@ -20,9 +21,15 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   inputs,
   results,
   onEditStage,
+  onReset,
 }) => {
-  const billingRate = results.nominalHourly / (1 - (inputs.nonBillablePct || 0.40));
-  const currentUtilization = ((1 - (inputs.nonBillablePct || 0.40)) * 100).toFixed(0);
+  const bdPct = inputs.bdPct ?? 0.15;
+  const invoicingPct = inputs.invoicingPct ?? 0.10;
+  const adminPct = inputs.adminPct ?? 0.15;
+  const nonBillablePct = bdPct + invoicingPct + adminPct;
+  
+  const billingRate = results.nominalHourly / (1 - nonBillablePct);
+  const currentUtilization = ((1 - nonBillablePct) * 100).toFixed(0);
   
   // Fractional First improvement scenario
   const improvedUtilization = 0.75; // 75% average
@@ -193,7 +200,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           <Button
             size="lg"
             variant="outline"
-            onClick={() => onEditStage('foundation')}
+            onClick={onReset}
           >
             Start Over
           </Button>

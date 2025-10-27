@@ -111,6 +111,22 @@ export const JourneyContainer: React.FC = () => {
     }));
   };
 
+  const resetJourney = () => {
+    setJourneyState({
+      currentStage: 'foundation',
+      stageStatus: {
+        foundation: 'active',
+        reality: 'locked',
+        refinements: 'locked',
+        solution: 'locked'
+      },
+      inputs: {},
+      visitedStages: new Set(['foundation'])
+    });
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const results = compute(journeyState.inputs);
   const hasFoundationInputs = (journeyState.inputs.baseSalary || 0) > 0 || 
                                (journeyState.inputs.fractionalHourlyInput || 0) > 0;
@@ -188,6 +204,7 @@ export const JourneyContainer: React.FC = () => {
               inputs={journeyState.inputs}
               results={results}
               onEditStage={goToStage}
+              onReset={resetJourney}
             />
           </div>
 
