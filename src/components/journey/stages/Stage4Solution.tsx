@@ -33,8 +33,9 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   
   // Fractional First improvement scenario
   const improvedUtilization = 0.75; // 75% average billable time
-  const improvedBillingRate = results.nominalHourly / improvedUtilization;
-  const annualImpact = (billingRate - improvedBillingRate) * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
+  const currentAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * (1 - nonBillablePct);
+  const improvedAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * improvedUtilization;
+  const annualImpact = improvedAnnualBillable - currentAnnualBillable;
 
   return (
     <JourneyStage
@@ -112,18 +113,15 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   <p className="text-xs text-muted-foreground">Billable time</p>
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Potential impact:</p>
-                  <div className="space-y-1">
-                    <p className="text-xl font-bold text-teal-700 dark:text-teal-400">
-                      {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Potential earnings increase:</p>
+                  <div className="space-y-2">
+                    <p className="text-2xl font-bold text-teal-700 dark:text-teal-400">
+                      {formatCurrency(annualImpact)}<span className="text-sm font-normal text-muted-foreground">/year</span>
                     </p>
-                    <p className="text-lg font-semibold text-teal-700 dark:text-teal-400">
-                      {formatCurrency(Math.abs(annualImpact))}/year
+                    <p className="text-xs text-muted-foreground">
+                      By increasing billable hours from {currentUtilization}% to 75% at your current billing rate
                     </p>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Lower billing rate needed
-                  </p>
                 </div>
               </div>
             </div>
