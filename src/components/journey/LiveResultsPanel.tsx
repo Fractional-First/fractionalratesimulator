@@ -125,17 +125,6 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                   {results.workingDaysPerYear} days
                 </p>
               </div>
-
-              {inputs.riskTolerancePct && inputs.riskTolerancePct < 1 && (
-                <div className="p-3 bg-primary/5 rounded-lg border border-primary/20">
-                  <p className="text-xs text-muted-foreground mb-1">Risk-Adjusted Rate</p>
-                  <p className="text-lg font-bold text-primary">
-                    {formatCurrencyDecimal(results.riskAdjustedHourly)}
-                    <span className="text-xs font-normal text-muted-foreground">/hr</span>
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">Conceptual reference rate</p>
-                </div>
-              )}
             </div>
           )}
 
