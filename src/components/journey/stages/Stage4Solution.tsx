@@ -33,9 +33,15 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   
   // Fractional First improvement scenario
   const improvedUtilization = 0.75; // 75% average billable time
+  
+  // Scenario 1: Earnings increase at same billing rate
   const currentAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * (1 - nonBillablePct);
   const improvedAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * improvedUtilization;
-  const annualImpact = improvedAnnualBillable - currentAnnualBillable;
+  const earningsIncrease = improvedAnnualBillable - currentAnnualBillable;
+  
+  // Scenario 2: Competitive advantage with lower rate
+  const improvedBillingRate = results.nominalHourly / improvedUtilization;
+  const rateDifference = billingRate - improvedBillingRate;
 
   return (
     <JourneyStage
@@ -113,13 +119,27 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   <p className="text-xs text-muted-foreground">Billable time</p>
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Potential earnings increase:</p>
-                  <div className="space-y-2">
-                    <p className="text-2xl font-bold text-teal-700 dark:text-teal-400">
-                      {formatCurrency(annualImpact)}<span className="text-sm font-normal text-muted-foreground">/year</span>
+                  <p className="text-sm font-medium text-muted-foreground mb-3">Two paths forward:</p>
+                  
+                  {/* Scenario 1: Earn More */}
+                  <div className="mb-4 p-3 bg-teal-500/5 rounded-lg border border-teal-500/20">
+                    <p className="text-xs font-medium text-teal-700 dark:text-teal-400 mb-2">Option 1: Earn More</p>
+                    <p className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-1">
+                      +{formatCurrency(earningsIncrease)}<span className="text-sm font-normal text-muted-foreground">/year</span>
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      By increasing billable hours from {currentUtilization}% to 75% at your current billing rate
+                      Keep billing at {formatCurrencyDecimal(billingRate)}/hr, increase utilization to 75%
+                    </p>
+                  </div>
+                  
+                  {/* Scenario 2: Competitive Advantage */}
+                  <div className="p-3 bg-teal-500/5 rounded-lg border border-teal-500/20">
+                    <p className="text-xs font-medium text-teal-700 dark:text-teal-400 mb-2">Option 2: Stay Competitive</p>
+                    <p className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-1">
+                      {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Charge ${formatCurrencyDecimal(rateDifference)}/hr less while hitting your target
                     </p>
                   </div>
                 </div>
