@@ -207,7 +207,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
             variant="outline"
             className="sm:w-auto"
           >
-            Skip to results
+            Skip details
             <SkipForward className="ml-2 w-4 h-4" />
           </Button>
         </div>
