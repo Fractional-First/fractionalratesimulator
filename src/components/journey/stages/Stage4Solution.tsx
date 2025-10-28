@@ -117,9 +117,12 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   </p>
                 </div>
                 <div className="pt-3 border-t border-border">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual earnings</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual take-home</p>
                   <p className="text-2xl font-bold text-foreground">
                     {formatCurrency(soloAnnualEarnings)}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    After {((nonBillablePct) * 100).toFixed(0)}% non-billable time
                   </p>
                 </div>
               </div>
@@ -148,13 +151,21 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   </p>
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual earnings</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual take-home</p>
                   <p className="text-2xl font-bold text-teal-700 dark:text-teal-400">
                     {formatCurrency(fractionalFirstNetEarnings)}
                   </p>
-                  <p className="text-xs font-semibold text-teal-700 dark:text-teal-400 mt-2">
-                    +{formatCurrency(netBenefit)} more per year ({percentageIncrease.toFixed(1)}% increase)
+                  <p className="text-xs text-muted-foreground mt-1">
+                    After 30% revenue share to Fractional First
                   </p>
+                  <div className="mt-3 p-3 bg-teal-500/20 rounded-lg">
+                    <p className="text-sm font-bold text-teal-700 dark:text-teal-400">
+                      You earn {formatCurrency(netBenefit)} MORE per year
+                    </p>
+                    <p className="text-xs text-teal-700 dark:text-teal-400 mt-1">
+                      ({percentageIncrease.toFixed(1)}% increase in take-home earnings)
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
