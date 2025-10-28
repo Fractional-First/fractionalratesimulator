@@ -34,7 +34,9 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   // Fractional First improvement scenario
   const improvedUtilization = 0.75; // 75% average billable time
   const improvedBillingRate = results.nominalHourly / improvedUtilization;
-  const annualImpact = (billingRate - improvedBillingRate) * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
+  const rateSavings = billingRate - improvedBillingRate;
+  const annualSavings = rateSavings * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
+  const extraEarnings = (billingRate - improvedBillingRate) * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
 
   return (
     <JourneyStage
@@ -112,18 +114,31 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   <p className="text-xs text-muted-foreground">Billable time</p>
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Potential impact:</p>
-                  <div className="space-y-1">
-                    <p className="text-xl font-bold text-teal-700 dark:text-teal-400">
-                      {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
-                    </p>
-                    <p className="text-lg font-semibold text-teal-700 dark:text-teal-400">
-                      {formatCurrency(Math.abs(annualImpact))}/year
-                    </p>
+                  <p className="text-sm font-semibold text-foreground mb-3">Your options at 75% billable:</p>
+                  
+                  <div className="space-y-3">
+                    {/* Option A */}
+                    <div className="p-3 bg-background/60 rounded-lg border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Option A: Charge less, earn the same</p>
+                      <p className="text-lg font-bold text-teal-700 dark:text-teal-400">
+                        {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Down from {formatCurrencyDecimal(billingRate)}/hr
+                      </p>
+                    </div>
+
+                    {/* Option B */}
+                    <div className="p-3 bg-background/60 rounded-lg border border-border">
+                      <p className="text-xs font-medium text-muted-foreground mb-2">Option B: Charge same, earn more</p>
+                      <p className="text-lg font-bold text-teal-700 dark:text-teal-400">
+                        +{formatCurrency(Math.abs(annualSavings))}<span className="text-sm font-normal text-muted-foreground">/year</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Keep your {formatCurrencyDecimal(billingRate)}/hr rate
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Lower billing rate needed
-                  </p>
                 </div>
               </div>
             </div>
