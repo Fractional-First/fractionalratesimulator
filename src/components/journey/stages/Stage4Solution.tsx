@@ -48,6 +48,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   // NET BENEFIT
   const netBenefit = fractionalFirstNetEarnings - soloAnnualEarnings;
   const netHourlyAfterRevShare = billingRate * (1 - fractionalFirstRevShare);
+  const percentageIncrease = ((netBenefit / soloAnnualEarnings) * 100);
 
   return (
     <JourneyStage
@@ -152,7 +153,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                     {formatCurrency(fractionalFirstNetEarnings)}
                   </p>
                   <p className="text-xs font-semibold text-teal-700 dark:text-teal-400 mt-2">
-                    +{formatCurrency(netBenefit)} more per year
+                    +{formatCurrency(netBenefit)} more per year ({percentageIncrease.toFixed(1)}% increase)
                   </p>
                 </div>
               </div>
