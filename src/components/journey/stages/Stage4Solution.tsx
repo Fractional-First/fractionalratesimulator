@@ -32,11 +32,22 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const currentUtilization = ((1 - nonBillablePct) * 100).toFixed(0);
   
   // Fractional First improvement scenario
-  const improvedUtilization = 0.75; // 75% average billable time
-  const improvedBillingRate = results.nominalHourly / improvedUtilization;
-  const rateSavings = billingRate - improvedBillingRate;
-  const annualSavings = rateSavings * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
-  const extraEarnings = (billingRate - improvedBillingRate) * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
+  const improvedUtilization = 0.75; // 75% average billable time with Fractional First
+  const fractionalFirstRevShare = 0.30; // 30% revenue share to Fractional First
+
+  // Annual working hours
+  const annualHours = results.workingDaysPerYear * (inputs.hoursPerDay || 8);
+
+  // BEFORE: Going solo at current rate and current utilization
+  const soloAnnualEarnings = billingRate * annualHours * (1 - nonBillablePct);
+
+  // AFTER: With Fractional First - same rate to clients, more billable hours, minus their cut
+  const fractionalFirstGrossEarnings = billingRate * annualHours * improvedUtilization;
+  const fractionalFirstNetEarnings = fractionalFirstGrossEarnings * (1 - fractionalFirstRevShare);
+
+  // NET BENEFIT
+  const netBenefit = fractionalFirstNetEarnings - soloAnnualEarnings;
+  const netHourlyAfterRevShare = billingRate * (1 - fractionalFirstRevShare);
 
   return (
     <JourneyStage
@@ -84,61 +95,65 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
 
           <p className="text-sm text-muted-foreground mb-6">
-            Fractional First reduces your non-billable overhead by handling business development, client matching, and administrative tasks - letting you focus on what you do best.
+            Fractional First handles business development, client matching, and admin tasks for a 30% revenue share. Even after their cut, you earn MORE because you spend 75% of your time on billable work instead of {currentUtilization}.
           </p>
 
           <div className="grid md:grid-cols-2 gap-4">
-            {/* Before */}
+            {/* BEFORE: Typical Independent */}
             <div className="p-5 bg-background/80 rounded-lg border border-border">
               <p className="text-xs font-medium text-muted-foreground mb-3">Typical Independent</p>
               <div className="space-y-3">
                 <div>
-                  <p className="text-2xl font-bold text-foreground mb-1">50-60%</p>
-                  <p className="text-xs text-muted-foreground">Billable time</p>
+                  <p className="text-sm text-muted-foreground mb-1">Billing rate</p>
+                  <p className="text-xl font-bold text-foreground">
+                    {formatCurrencyDecimal(billingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Billable time</p>
+                  <p className="text-xl font-bold text-amber-700 dark:text-amber-400">
+                    {currentUtilization}%
+                  </p>
                 </div>
                 <div className="pt-3 border-t border-border">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Your situation:</p>
-                  <p className="text-xl font-bold text-amber-700 dark:text-amber-400">
-                    {currentUtilization}% billable
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual earnings</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {formatCurrency(soloAnnualEarnings)}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* After */}
+            {/* AFTER: With Fractional First */}
             <div className="p-5 bg-teal-500/10 rounded-lg border-2 border-teal-500/30">
               <p className="text-xs font-medium text-teal-700 dark:text-teal-400 mb-3">With Fractional First</p>
               <div className="space-y-3">
                 <div>
-                  <p className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-1">70-85%</p>
-                  <p className="text-xs text-muted-foreground">Billable time</p>
+                  <p className="text-sm text-muted-foreground mb-1">Billing rate (to clients)</p>
+                  <p className="text-xl font-bold text-foreground">
+                    {formatCurrencyDecimal(billingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Billable time</p>
+                  <p className="text-xl font-bold text-teal-700 dark:text-teal-400">
+                    75%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">Your net rate (after 30% share)</p>
+                  <p className="text-lg font-bold text-foreground">
+                    {formatCurrencyDecimal(netHourlyAfterRevShare)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
+                  </p>
                 </div>
                 <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-semibold text-foreground mb-3">Your options at 75% billable:</p>
-                  
-                  <div className="space-y-3">
-                    {/* Option A */}
-                    <div className="p-3 bg-background/60 rounded-lg border border-border">
-                      <p className="text-xs font-medium text-muted-foreground mb-2">Option A: Charge less, earn the same</p>
-                      <p className="text-lg font-bold text-teal-700 dark:text-teal-400">
-                        {formatCurrencyDecimal(improvedBillingRate)}<span className="text-sm font-normal text-muted-foreground">/hr</span>
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Down from {formatCurrencyDecimal(billingRate)}/hr
-                      </p>
-                    </div>
-
-                    {/* Option B */}
-                    <div className="p-3 bg-background/60 rounded-lg border border-border">
-                      <p className="text-xs font-medium text-muted-foreground mb-2">Option B: Charge same, earn more</p>
-                      <p className="text-lg font-bold text-teal-700 dark:text-teal-400">
-                        +{formatCurrency(Math.abs(annualSavings))}<span className="text-sm font-normal text-muted-foreground">/year</span>
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Keep your {formatCurrencyDecimal(billingRate)}/hr rate
-                      </p>
-                    </div>
-                  </div>
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Annual earnings</p>
+                  <p className="text-2xl font-bold text-teal-700 dark:text-teal-400">
+                    {formatCurrency(fractionalFirstNetEarnings)}
+                  </p>
+                  <p className="text-xs font-semibold text-teal-700 dark:text-teal-400 mt-2">
+                    +{formatCurrency(netBenefit)} more per year
+                  </p>
                 </div>
               </div>
             </div>
