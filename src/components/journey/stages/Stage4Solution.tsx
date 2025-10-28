@@ -32,8 +32,8 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const currentUtilization = ((1 - nonBillablePct) * 100).toFixed(0);
   
   // Fractional First improvement scenario
-  const improvedUtilization = 0.75; // 75% average
-  const improvedBillingRate = results.nominalHourly / (1 - improvedUtilization);
+  const improvedUtilization = 0.75; // 75% average billable time
+  const improvedBillingRate = results.nominalHourly / improvedUtilization;
   const annualImpact = (billingRate - improvedBillingRate) * results.workingDaysPerYear * (inputs.hoursPerDay || 8);
 
   return (
