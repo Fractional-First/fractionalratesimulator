@@ -68,6 +68,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
         </div>
 
+
         {/* Completion Badge */}
         <div className="flex items-center justify-center gap-2 p-4 bg-primary/5 rounded-lg border border-primary/20">
           <Sparkles className="w-5 h-5 text-primary" />
