@@ -45,9 +45,11 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
         {showEffectiveRate && <div className="mb-4 p-3 bg-muted/30 rounded-lg border border-border">
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
-                <p className="text-xs font-medium text-foreground">Show Effective Rate</p>
+                <p className="text-xs font-medium text-foreground">
+                  {showFullyLoaded ? 'Show Fully Loaded Rate' : 'Show Effective Rate'}
+                </p>
                 <p className="text-xs text-muted-foreground">
-                  {showFullyLoaded ? 'Your direct compensation' : 'Includes overhead & benefits'}
+                  {showFullyLoaded ? 'Includes overhead & benefits' : 'Your direct compensation'}
                 </p>
               </div>
               <Switch checked={showFullyLoaded} onCheckedChange={setShowFullyLoaded} />
@@ -81,7 +83,7 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                   {formatCurrencyDecimal(billingRate)}
                   <span className="text-sm font-normal text-muted-foreground">/hr</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">What you should charge clients</p>
+                <p className="text-xs text-muted-foreground mt-2">What you should charge clients</p>
               </div>
 
               {/* Gap Visualization */}
