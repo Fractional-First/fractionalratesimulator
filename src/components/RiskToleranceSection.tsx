@@ -114,7 +114,7 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+              <div className="p-4 bg-muted/30 rounded-lg">
                 <div className="space-y-2">
                   <label className="text-sm font-medium flex items-center gap-2 text-foreground">
                     Risk-Adjusted Billing Rate
