@@ -47,7 +47,13 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
       
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
-          {/* Educational Note - Moved to top */}
+          <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <p className="text-xs text-amber-700 dark:text-amber-400">
+              <strong>Note:</strong> This risk-adjusted rate is theoretical and helps you understand how risk tolerance affects pricing decisions. Market rates may differ based on industry, experience, and demand.
+            </p>
+          </div>
+
+          {/* Educational Note */}
           <div className="p-4 bg-muted/30 rounded-lg">
             <h4 className="text-sm font-medium text-foreground mb-2">Understanding Risk in Fractional Work</h4>
             <ul className="space-y-2 text-xs text-muted-foreground">
@@ -146,12 +152,6 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <p className="text-xs text-amber-700 dark:text-amber-400">
-                <strong>Note:</strong> This risk-adjusted rate is theoretical and helps you understand how risk tolerance affects pricing decisions. Market rates may differ based on industry, experience, and demand.
-              </p>
             </div>
           </div>
         </div>
