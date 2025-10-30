@@ -30,6 +30,15 @@ export type Results = {
   annualCostIncludingOH: number;
   monthlyComp: number;
   monthlyCostIncludingOH: number;
+  // Direct rates (personal compensation only, no overhead)
+  directHourly: number;
+  directDaily: number;
+  directEffectiveHourly: number;
+  // Fully loaded rates (includes overhead)
+  fullyLoadedHourly: number;
+  fullyLoadedDaily: number;
+  fullyLoadedEffectiveHourly: number;
+  // Legacy fields for backward compatibility
   nominalHourly: number;
   nominalDaily: number;
   effectiveHourly: number;
@@ -64,32 +73,45 @@ export function compute(state: Inputs): Results {
 
   const usingFractional = s.fractionalHourlyInput > 0 && totalAnnualCompInput === 0;
 
-  const annualCostIncludingOH = usingFractional
+  // Total annual compensation (direct, no overhead)
+  const totalAnnualComp = usingFractional
     ? s.fractionalHourlyInput * workingDaysPerYear * s.hoursPerDay
-    : (totalAnnualCompInput > 0
-        ? s.baseSalary * (1 + s.overheadPct) + s.annualBonus + s.annualEquityFmv
-        : 0);
+    : totalAnnualCompInput;
 
-  const totalAnnualComp =
-    totalAnnualCompInput > 0
-      ? totalAnnualCompInput
-      : (annualCostIncludingOH > 0 ? (annualCostIncludingOH / (1 + s.overheadPct)) : 0);
+  // Annual cost including overhead (for organization)
+  const annualCostIncludingOH = s.baseSalary * (1 + s.overheadPct) + s.annualBonus + s.annualEquityFmv;
 
-  const annualCostInclOHFinal =
-    annualCostIncludingOH > 0 ? annualCostIncludingOH : totalAnnualComp * (1 + s.overheadPct);
+  // DIRECT RATES (personal compensation, no overhead)
+  const directHourly = totalAnnualComp / (Math.max(1, workingDaysPerYear) * s.hoursPerDay);
+  const directDaily = directHourly * s.hoursPerDay;
+  const directEffectiveHourly = directHourly * (1 - nonBillablePct);
 
-  const nominalHourly = annualCostInclOHFinal / (Math.max(1, workingDaysPerYear) * s.hoursPerDay);
-  const nominalDaily = nominalHourly * s.hoursPerDay;
-  const effectiveHourly = nominalHourly * (1 - nonBillablePct);
-  const riskAdjustedHourly = effectiveHourly / s.riskTolerancePct;
+  // FULLY LOADED RATES (includes overhead for organization cost)
+  const fullyLoadedHourly = annualCostIncludingOH / (Math.max(1, workingDaysPerYear) * s.hoursPerDay);
+  const fullyLoadedDaily = fullyLoadedHourly * s.hoursPerDay;
+  const fullyLoadedEffectiveHourly = fullyLoadedHourly * (1 - nonBillablePct);
+
+  // Risk-adjusted rate (based on direct effective rate)
+  const riskAdjustedHourly = directEffectiveHourly / s.riskTolerancePct;
+
+  // Legacy fields for backward compatibility (use direct rates)
+  const nominalHourly = directHourly;
+  const nominalDaily = directDaily;
+  const effectiveHourly = directEffectiveHourly;
 
   return {
     totalAnnualCompInput,
     workingDaysPerYear,
     totalAnnualComp,
-    annualCostIncludingOH: annualCostInclOHFinal,
+    annualCostIncludingOH,
     monthlyComp: totalAnnualComp / 12,
-    monthlyCostIncludingOH: annualCostInclOHFinal / 12,
+    monthlyCostIncludingOH: annualCostIncludingOH / 12,
+    directHourly,
+    directDaily,
+    directEffectiveHourly,
+    fullyLoadedHourly,
+    fullyLoadedDaily,
+    fullyLoadedEffectiveHourly,
     nominalHourly,
     nominalDaily,
     effectiveHourly,

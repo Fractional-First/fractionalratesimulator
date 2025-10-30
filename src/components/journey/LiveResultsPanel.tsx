@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TrendingUp, DollarSign, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
 import { type JourneyStage } from './JourneyContainer';
+import { Switch } from '@/components/ui/switch';
 
 interface LiveResultsPanelProps {
   inputs: Inputs;
@@ -17,6 +18,8 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
   completedStages,
   hasFoundationInputs,
 }) => {
+  const [showFullyLoaded, setShowFullyLoaded] = useState(false);
+  
   const showEffectiveRate = hasFoundationInputs;
   const showBillingRate = completedStages.includes('reality');
   const showFullBreakdown = completedStages.includes('refinements');
@@ -27,9 +30,14 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
   const adminPct = inputs.adminPct ?? 0.15;
   const nonBillablePct = (bdPct + invoicingPct + adminPct);
   
-  const billingRate = results.nominalHourly / (1 - nonBillablePct);
-  const gap = billingRate - results.nominalHourly;
-  const gapPercentage = results.nominalHourly > 0 ? (gap / results.nominalHourly) * 100 : 0;
+  // Use direct or fully loaded rates based on toggle
+  const displayHourly = showFullyLoaded ? results.fullyLoadedHourly : results.directHourly;
+  const displayDaily = showFullyLoaded ? results.fullyLoadedDaily : results.directDaily;
+  const displayEffectiveHourly = showFullyLoaded ? results.fullyLoadedEffectiveHourly : results.directEffectiveHourly;
+  
+  const billingRate = displayHourly / (1 - nonBillablePct);
+  const gap = billingRate - displayHourly;
+  const gapPercentage = displayHourly > 0 ? (gap / displayHourly) * 100 : 0;
 
   return (
     <div className="sticky top-24 space-y-4">
@@ -39,20 +47,42 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
           Live Results
         </h3>
 
+        {/* Toggle between Direct and Fully Loaded */}
+        {showEffectiveRate && (
+          <div className="mb-4 p-3 bg-muted/30 rounded-lg border border-border">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex-1">
+                <p className="text-xs font-medium text-foreground">
+                  {showFullyLoaded ? 'Organization Cost' : 'Personal Rate'}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {showFullyLoaded ? 'Includes overhead & benefits' : 'Your direct compensation'}
+                </p>
+              </div>
+              <Switch
+                checked={showFullyLoaded}
+                onCheckedChange={setShowFullyLoaded}
+              />
+            </div>
+          </div>
+        )}
+
         <div className="space-y-4">
           {/* Stage 1: Effective Rate */}
           {showEffectiveRate && (
             <div className="animate-fade-in">
               <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
                 <p className="text-xs font-medium text-muted-foreground mb-1">
-                  Your Effective Rate
+                  {showFullyLoaded ? 'Fully Loaded Rate' : 'Your Direct Rate'}
                 </p>
                 <div className="text-3xl font-bold text-primary">
-                  {formatCurrencyDecimal(results.nominalHourly)}
+                  {formatCurrencyDecimal(displayHourly)}
                   <span className="text-sm font-normal text-muted-foreground">/hr</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Your apples-to-apples hourly rate
+                  {showFullyLoaded 
+                    ? 'Total cost to organization including overhead'
+                    : 'Your personal compensation equivalent'}
                 </p>
               </div>
             </div>
@@ -108,13 +138,13 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                 <div className="p-3 bg-muted/30 rounded-lg">
                   <p className="text-xs text-muted-foreground mb-1">Daily Rate</p>
                   <p className="text-lg font-bold text-foreground">
-                    {formatCurrency(results.nominalDaily)}
+                    {formatCurrency(displayDaily)}
                   </p>
                 </div>
                 <div className="p-3 bg-muted/30 rounded-lg">
                   <p className="text-xs text-muted-foreground mb-1">Monthly</p>
                   <p className="text-lg font-bold text-foreground">
-                    {formatCurrency(results.monthlyCostIncludingOH)}
+                    {formatCurrency(showFullyLoaded ? results.monthlyCostIncludingOH : results.monthlyComp)}
                   </p>
                 </div>
               </div>
