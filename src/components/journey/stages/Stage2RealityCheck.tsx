@@ -211,7 +211,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               }`
             })}
             <div className="flex-1">
-              <h4 className="text-sm font-semibold text-foreground mb-1">Rate Gap / Efficiency</h4>
+              <h4 className="text-sm font-semibold text-foreground mb-1">Rate Gap</h4>
               <p className="text-xs text-muted-foreground">
                 The difference between your effective rate and what you must charge
               </p>
