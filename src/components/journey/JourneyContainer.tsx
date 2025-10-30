@@ -81,7 +81,7 @@ export const JourneyContainer: React.FC = () => {
       };
     });
 
-    // Scroll to the appropriate stage when navigating
+    // Scroll to the appropriate stage when navigating, accounting for sticky header
     setTimeout(() => {
       const stageRefs = {
         foundation: foundationRef,
@@ -90,10 +90,17 @@ export const JourneyContainer: React.FC = () => {
         solution: solutionRef
       };
       
-      stageRefs[stage]?.current?.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
-      });
+      const targetRef = stageRefs[stage]?.current;
+      if (targetRef) {
+        const headerOffset = 100; // Height of sticky header + some padding
+        const elementPosition = targetRef.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }, 100);
   };
 
