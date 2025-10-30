@@ -58,7 +58,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               <label className="text-xs text-muted-foreground">Select your country to pre-fill overhead costs and working days. </label>
               <div className="flex gap-3 items-start">
                 <Select value={selectedCountry} onValueChange={onCountryChange}>
-                  <SelectTrigger className="flex-1">
+                  <SelectTrigger className="w-64">
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border z-50">
