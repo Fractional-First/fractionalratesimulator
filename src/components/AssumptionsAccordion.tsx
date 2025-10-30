@@ -91,7 +91,11 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  
+                  <TableRow className="border-0 hover:bg-transparent">
+                    <TableHead className="text-xs font-semibold w-[35%]">Parameter</TableHead>
+                    <TableHead className="text-xs font-semibold text-center">Value</TableHead>
+                    <TableHead className="text-xs font-semibold w-[10%]"></TableHead>
+                  </TableRow>
                 </TableHeader>
                 <TableBody>
                   <TableRow className="border-0 hover:bg-muted/30">
