@@ -61,7 +61,7 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
           {showEffectiveRate && <div className="animate-fade-in">
               <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
                 <p className="text-xs font-medium text-muted-foreground mb-1">
-                  {showFullyLoaded ? 'Fully Loaded Rate' : 'Your Direct Rate'}
+                  {showFullyLoaded ? 'Fully Loaded Rate' : 'Your Effective Rate'}
                 </p>
                 <div className="text-3xl font-bold text-primary">
                   {formatCurrencyDecimal(displayHourly)}
