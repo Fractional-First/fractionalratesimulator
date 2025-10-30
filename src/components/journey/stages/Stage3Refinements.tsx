@@ -62,7 +62,6 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
 
         {/* Assumptions Section */}
         <div className="space-y-4">
-          <h4 className="text-sm font-semibold text-foreground">Country & Working Conditions</h4>
           <AssumptionsAccordion
             inputs={inputs}
             updateInput={updateInput}
@@ -73,7 +72,6 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
 
         {/* Risk Tolerance Section */}
         <div className="space-y-4">
-          <h4 className="text-sm font-semibold text-foreground">Risk Tolerance</h4>
           <RiskToleranceSection
             inputs={inputs}
             updateInput={updateInput}
