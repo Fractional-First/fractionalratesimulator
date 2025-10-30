@@ -38,7 +38,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
       isActive={isActive}
       onEdit={onEdit}
     >
-      <div className="space-y-6">
+      <div className="space-y-6 mt-6">
         <div className="space-y-4">
           <div className="grid gap-4">
             <CurrencyInput

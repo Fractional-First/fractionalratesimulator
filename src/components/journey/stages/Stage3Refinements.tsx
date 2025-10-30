@@ -47,7 +47,7 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
       isActive={isActive}
       onEdit={onEdit}
     >
-      <div className="space-y-6">
+      <div className="space-y-6 mt-6">
         <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
           <p className="text-sm text-muted-foreground">
             Every situation is unique. These defaults work for most people, but you can adjust them to match your specific circumstances and risk tolerance.

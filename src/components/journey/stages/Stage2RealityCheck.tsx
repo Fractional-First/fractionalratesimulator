@@ -81,7 +81,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
       isActive={isActive}
       onEdit={onEdit}
     >
-      <div className="space-y-6">
+      <div className="space-y-6 mt-6">
         {/* Educational Context */}
         <div className="mt-4 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-sm text-foreground font-medium mb-2">
