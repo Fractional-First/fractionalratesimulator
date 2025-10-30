@@ -131,14 +131,18 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
 
         {/* Required Billing Rate */}
         <div className="p-6 bg-gradient-to-br from-amber-500/5 to-amber-500/10 rounded-xl border-2 border-amber-500/20">
-          <h3 className="text-lg font-bold text-foreground mb-2">Required Billing Rate</h3>
-          <p className="text-5xl font-bold text-amber-700 dark:text-amber-400 mb-1">
-            {formatCurrencyDecimal(billingRate)}
-            <span className="text-xl font-normal text-muted-foreground">/hr</span>
-          </p>
-          <p className="text-sm text-muted-foreground">
-            To achieve your effective rate at 60% utilization
-          </p>
+          <h3 className="text-lg font-bold text-foreground mb-4">Required Billing Rate</h3>
+          
+          <div>
+            <p className="text-xs text-muted-foreground mb-3">
+              To achieve your effective rate at <strong>{Math.round(utilizationRate)}% utilization</strong>
+            </p>
+            <p className="text-4xl font-bold text-amber-700 dark:text-amber-400 mb-1">
+              {formatCurrencyDecimal(billingRate)}
+              <span className="text-lg font-normal text-muted-foreground">/hr</span>
+            </p>
+            <p className="text-sm text-muted-foreground">Rate needed to cover non-billable time</p>
+          </div>
         </div>
 
         {/* BD Pipeline Health Assessment */}
