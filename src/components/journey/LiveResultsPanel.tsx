@@ -49,7 +49,7 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                   {showFullyLoaded ? 'Show Fully Loaded Rate' : 'Show Effective Rate'}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {showFullyLoaded ? 'Includes overhead & benefits' : 'Your direct compensation'}
+                  {showFullyLoaded ? 'Your direct compensation' : 'Includes overhead & benefits'}
                 </p>
               </div>
               <Switch checked={showFullyLoaded} onCheckedChange={setShowFullyLoaded} />
