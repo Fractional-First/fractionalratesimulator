@@ -8,7 +8,6 @@ import { type JourneyStage as JourneyStageType } from '../JourneyContainer';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
 interface Stage4SolutionProps {
   isActive: boolean;
   status: StageStatus;
@@ -17,9 +16,7 @@ interface Stage4SolutionProps {
   onEditStage: (stage: JourneyStageType) => void;
   onReset: () => void;
 }
-
 type BDPipelineHealth = 'poor' | 'fair' | 'good' | 'excellent';
-
 interface AdviceContent {
   title: string;
   description: string;
@@ -27,7 +24,6 @@ interface AdviceContent {
   ctaText: string;
   severity: 'critical' | 'warning' | 'success';
 }
-
 const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHealth): AdviceContent => {
   // Utilization ranges: 0-50%, 50-70%, 70%+
   const isLowUtil = utilizationRate < 50;
@@ -39,57 +35,34 @@ const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHeal
     return {
       title: 'Critical: You Need Comprehensive Support',
       description: 'With low utilization and a struggling pipeline, you\'re spending too much time on non-billable work while also struggling to find clients. This is the exact situation Fractional First was built to solve.',
-      recommendations: [
-        'Immediate access to qualified client opportunities through our marketplace',
-        'Structured BD support to build a consistent pipeline',
-        'Administrative offloading to free up 20-30% more billable time',
-        'Rate optimization coaching to ensure you\'re charging appropriately'
-      ],
+      recommendations: ['Immediate access to qualified client opportunities through our marketplace', 'Structured BD support to build a consistent pipeline', 'Administrative offloading to free up 20-30% more billable time', 'Rate optimization coaching to ensure you\'re charging appropriately'],
       ctaText: 'Get Immediate Support from Fractional First',
       severity: 'critical'
     };
   }
-
   if (isLowUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
     return {
       title: 'Opportunity: Convert Pipeline to Billable Hours',
       description: 'You have a strong pipeline, but you\'re losing too much time to admin and operational tasks. Let\'s help you convert that strong pipeline into more billable revenue.',
-      recommendations: [
-        'Operational support to reduce admin time by 50%+',
-        'Contract and invoicing automation',
-        'Client onboarding streamlining',
-        'Focus your time on converting your strong pipeline'
-      ],
+      recommendations: ['Operational support to reduce admin time by 50%+', 'Contract and invoicing automation', 'Client onboarding streamlining', 'Focus your time on converting your strong pipeline'],
       ctaText: 'Maximize Your Strong Pipeline',
       severity: 'warning'
     };
   }
-
   if (isMedUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
     return {
       title: 'Strategic Support Needed',
       description: 'You\'re achieving decent utilization, but your pipeline health suggests this may not be sustainable. Let\'s build a foundation for consistent, long-term success.',
-      recommendations: [
-        'Pipeline development and lead generation support',
-        'Client qualification and matching services',
-        'Reduce business development time by 60-70%',
-        'Build a sustainable, recurring client base'
-      ],
+      recommendations: ['Pipeline development and lead generation support', 'Client qualification and matching services', 'Reduce business development time by 60-70%', 'Build a sustainable, recurring client base'],
       ctaText: 'Build a Sustainable Practice',
       severity: 'warning'
     };
   }
-
   if (isMedUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
     return {
       title: 'Good Position: Optimize for Excellence',
       description: 'You\'re in a solid position with good utilization and a healthy pipeline. Fractional First can help you reach elite performance levels (75%+ utilization).',
-      recommendations: [
-        'Premium client matching for higher-value engagements',
-        'Advanced operational efficiency tools',
-        'Strategic growth consulting',
-        'Network access to expand into new markets'
-      ],
+      recommendations: ['Premium client matching for higher-value engagements', 'Advanced operational efficiency tools', 'Strategic growth consulting', 'Network access to expand into new markets'],
       ctaText: 'Reach Elite Performance',
       severity: 'success'
     };
@@ -100,12 +73,7 @@ const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHeal
     return {
       title: 'Caution: Unsustainable Pace',
       description: 'You\'re achieving excellent utilization, but a weak pipeline suggests you may be overworked on current clients without planning for the future. This creates burnout risk and income volatility.',
-      recommendations: [
-        'Build a sustainable pipeline while maintaining current work',
-        'Strategic BD support that doesn\'t require your time',
-        'Succession planning for current engagements',
-        'Work-life balance optimization'
-      ],
+      recommendations: ['Build a sustainable pipeline while maintaining current work', 'Strategic BD support that doesn\'t require your time', 'Succession planning for current engagements', 'Work-life balance optimization'],
       ctaText: 'Create Sustainable Success',
       severity: 'warning'
     };
@@ -115,61 +83,39 @@ const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHeal
   return {
     title: 'Excellent: You\'re in Elite Territory',
     description: 'You\'ve achieved what most fractional leaders aspire to: high utilization with a strong pipeline. Fractional First can help you maintain this position and explore premium opportunities.',
-    recommendations: [
-      'Access to premium, high-value client engagements',
-      'Peer network of elite fractional leaders',
-      'Strategic growth and scaling opportunities',
-      'Maintain your position with minimal effort'
-    ],
+    recommendations: ['Access to premium, high-value client engagements', 'Peer network of elite fractional leaders', 'Strategic growth and scaling opportunities', 'Maintain your position with minimal effort'],
     ctaText: 'Join Our Elite Network',
     severity: 'success'
   };
 };
-
 export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   isActive,
   status,
   inputs,
   results,
   onEditStage,
-  onReset,
+  onReset
 }) => {
   // Salary anchor override state
   const [useCustomRate, setUseCustomRate] = useState(false);
   const [customEffectiveRate, setCustomEffectiveRate] = useState(results.nominalHourly);
-  
+
   // BD Pipeline health state
   const [pipelineHealth, setPipelineHealth] = useState<BDPipelineHealth>('fair');
-  
   const bdPct = inputs.bdPct ?? 0.15;
   const invoicingPct = inputs.invoicingPct ?? 0.10;
   const adminPct = inputs.adminPct ?? 0.15;
   const nonBillablePct = bdPct + invoicingPct + adminPct;
-  
   const utilizationRate = (1 - nonBillablePct) * 100;
   const effectiveRate = useCustomRate ? customEffectiveRate : results.nominalHourly;
   const billingRate = effectiveRate / (1 - nonBillablePct);
-  
+
   // Get personalized advice
   const advice = getAdviceMatrix(utilizationRate, pipelineHealth);
-
-  const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : 
-                         advice.severity === 'warning' ? TrendingUp : CheckCircle2;
-  const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' :
-                        advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' :
-                        'text-green-600 dark:text-green-400';
-  const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' :
-                     advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' :
-                     'bg-green-500/10 border-green-500/20';
-
-  return (
-    <JourneyStage
-      stageNumber={4}
-      title="Your Path Forward"
-      subtitle="Personalized analysis and actionable next steps"
-      status={status}
-      isActive={isActive}
-    >
+  const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : advice.severity === 'warning' ? TrendingUp : CheckCircle2;
+  const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' : advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
+  const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
+  return <JourneyStage stageNumber={4} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6">
         {/* Effective Rate with Anchor Override */}
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
@@ -178,24 +124,18 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <Anchor className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-bold text-foreground">Your Effective Rate</h3>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setUseCustomRate(!useCustomRate);
-                if (!useCustomRate) {
-                  setCustomEffectiveRate(results.nominalHourly);
-                }
-              }}
-              className="text-xs"
-            >
+            <Button variant="ghost" size="sm" onClick={() => {
+            setUseCustomRate(!useCustomRate);
+            if (!useCustomRate) {
+              setCustomEffectiveRate(results.nominalHourly);
+            }
+          }} className="text-xs">
               <Edit3 className="w-3 h-3 mr-1" />
               {useCustomRate ? 'Reset to Calculated' : 'Test Custom Rate'}
             </Button>
           </div>
 
-          {!useCustomRate ? (
-            <div>
+          {!useCustomRate ? <div>
               <p className="text-xs text-muted-foreground mb-3">
                 Based on your full-time salary target of <strong>{formatCurrency(inputs.baseSalary || 0)}</strong>
               </p>
@@ -204,22 +144,14 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                 <span className="text-lg font-normal text-muted-foreground">/hr</span>
               </p>
               <p className="text-sm text-muted-foreground">Your calculated take-home hourly rate</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
+            </div> : <div className="space-y-3">
               <p className="text-xs text-muted-foreground">
                 Test different effective rate scenarios:
               </p>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
                   <Label htmlFor="custom-rate" className="text-xs">Custom Effective Rate</Label>
-                  <Input
-                    id="custom-rate"
-                    type="number"
-                    value={customEffectiveRate}
-                    onChange={(e) => setCustomEffectiveRate(Number(e.target.value))}
-                    className="mt-1"
-                  />
+                  <Input id="custom-rate" type="number" value={customEffectiveRate} onChange={e => setCustomEffectiveRate(Number(e.target.value))} className="mt-1" />
                 </div>
                 <div className="pt-5">
                   <p className="text-2xl font-bold text-primary">
@@ -231,13 +163,12 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <p className="text-xs text-amber-600 dark:text-amber-400">
                 Scenario testing: This overrides your salary-based calculation
               </p>
-            </div>
-          )}
+            </div>}
         </div>
 
         {/* Required Billing Rate */}
         <div className="p-6 bg-gradient-to-br from-amber-500/5 to-amber-500/10 rounded-xl border-2 border-amber-500/20">
-          <h3 className="text-lg font-bold text-foreground mb-3">What You Must Charge</h3>
+          <h3 className="text-lg font-bold text-foreground mb-3">Required Billing Rate</h3>
           <p className="text-sm text-muted-foreground mb-4">
             To achieve your effective rate at <strong>{utilizationRate.toFixed(0)}%</strong> utilization:
           </p>
@@ -259,7 +190,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             How would you describe the current health of your client pipeline and business development efforts?
           </p>
           
-          <RadioGroup value={pipelineHealth} onValueChange={(value) => setPipelineHealth(value as BDPipelineHealth)}>
+          <RadioGroup value={pipelineHealth} onValueChange={value => setPipelineHealth(value as BDPipelineHealth)}>
             <div className="space-y-3">
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="poor" id="poor" className="mt-0.5" />
@@ -320,21 +251,15 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                 How Fractional First Can Help You:
               </h4>
               <ul className="space-y-2">
-                {advice.recommendations.map((rec, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                {advice.recommendations.map((rec, idx) => <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <span className={`${severityColor} mt-0.5`}>✓</span>
                     <span>{rec}</span>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
             </div>
 
             <div className="pt-4 border-t border-border">
-              <Button
-                size="lg"
-                className="w-full"
-                asChild
-              >
+              <Button size="lg" className="w-full" asChild>
                 <a href="https://fractionalfirst.com" target="_blank" rel="noopener noreferrer">
                   {advice.ctaText}
                   <ExternalLink className="ml-2 w-4 h-4" />
@@ -370,24 +295,13 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
 
         {/* Additional Actions */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={onReset}
-            className="flex-1"
-          >
+          <Button size="lg" variant="outline" onClick={onReset} className="flex-1">
             Start Over
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => onEditStage('foundation')}
-            className="flex-1"
-          >
+          <Button size="lg" variant="outline" onClick={() => onEditStage('foundation')} className="flex-1">
             Edit Inputs
           </Button>
         </div>
       </div>
-    </JourneyStage>
-  );
+    </JourneyStage>;
 };
