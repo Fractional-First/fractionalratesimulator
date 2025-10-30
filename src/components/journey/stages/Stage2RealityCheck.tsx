@@ -120,10 +120,6 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 max={1}
                 step={0.05}
               />
-              <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border border-primary/20">
-                <span className="text-xs font-medium text-muted-foreground">Utilization Rate:</span>
-                <span className="text-lg font-bold text-primary">{utilizationRate.toFixed(0)}%</span>
-              </div>
             </div>
 
             {/* Non-billable Time Breakdown */}
