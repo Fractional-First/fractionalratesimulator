@@ -122,7 +122,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-2">
               <Anchor className="w-5 h-5 text-primary" />
-              <h3 className="text-lg font-bold text-foreground">Your Effective Rate</h3>
+              <h3 className="text-lg font-bold text-foreground">What you should charge clients</h3>
             </div>
             <Button variant="ghost" size="sm" onClick={() => {
             setUseCustomRate(!useCustomRate);
