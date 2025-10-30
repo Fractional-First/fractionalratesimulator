@@ -12,11 +12,11 @@ interface RiskToleranceSectionProps {
 }
 
 const riskToleranceOptions = [
-  { value: 1.0, label: "Low Risk: Very comfortable with income gaps (0% premium)" },
-  { value: 0.8, label: "Low-Medium Risk: Comfortable with some uncertainty (25% premium)" },
+  { value: 1.0, label: "High Risk: Very comfortable with income gaps (0% premium)" },
+  { value: 0.8, label: "Medium-High Risk: Comfortable with some uncertainty (25% premium)" },
   { value: 0.67, label: "Medium Risk: Somewhat comfortable (50% premium)" },
-  { value: 0.57, label: "Medium-High Risk: Need more stability (75% premium)" },
-  { value: 0.5, label: "High Risk: Require steady income (100% premium)" }
+  { value: 0.57, label: "Low-Medium Risk: Need more stability (75% premium)" },
+  { value: 0.5, label: "Low Risk: Require steady income (100% premium)" }
 ];
 
 const getWarningLevel = (percentIncrease: number): {
