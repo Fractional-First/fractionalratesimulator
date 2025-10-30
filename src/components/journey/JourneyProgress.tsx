@@ -12,7 +12,7 @@ interface JourneyProgressProps {
 const stages: { id: JourneyStage; label: string; number: number }[] = [
   { id: 'foundation', label: 'Your Worth', number: 1 },
   { id: 'reality', label: 'Reality Check', number: 2 },
-  { id: 'refinements', label: 'Fine Print', number: 3 },
+  { id: 'refinements', label: 'Fine-tuning', number: 3 },
   { id: 'solution', label: 'Path Forward', number: 4 },
 ];
 
