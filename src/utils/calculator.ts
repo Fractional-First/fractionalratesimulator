@@ -54,7 +54,7 @@ export function compute(state: Inputs): Results {
     hoursPerDay: state.hoursPerDay ?? 8,
     vacationDays: state.vacationDays ?? 21,
     publicHolidays: state.publicHolidays ?? 15,
-    otherLeaveDays: state.otherLeaveDays ?? 10,
+    otherLeaveDays: state.otherLeaveDays ?? 5,
     trainingDays: state.trainingDays ?? 4,
     projectWorkPct: state.projectWorkPct ?? 0.6,
     bdPct: state.bdPct ?? 0.15,

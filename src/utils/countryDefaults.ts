@@ -49,7 +49,7 @@ export const countryDefaults: Record<string, CountryDefaults> = {
     trainingDays: 4,
   },
   'FR': {
-    overheadPct: 0.32,
+    overheadPct: 0.42,
     hoursPerDay: 7,
     vacationDays: 30,
     publicHolidays: 11,
@@ -129,7 +129,7 @@ export const countryDefaults: Record<string, CountryDefaults> = {
     trainingDays: 2,
   },
   'BR': {
-    overheadPct: 0.28,
+    overheadPct: 0.35,
     hoursPerDay: 8,
     vacationDays: 30,
     publicHolidays: 12,
@@ -171,7 +171,7 @@ export const countryDefaults: Record<string, CountryDefaults> = {
   'AE': {
     overheadPct: 0.15,
     hoursPerDay: 8,
-    vacationDays: 30,
+    vacationDays: 22,
     publicHolidays: 13,
     otherLeaveDays: 5,
     trainingDays: 3,
