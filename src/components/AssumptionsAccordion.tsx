@@ -74,14 +74,9 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                   <div className="text-sm font-bold text-primary">{Math.round((inputs.overheadPct || 0.25) * 100)}%</div>
                 </div>
               </div>
-              <div className="p-3 bg-muted/30 rounded-lg border border-border">
-                <p className="text-xs text-muted-foreground mb-2">
-                  <strong>Country selection pre-fills:</strong> Overhead %, Hours per Day, Vacation Days, Public Holidays, Other Leave Days, and Training Days
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  All values can be fine-tuned below after selection
-                </p>
-              </div>
+              <p className="text-xs text-muted-foreground italic">
+                All values can be fine-tuned below after selection
+              </p>
             </div>
           </div>
 
