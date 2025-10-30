@@ -90,12 +90,13 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
               {gap > 0 && <div className="p-3 bg-muted/50 rounded-lg border border-border">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="text-xs font-medium text-muted-foreground">
-                      The Gap:
+                      Rate Gap:
                     </span>
                     <span className="text-xs font-bold text-red-600 dark:text-red-400">
                       {formatCurrency(gap)}/hr
                     </span>
                   </div>
+                  <p className="text-xs font-medium text-muted-foreground mb-1.5">Utilization Impact</p>
                   <div className="w-full h-2 bg-muted rounded-full overflow-hidden mb-1.5">
                     <div className="h-full bg-gradient-to-r from-primary to-amber-500 transition-all duration-500" style={{
                 width: `${Math.min(100, gapPercentage)}%`
