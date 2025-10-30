@@ -165,11 +165,10 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                         (inputs.trainingDays || 4)
                       );
                       const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                      const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                      const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                      const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
-                      const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
-                      const percentageIncrease = ((riskAdjustedRate - primaryBillingRate) / primaryBillingRate) * 100;
+                      const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                      const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                      const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
+                      const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
                       const warning = getWarningLevel(percentageIncrease);
                       
                       return (
@@ -198,10 +197,9 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                           (inputs.trainingDays || 4)
                         );
                         const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                        const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                        const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                        const billingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
-                        return billingRate / (inputs.riskTolerancePct || 0.50);
+                        const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                        const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                        return directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
                       })()
                     )}
                     <span className="text-sm font-normal text-muted-foreground">/hr</span>
@@ -215,11 +213,10 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       (inputs.trainingDays || 4)
                     );
                     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                    const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                    const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                    const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
-                    const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
-                    const percentageIncrease = ((riskAdjustedRate - primaryBillingRate) / primaryBillingRate) * 100;
+                    const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                    const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                    const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
+                    const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
                     const warning = getWarningLevel(percentageIncrease);
                     
                     return (
