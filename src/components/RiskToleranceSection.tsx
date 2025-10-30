@@ -165,7 +165,7 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                         (inputs.trainingDays || 4)
                       );
                       const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                      const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                      const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                       const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
                       const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
                       const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
@@ -198,7 +198,7 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                           (inputs.trainingDays || 4)
                         );
                         const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                        const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                        const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                         const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
                         const billingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
                         return billingRate / (inputs.riskTolerancePct || 0.50);
@@ -215,7 +215,7 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       (inputs.trainingDays || 4)
                     );
                     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
-                    const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                    const annualCost = (inputs.baseSalary || 0) * (1 + (inputs.overheadPct || 0.25)) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                     const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
                     const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
                     const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
