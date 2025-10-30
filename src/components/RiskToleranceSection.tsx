@@ -1,8 +1,9 @@
 import React from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { InfoTooltip } from './InfoTooltip';
-import { TrendingUp, ChevronDown } from 'lucide-react';
+import { TrendingUp, ChevronDown, CheckCircle2, AlertTriangle, AlertCircle } from 'lucide-react';
 import { type Inputs } from '@/utils/calculator';
 
 interface RiskToleranceSectionProps {
@@ -17,6 +18,40 @@ const riskToleranceOptions = [
   { value: 0.57, label: "Medium-High Risk: Need more stability (75% premium)" },
   { value: 0.5, label: "High Risk: Require steady income (100% premium)" }
 ];
+
+const getWarningLevel = (percentIncrease: number): {
+  level: 'green' | 'yellow' | 'red';
+  message: string;
+  icon: React.ReactNode;
+  badgeClasses: string;
+  messageClasses: string;
+} => {
+  if (percentIncrease <= 25) {
+    return {
+      level: 'green',
+      message: 'Healthy Risk Level: Your risk adjustment is modest and typically acceptable in fractional markets.',
+      icon: <CheckCircle2 className="w-3 h-3 mr-1" />,
+      badgeClasses: 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20',
+      messageClasses: 'bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400'
+    };
+  } else if (percentIncrease <= 75) {
+    return {
+      level: 'yellow',
+      message: 'Elevated Risk Premium: This risk level adds significant markup. Consider if market rates support this premium.',
+      icon: <AlertTriangle className="w-3 h-3 mr-1" />,
+      badgeClasses: 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20',
+      messageClasses: 'bg-amber-500/10 border-amber-500/20 text-amber-700 dark:text-amber-400'
+    };
+  } else {
+    return {
+      level: 'red',
+      message: 'High Risk-Adjusted Rate: This risk level may require a market rate that signals unsuitability for fractional work.',
+      icon: <AlertCircle className="w-3 h-3 mr-1" />,
+      badgeClasses: 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20',
+      messageClasses: 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400'
+    };
+  }
+};
 
 export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
   inputs,
@@ -112,15 +147,42 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
               </div>
 
               <div className="p-4 bg-muted/30 rounded-lg">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium flex items-center gap-2 text-foreground">
-                    Risk-Adjusted Billing Rate
-                    <InfoTooltip content={
-                      <>
-                        A <strong>conceptual rate</strong> that factors in income volatility risk. This helps you understand risk aversion impact but may not reflect actual market rates. Use as a reference point, not a pricing target.
-                      </>
-                    } />
-                  </label>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium flex items-center gap-2 text-foreground">
+                      Risk-Adjusted Billing Rate
+                      <InfoTooltip content={
+                        <>
+                          A <strong>conceptual rate</strong> that factors in income volatility risk. This helps you understand risk aversion impact but may not reflect actual market rates. Use as a reference point, not a pricing target.
+                        </>
+                      } />
+                    </label>
+                    {(() => {
+                      const workingDays = 52*5 - (
+                        (inputs.vacationDays || 21) + 
+                        (inputs.publicHolidays || 15) + 
+                        (inputs.otherLeaveDays || 10) + 
+                        (inputs.trainingDays || 4)
+                      );
+                      const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
+                      const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                      const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                      const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
+                      const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
+                      const percentageIncrease = ((riskAdjustedRate - primaryBillingRate) / primaryBillingRate) * 100;
+                      const warning = getWarningLevel(percentageIncrease);
+                      
+                      return (
+                        <>
+                          <Badge className={`${warning.badgeClasses} border`}>
+                            {warning.icon}
+                            {Math.round(percentageIncrease)}% over base
+                          </Badge>
+                        </>
+                      );
+                    })()}
+                  </div>
+                  
                   <div className="text-2xl font-bold text-primary">
                     {new Intl.NumberFormat('en-US', {
                       style: 'currency',
@@ -144,6 +206,31 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                     )}
                     <span className="text-sm font-normal text-muted-foreground">/hr</span>
                   </div>
+                  
+                  {(() => {
+                    const workingDays = 52*5 - (
+                      (inputs.vacationDays || 21) + 
+                      (inputs.publicHolidays || 15) + 
+                      (inputs.otherLeaveDays || 10) + 
+                      (inputs.trainingDays || 4)
+                    );
+                    const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
+                    const annualCost = totalComp * (1 + (inputs.overheadPct || 0.25));
+                    const nominalHourly = annualCost / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
+                    const primaryBillingRate = nominalHourly / (1 - (inputs.nonBillablePct || 0.30));
+                    const riskAdjustedRate = primaryBillingRate / (inputs.riskTolerancePct || 0.50);
+                    const percentageIncrease = ((riskAdjustedRate - primaryBillingRate) / primaryBillingRate) * 100;
+                    const warning = getWarningLevel(percentageIncrease);
+                    
+                    return (
+                      <div className={`p-3 rounded-lg border ${warning.messageClasses}`}>
+                        <p className="text-xs">
+                          {warning.message}
+                        </p>
+                      </div>
+                    );
+                  })()}
+                  
                   <p className="text-xs text-muted-foreground">
                     Conceptual rate for understanding risk impact
                   </p>
