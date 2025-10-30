@@ -115,10 +115,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
       <div className="space-y-6 mt-6">
         {/* Effective Rate */}
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
-          <div className="flex items-center gap-2 mb-4">
-            <Anchor className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-bold text-foreground">Your Effective Rate</h3>
-          </div>
+          <h3 className="text-lg font-bold text-foreground mb-4">Your Effective Rate</h3>
           
           <div>
             <p className="text-xs text-muted-foreground mb-3">
