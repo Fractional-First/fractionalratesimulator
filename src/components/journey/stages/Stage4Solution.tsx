@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Sparkles } from 'lucide-react';
+import { ExternalLink, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Anchor, Edit3 } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
 import { type JourneyStage as JourneyStageType } from '../JourneyContainer';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface Stage4SolutionProps {
   isActive: boolean;
@@ -15,6 +18,114 @@ interface Stage4SolutionProps {
   onReset: () => void;
 }
 
+type BDPipelineHealth = 'poor' | 'fair' | 'good' | 'excellent';
+
+interface AdviceContent {
+  title: string;
+  description: string;
+  recommendations: string[];
+  ctaText: string;
+  severity: 'critical' | 'warning' | 'success';
+}
+
+const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHealth): AdviceContent => {
+  // Utilization ranges: 0-50%, 50-70%, 70%+
+  const isLowUtil = utilizationRate < 50;
+  const isMedUtil = utilizationRate >= 50 && utilizationRate < 70;
+  const isHighUtil = utilizationRate >= 70;
+
+  // Matrix logic
+  if (isLowUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
+    return {
+      title: 'Critical: You Need Comprehensive Support',
+      description: 'With low utilization and a struggling pipeline, you\'re spending too much time on non-billable work while also struggling to find clients. This is the exact situation Fractional First was built to solve.',
+      recommendations: [
+        'Immediate access to qualified client opportunities through our marketplace',
+        'Structured BD support to build a consistent pipeline',
+        'Administrative offloading to free up 20-30% more billable time',
+        'Rate optimization coaching to ensure you\'re charging appropriately'
+      ],
+      ctaText: 'Get Immediate Support from Fractional First',
+      severity: 'critical'
+    };
+  }
+
+  if (isLowUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
+    return {
+      title: 'Opportunity: Convert Pipeline to Billable Hours',
+      description: 'You have a strong pipeline, but you\'re losing too much time to admin and operational tasks. Let\'s help you convert that strong pipeline into more billable revenue.',
+      recommendations: [
+        'Operational support to reduce admin time by 50%+',
+        'Contract and invoicing automation',
+        'Client onboarding streamlining',
+        'Focus your time on converting your strong pipeline'
+      ],
+      ctaText: 'Maximize Your Strong Pipeline',
+      severity: 'warning'
+    };
+  }
+
+  if (isMedUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
+    return {
+      title: 'Strategic Support Needed',
+      description: 'You\'re achieving decent utilization, but your pipeline health suggests this may not be sustainable. Let\'s build a foundation for consistent, long-term success.',
+      recommendations: [
+        'Pipeline development and lead generation support',
+        'Client qualification and matching services',
+        'Reduce business development time by 60-70%',
+        'Build a sustainable, recurring client base'
+      ],
+      ctaText: 'Build a Sustainable Practice',
+      severity: 'warning'
+    };
+  }
+
+  if (isMedUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
+    return {
+      title: 'Good Position: Optimize for Excellence',
+      description: 'You\'re in a solid position with good utilization and a healthy pipeline. Fractional First can help you reach elite performance levels (75%+ utilization).',
+      recommendations: [
+        'Premium client matching for higher-value engagements',
+        'Advanced operational efficiency tools',
+        'Strategic growth consulting',
+        'Network access to expand into new markets'
+      ],
+      ctaText: 'Reach Elite Performance',
+      severity: 'success'
+    };
+  }
+
+  // High utilization cases
+  if (isHighUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
+    return {
+      title: 'Caution: Unsustainable Pace',
+      description: 'You\'re achieving excellent utilization, but a weak pipeline suggests you may be overworked on current clients without planning for the future. This creates burnout risk and income volatility.',
+      recommendations: [
+        'Build a sustainable pipeline while maintaining current work',
+        'Strategic BD support that doesn\'t require your time',
+        'Succession planning for current engagements',
+        'Work-life balance optimization'
+      ],
+      ctaText: 'Create Sustainable Success',
+      severity: 'warning'
+    };
+  }
+
+  // High utilization + good/excellent pipeline (ideal state)
+  return {
+    title: 'Excellent: You\'re in Elite Territory',
+    description: 'You\'ve achieved what most fractional leaders aspire to: high utilization with a strong pipeline. Fractional First can help you maintain this position and explore premium opportunities.',
+    recommendations: [
+      'Access to premium, high-value client engagements',
+      'Peer network of elite fractional leaders',
+      'Strategic growth and scaling opportunities',
+      'Maintain your position with minimal effort'
+    ],
+    ctaText: 'Join Our Elite Network',
+    severity: 'success'
+  };
+};
+
 export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   isActive,
   status,
@@ -23,159 +134,257 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   onEditStage,
   onReset,
 }) => {
+  // Salary anchor override state
+  const [useCustomRate, setUseCustomRate] = useState(false);
+  const [customEffectiveRate, setCustomEffectiveRate] = useState(results.nominalHourly);
+  
+  // BD Pipeline health state
+  const [pipelineHealth, setPipelineHealth] = useState<BDPipelineHealth>('fair');
+  
   const bdPct = inputs.bdPct ?? 0.15;
   const invoicingPct = inputs.invoicingPct ?? 0.10;
   const adminPct = inputs.adminPct ?? 0.15;
   const nonBillablePct = bdPct + invoicingPct + adminPct;
   
-  const billingRate = results.nominalHourly / (1 - nonBillablePct);
-  const currentUtilization = ((1 - nonBillablePct) * 100).toFixed(0);
+  const utilizationRate = (1 - nonBillablePct) * 100;
+  const effectiveRate = useCustomRate ? customEffectiveRate : results.nominalHourly;
+  const billingRate = effectiveRate / (1 - nonBillablePct);
   
-  // Fractional First improvement scenario
-  const improvedUtilization = 0.75; // 75% average billable time
-  const currentAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * (1 - nonBillablePct);
-  const improvedAnnualBillable = billingRate * results.workingDaysPerYear * (inputs.hoursPerDay || 8) * improvedUtilization;
-  const annualImpact = improvedAnnualBillable - currentAnnualBillable;
+  // Get personalized advice
+  const advice = getAdviceMatrix(utilizationRate, pipelineHealth);
+
+  const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : 
+                         advice.severity === 'warning' ? TrendingUp : CheckCircle2;
+  const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' :
+                        advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' :
+                        'text-green-600 dark:text-green-400';
+  const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' :
+                     advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' :
+                     'bg-green-500/10 border-green-500/20';
 
   return (
     <JourneyStage
       stageNumber={4}
       title="Your Path Forward"
-      subtitle="Your complete fractional rate breakdown"
+      subtitle="Personalized analysis and actionable next steps"
       status={status}
       isActive={isActive}
     >
       <div className="space-y-6">
-        {/* Summary Cards */}
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="p-6 bg-primary/10 rounded-xl border border-primary/20">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Effective Rate</p>
-            <p className="text-3xl font-bold text-primary mb-1">
-              {formatCurrencyDecimal(results.nominalHourly)}
-              <span className="text-sm font-normal text-muted-foreground">/hr</span>
-            </p>
-            <p className="text-xs text-muted-foreground">Your take-home hourly rate</p>
+        {/* Effective Rate with Anchor Override */}
+        <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Anchor className="w-5 h-5 text-primary" />
+              <h3 className="text-lg font-bold text-foreground">Your Effective Rate</h3>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setUseCustomRate(!useCustomRate);
+                if (!useCustomRate) {
+                  setCustomEffectiveRate(results.nominalHourly);
+                }
+              }}
+              className="text-xs"
+            >
+              <Edit3 className="w-3 h-3 mr-1" />
+              {useCustomRate ? 'Reset to Calculated' : 'Test Custom Rate'}
+            </Button>
           </div>
 
-          <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-500/20">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Billing Rate</p>
-            <p className="text-3xl font-bold text-amber-700 dark:text-amber-400 mb-1">
-              {formatCurrencyDecimal(billingRate)}
-              <span className="text-sm font-normal text-muted-foreground">/hr</span>
-            </p>
-            <p className="text-xs text-muted-foreground">What you charge clients</p>
-          </div>
-
-          <div className="p-6 bg-muted/30 rounded-xl border border-border">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Annual Target</p>
-            <p className="text-3xl font-bold text-foreground mb-1">
-              {formatCurrency(results.annualCostIncludingOH)}
-            </p>
-            <p className="text-xs text-muted-foreground">Equivalent full-time comp</p>
-          </div>
-        </div>
-
-        {/* Fractional First Value Proposition */}
-        <div className="p-6 bg-gradient-to-br from-teal-500/10 to-primary/10 rounded-xl border-2 border-teal-500/20">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-            <h3 className="text-lg font-bold text-foreground">How Fractional First Helps You</h3>
-          </div>
-
-          <p className="text-sm text-muted-foreground mb-6">
-            Fractional First reduces your non-billable overhead by handling business development, client matching, and administrative tasks - letting you focus on what you do best.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* Before */}
-            <div className="p-5 bg-background/80 rounded-lg border border-border">
-              <p className="text-xs font-medium text-muted-foreground mb-3">Typical Independent</p>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-2xl font-bold text-foreground mb-1">50-60%</p>
-                  <p className="text-xs text-muted-foreground">Billable time</p>
+          {!useCustomRate ? (
+            <div>
+              <p className="text-xs text-muted-foreground mb-3">
+                Based on your full-time salary target of <strong>{formatCurrency(inputs.baseSalary || 0)}</strong>
+              </p>
+              <p className="text-4xl font-bold text-primary mb-1">
+                {formatCurrencyDecimal(results.nominalHourly)}
+                <span className="text-lg font-normal text-muted-foreground">/hr</span>
+              </p>
+              <p className="text-sm text-muted-foreground">Your calculated take-home hourly rate</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Test different effective rate scenarios:
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="flex-1">
+                  <Label htmlFor="custom-rate" className="text-xs">Custom Effective Rate</Label>
+                  <Input
+                    id="custom-rate"
+                    type="number"
+                    value={customEffectiveRate}
+                    onChange={(e) => setCustomEffectiveRate(Number(e.target.value))}
+                    className="mt-1"
+                  />
                 </div>
-                <div className="pt-3 border-t border-border">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Your situation:</p>
-                  <p className="text-xl font-bold text-amber-700 dark:text-amber-400">
-                    {currentUtilization}% billable
+                <div className="pt-5">
+                  <p className="text-2xl font-bold text-primary">
+                    {formatCurrencyDecimal(customEffectiveRate)}
+                    <span className="text-sm font-normal text-muted-foreground">/hr</span>
                   </p>
                 </div>
               </div>
+              <p className="text-xs text-amber-600 dark:text-amber-400">
+                Scenario testing: This overrides your salary-based calculation
+              </p>
             </div>
-
-            {/* After */}
-            <div className="p-5 bg-teal-500/10 rounded-lg border-2 border-teal-500/30">
-              <p className="text-xs font-medium text-teal-700 dark:text-teal-400 mb-3">With Fractional First</p>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-2xl font-bold text-teal-700 dark:text-teal-400 mb-1">70-85%</p>
-                  <p className="text-xs text-muted-foreground">Billable time</p>
-                </div>
-                <div className="pt-3 border-t border-teal-500/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Potential earnings increase:</p>
-                  <div className="space-y-2">
-                    <p className="text-2xl font-bold text-teal-700 dark:text-teal-400">
-                      {formatCurrency(annualImpact)}<span className="text-sm font-normal text-muted-foreground">/year</span>
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      By increasing billable hours from {currentUtilization}% to 75% at your current billing rate
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 pt-6 border-t border-border">
-            <p className="text-sm font-semibold text-foreground mb-3">What Fractional First handles for you:</p>
-            <ul className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="text-teal-600 dark:text-teal-400">✓</span>
-                Business development & lead generation
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-teal-600 dark:text-teal-400">✓</span>
-                Client matching & qualification
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-teal-600 dark:text-teal-400">✓</span>
-                Contract negotiation & legal support
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-teal-600 dark:text-teal-400">✓</span>
-                Invoicing & payment processing
-              </li>
-            </ul>
-          </div>
+          )}
         </div>
 
-        {/* Completion Badge */}
-        <div className="flex items-center justify-center gap-2 p-4 bg-primary/5 rounded-lg border border-primary/20">
-          <Sparkles className="w-5 h-5 text-primary" />
-          <p className="text-sm font-medium text-primary">
-            Calculation Complete! All stages reviewed.
+        {/* Required Billing Rate */}
+        <div className="p-6 bg-gradient-to-br from-amber-500/5 to-amber-500/10 rounded-xl border-2 border-amber-500/20">
+          <h3 className="text-lg font-bold text-foreground mb-3">What You Must Charge</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            To achieve your effective rate at <strong>{utilizationRate.toFixed(0)}%</strong> utilization:
+          </p>
+          <p className="text-5xl font-bold text-amber-700 dark:text-amber-400 mb-2">
+            {formatCurrencyDecimal(billingRate)}
+            <span className="text-xl font-normal text-muted-foreground">/hr</span>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Client billing rate required
           </p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button
-            size="lg"
-            className="flex-1"
-            asChild
-          >
-            <a href="https://fractionalfirst.com" target="_blank" rel="noopener noreferrer">
-              Talk to Fractional First
-              <ExternalLink className="ml-2 w-4 h-4" />
-            </a>
-          </Button>
+        {/* BD Pipeline Health Assessment */}
+        <div className="p-6 bg-card rounded-xl border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-3">
+            Assess Your Business Development Pipeline
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            How would you describe the current health of your client pipeline and business development efforts?
+          </p>
+          
+          <RadioGroup value={pipelineHealth} onValueChange={(value) => setPipelineHealth(value as BDPipelineHealth)}>
+            <div className="space-y-3">
+              <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
+                <RadioGroupItem value="poor" id="poor" className="mt-0.5" />
+                <Label htmlFor="poor" className="flex-1 cursor-pointer">
+                  <span className="font-medium text-foreground">Poor</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Struggling to find leads; inconsistent pipeline; often unsure where next client will come from
+                  </p>
+                </Label>
+              </div>
+              
+              <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
+                <RadioGroupItem value="fair" id="fair" className="mt-0.5" />
+                <Label htmlFor="fair" className="flex-1 cursor-pointer">
+                  <span className="font-medium text-foreground">Fair</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Some leads but inconsistent; spending significant time on BD; pipeline has gaps
+                  </p>
+                </Label>
+              </div>
+              
+              <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
+                <RadioGroupItem value="good" id="good" className="mt-0.5" />
+                <Label htmlFor="good" className="flex-1 cursor-pointer">
+                  <span className="font-medium text-foreground">Good</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Steady flow of qualified leads; reasonable pipeline visibility; BD is manageable but time-consuming
+                  </p>
+                </Label>
+              </div>
+              
+              <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
+                <RadioGroupItem value="excellent" id="excellent" className="mt-0.5" />
+                <Label htmlFor="excellent" className="flex-1 cursor-pointer">
+                  <span className="font-medium text-foreground">Excellent</span>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Strong, consistent pipeline; clients seeking you out; confident in future bookings
+                  </p>
+                </Label>
+              </div>
+            </div>
+          </RadioGroup>
+        </div>
+
+        {/* Personalized Advice Matrix */}
+        <div className={`p-6 rounded-xl border-2 ${severityBg}`}>
+          <div className="flex items-start gap-3 mb-4">
+            <SeverityIcon className={`w-6 h-6 ${severityColor} flex-shrink-0 mt-0.5`} />
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
+              <p className="text-sm text-muted-foreground">{advice.description}</p>
+            </div>
+          </div>
+
+          <div className="mt-6 space-y-4">
+            <div>
+              <h4 className="text-sm font-semibold text-foreground mb-3">
+                How Fractional First Can Help You:
+              </h4>
+              <ul className="space-y-2">
+                {advice.recommendations.map((rec, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className={`${severityColor} mt-0.5`}>✓</span>
+                    <span>{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="pt-4 border-t border-border">
+              <Button
+                size="lg"
+                className="w-full"
+                asChild
+              >
+                <a href="https://fractionalfirst.com" target="_blank" rel="noopener noreferrer">
+                  {advice.ctaText}
+                  <ExternalLink className="ml-2 w-4 h-4" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Summary Stats */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="p-4 bg-muted/30 rounded-lg border border-border">
+            <p className="text-xs font-medium text-muted-foreground mb-1">Utilization Rate</p>
+            <p className="text-2xl font-bold text-foreground">
+              {utilizationRate.toFixed(0)}%
+            </p>
+          </div>
+          
+          <div className="p-4 bg-muted/30 rounded-lg border border-border">
+            <p className="text-xs font-medium text-muted-foreground mb-1">Pipeline Health</p>
+            <p className="text-2xl font-bold text-foreground capitalize">
+              {pipelineHealth}
+            </p>
+          </div>
+          
+          <div className="p-4 bg-muted/30 rounded-lg border border-border">
+            <p className="text-xs font-medium text-muted-foreground mb-1">Annual Target</p>
+            <p className="text-2xl font-bold text-foreground">
+              {formatCurrency(results.annualCostIncludingOH)}
+            </p>
+          </div>
+        </div>
+
+        {/* Additional Actions */}
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <Button
             size="lg"
             variant="outline"
             onClick={onReset}
+            className="flex-1"
           >
             Start Over
+          </Button>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => onEditStage('foundation')}
+            className="flex-1"
+          >
+            Edit Inputs
           </Button>
         </div>
       </div>
