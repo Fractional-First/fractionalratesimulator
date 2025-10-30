@@ -83,7 +83,7 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                   {formatCurrencyDecimal(billingRate)}
                   <span className="text-sm font-normal text-muted-foreground">/hr</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">What you should charge clients</p>
+                <p className="text-xs text-muted-foreground mt-2">Your Effective Rate</p>
               </div>
 
               {/* Gap Visualization */}

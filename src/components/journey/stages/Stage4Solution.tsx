@@ -117,7 +117,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
           <div className="flex items-center gap-2 mb-4">
             <Anchor className="w-5 h-5 text-primary" />
-            <h3 className="text-lg font-bold text-foreground">What you should charge clients</h3>
+            <h3 className="text-lg font-bold text-foreground">Your Effective Rate</h3>
           </div>
           
           <div>
