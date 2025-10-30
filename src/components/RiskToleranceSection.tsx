@@ -103,7 +103,14 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
               </Select>
             </div>
 
-            <div className="max-w-md mx-auto">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 bg-muted/30 rounded-lg">
+                <h4 className="text-sm font-medium text-foreground mb-2">Your Selection</h4>
+                <div className="text-lg font-semibold text-primary">
+                  {riskToleranceOptions.find(opt => opt.value === (inputs.riskTolerancePct || 0.5))?.label}
+                </div>
+              </div>
+
               <div className="p-4 bg-muted/30 rounded-lg">
                 <div className="space-y-2">
                   <label className="text-sm font-medium flex items-center gap-2 text-foreground">
