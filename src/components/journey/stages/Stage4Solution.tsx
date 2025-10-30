@@ -134,16 +134,13 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
 
         {/* Required Billing Rate */}
         <div className="p-6 bg-gradient-to-br from-amber-500/5 to-amber-500/10 rounded-xl border-2 border-amber-500/20">
-          <h3 className="text-lg font-bold text-foreground mb-3">Required Billing Rate</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            To achieve your effective rate at <strong>{utilizationRate.toFixed(0)}%</strong> utilization:
-          </p>
-          <p className="text-5xl font-bold text-amber-700 dark:text-amber-400 mb-2">
+          <h3 className="text-lg font-bold text-foreground mb-2">Required Billing Rate</h3>
+          <p className="text-5xl font-bold text-amber-700 dark:text-amber-400 mb-1">
             {formatCurrencyDecimal(billingRate)}
             <span className="text-xl font-normal text-muted-foreground">/hr</span>
           </p>
           <p className="text-sm text-muted-foreground">
-            Client billing rate required
+            To achieve your effective rate at 60% utilization
           </p>
         </div>
 
