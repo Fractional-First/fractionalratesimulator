@@ -20,7 +20,10 @@ interface JourneyState {
 const STORAGE_KEY = 'fractional-journey-state';
 
 export const JourneyContainer: React.FC = () => {
+  const foundationRef = useRef<HTMLDivElement>(null);
+  const realityRef = useRef<HTMLDivElement>(null);
   const refinementsRef = useRef<HTMLDivElement>(null);
+  const solutionRef = useRef<HTMLDivElement>(null);
   
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
@@ -78,15 +81,20 @@ export const JourneyContainer: React.FC = () => {
       };
     });
 
-    // Scroll to refinements stage when navigating to it
-    if (stage === 'refinements') {
-      setTimeout(() => {
-        refinementsRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
-      }, 100);
-    }
+    // Scroll to the appropriate stage when navigating
+    setTimeout(() => {
+      const stageRefs = {
+        foundation: foundationRef,
+        reality: realityRef,
+        refinements: refinementsRef,
+        solution: solutionRef
+      };
+      
+      stageRefs[stage]?.current?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }, 100);
   };
 
   const completeStage = (stage: JourneyStage) => {
@@ -168,35 +176,39 @@ export const JourneyContainer: React.FC = () => {
               </p>
             </div>
 
-      <Stage1Foundation
-        isActive={journeyState.currentStage === 'foundation'}
-        status={journeyState.stageStatus.foundation}
-        inputs={journeyState.inputs}
-        results={results}
-        updateInput={updateInput}
-        onComplete={() => {
-          completeStage('foundation');
-          goToStage('reality');
-        }}
-        onEdit={() => goToStage('foundation')}
-      />
+      <div ref={foundationRef}>
+        <Stage1Foundation
+          isActive={journeyState.currentStage === 'foundation'}
+          status={journeyState.stageStatus.foundation}
+          inputs={journeyState.inputs}
+          results={results}
+          updateInput={updateInput}
+          onComplete={() => {
+            completeStage('foundation');
+            goToStage('reality');
+          }}
+          onEdit={() => goToStage('foundation')}
+        />
+      </div>
 
-            <Stage2RealityCheck
-              isActive={journeyState.currentStage === 'reality'}
-              status={journeyState.stageStatus.reality}
-              inputs={journeyState.inputs}
-              results={results}
-              updateInput={updateInput}
-              onComplete={() => {
-                completeStage('reality');
-                goToStage('refinements');
-              }}
-              onEdit={() => goToStage('reality')}
-              onSkip={() => {
-                unlockAllStages();
-                goToStage('solution');
-              }}
-            />
+            <div ref={realityRef}>
+              <Stage2RealityCheck
+                isActive={journeyState.currentStage === 'reality'}
+                status={journeyState.stageStatus.reality}
+                inputs={journeyState.inputs}
+                results={results}
+                updateInput={updateInput}
+                onComplete={() => {
+                  completeStage('reality');
+                  goToStage('refinements');
+                }}
+                onEdit={() => goToStage('reality')}
+                onSkip={() => {
+                  unlockAllStages();
+                  goToStage('solution');
+                }}
+              />
+            </div>
 
             <div ref={refinementsRef}>
               <Stage3Refinements
@@ -212,14 +224,16 @@ export const JourneyContainer: React.FC = () => {
               />
             </div>
 
-            <Stage4Solution
-              isActive={journeyState.currentStage === 'solution'}
-              status={journeyState.stageStatus.solution}
-              inputs={journeyState.inputs}
-              results={results}
-              onEditStage={goToStage}
-              onReset={resetJourney}
-            />
+            <div ref={solutionRef}>
+              <Stage4Solution
+                isActive={journeyState.currentStage === 'solution'}
+                status={journeyState.stageStatus.solution}
+                inputs={journeyState.inputs}
+                results={results}
+                onEditStage={goToStage}
+                onReset={resetJourney}
+              />
+            </div>
           </div>
 
           {/* Right: Live Results Panel (Desktop) */}
