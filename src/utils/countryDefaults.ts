@@ -8,6 +8,14 @@ export interface CountryDefaults {
 }
 
 export const countryDefaults: Record<string, CountryDefaults> = {
+  'GLOBAL': {
+    overheadPct: 0.25,
+    hoursPerDay: 8,
+    vacationDays: 21,
+    publicHolidays: 15,
+    otherLeaveDays: 10,
+    trainingDays: 4,
+  },
   'US': {
     overheadPct: 0.25,
     hoursPerDay: 8,
@@ -187,6 +195,7 @@ export const countryDefaults: Record<string, CountryDefaults> = {
 };
 
 export const countryOptions = [
+  { value: 'GLOBAL', label: 'Global' },
   { value: 'AR', label: 'Argentina' },
   { value: 'AU', label: 'Australia' },
   { value: 'BR', label: 'Brazil' },
