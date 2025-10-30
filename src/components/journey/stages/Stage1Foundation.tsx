@@ -122,7 +122,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
             size="lg"
             className="w-full md:w-auto animate-fade-in"
           >
-            Continue to Reality Check
+            Continue
             <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         )}
