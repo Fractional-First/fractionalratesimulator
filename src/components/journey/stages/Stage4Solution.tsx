@@ -224,7 +224,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
 
             <div className="pt-4 border-t border-border">
               <Button size="lg" className="w-full" asChild>
-                <a href="https://fractionalfirst.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://talent.fractionalfirst.com/signup" target="_blank" rel="noopener noreferrer">
                   {advice.ctaText}
                   <ExternalLink className="ml-2 w-4 h-4" />
                 </a>
