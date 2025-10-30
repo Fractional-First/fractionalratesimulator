@@ -48,7 +48,10 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
-        <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="p-4 bg-muted/30 rounded-lg border border-border">
+          <p className="text-sm text-foreground font-medium mb-2">
+            Fine-tuning Your Numbers
+          </p>
           <p className="text-sm text-muted-foreground">
             Every situation is unique. These defaults work for most people, but you can adjust them to match your specific circumstances and risk tolerance.
           </p>
