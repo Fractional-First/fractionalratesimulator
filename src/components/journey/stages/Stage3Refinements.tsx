@@ -95,7 +95,7 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
           size="lg"
           className="w-full md:w-auto"
         >
-          See my complete picture
+          See path forward
           <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
       </div>
