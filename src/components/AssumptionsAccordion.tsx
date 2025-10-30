@@ -49,7 +49,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
           {/* Country Selector with Overhead Display */}
-          <div className="space-y-4 pb-6">
+          <div className="space-y-4 pb-4">
             <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Globe className="h-4 w-4 text-primary" />
               Country Selection
