@@ -49,7 +49,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
           {/* Country Selector with Overhead Display */}
-          <div className="space-y-4 pb-6 border-b border-border">
+          <div className="space-y-4 pb-6">
             <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
               <Globe className="h-4 w-4 text-primary" />
               Country Selection
@@ -87,7 +87,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
 
           {/* Assumptions Table */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-foreground border-b border-border pb-2">Assumptions</h4>
+            <h4 className="text-xs font-semibold text-foreground pb-2">Assumptions</h4>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
