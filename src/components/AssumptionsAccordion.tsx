@@ -58,7 +58,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               <label className="text-xs text-muted-foreground">Select your country to pre-fill overhead costs and working days. </label>
               <div className="flex gap-3 items-start">
                 <Select value={selectedCountry} onValueChange={onCountryChange}>
-                  <SelectTrigger className="w-64">
+                  <SelectTrigger className="flex-1">
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border z-50">
@@ -67,10 +67,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </SelectItem>)}
                   </SelectContent>
                 </Select>
-                <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg">
-                  <div className="text-xs text-muted-foreground">Overhead</div>
-                  <div className="text-sm font-bold text-primary">{Math.round((inputs.overheadPct || 0.25) * 100)}%</div>
-                </div>
+                
               </div>
               
             </div>
