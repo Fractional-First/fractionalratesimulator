@@ -166,8 +166,9 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       );
                       const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                       const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                      const riskAdjustedRate = directHourly / (inputs.riskTolerancePct || 0.50);
-                      const percentageIncrease = ((riskAdjustedRate - directHourly) / directHourly) * 100;
+                      const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                      const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
+                      const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
                       const warning = getWarningLevel(percentageIncrease);
                       
                       return (
@@ -197,7 +198,8 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                         );
                         const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                         const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                        return directHourly / (inputs.riskTolerancePct || 0.50);
+                        const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                        return directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
                       })()
                     )}
                     <span className="text-sm font-normal text-muted-foreground">/hr</span>
@@ -212,8 +214,9 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                     );
                     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                     const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                    const riskAdjustedRate = directHourly / (inputs.riskTolerancePct || 0.50);
-                    const percentageIncrease = ((riskAdjustedRate - directHourly) / directHourly) * 100;
+                    const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
+                    const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
+                    const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
                     const warning = getWarningLevel(percentageIncrease);
                     
                     return (
