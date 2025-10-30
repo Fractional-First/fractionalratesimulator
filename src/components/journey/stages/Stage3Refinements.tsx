@@ -41,7 +41,7 @@ export const Stage3Refinements: React.FC<Stage3RefinementsProps> = ({
   return (
     <JourneyStage
       stageNumber={3}
-      title="Fine-tuning"
+      title="Fine-tune"
       subtitle="Adjust for your specific situation"
       status={status}
       isActive={isActive}
