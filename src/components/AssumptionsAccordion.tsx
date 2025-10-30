@@ -67,7 +67,10 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </SelectItem>)}
                   </SelectContent>
                 </Select>
-                
+                <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-lg">
+                  <div className="text-xs text-muted-foreground">Overhead</div>
+                  <div className="text-sm font-bold text-primary">{Math.round((inputs.overheadPct || 0.25) * 100)}%</div>
+                </div>
               </div>
               
             </div>
