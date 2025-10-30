@@ -8,7 +8,7 @@ const Index = () => {
         <div className="text-center mb-8 md:mb-12 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h1 className="text-foreground">
-              Guided Fractional Rate Calculator: The 4-Stage Journey
+              Guided Fractional Rate Calculator
             </h1>
           </div>
           
