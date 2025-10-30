@@ -6,6 +6,7 @@ import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrencyDecimal } from '@/utils/calculator';
 import { NumberInput } from '@/components/NumberInput';
 import { InfoTooltip } from '@/components/InfoTooltip';
+
 interface Stage2RealityCheckProps {
   isActive: boolean;
   status: StageStatus;
@@ -16,6 +17,7 @@ interface Stage2RealityCheckProps {
   onEdit: () => void;
   onSkip: () => void;
 }
+
 export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   isActive,
   status,
@@ -24,68 +26,70 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   updateInput,
   onComplete,
   onEdit,
-  onSkip
+  onSkip,
 }) => {
   // Get time allocation percentages from inputs (decimals 0-1)
   const projectWorkPct = inputs.projectWorkPct ?? 0.6;
   const bdPct = inputs.bdPct ?? 0.15;
   const invoicingPct = inputs.invoicingPct ?? 0.10;
   const adminPct = inputs.adminPct ?? 0.15;
-
+  
   // Calculate utilization rate (project work percentage)
   const utilizationRate = projectWorkPct * 100;
-  const nonBillablePct = bdPct + invoicingPct + adminPct;
-
+  const nonBillablePct = (bdPct + invoicingPct + adminPct);
+  
   // Calculate total and billing rate
   const totalPct = (projectWorkPct + bdPct + invoicingPct + adminPct) * 100;
   const billingRate = results.directHourly / projectWorkPct;
   const effectiveRate = results.directHourly;
-
+  
   // Calculate Rate Gap as a multiple
   const rateMultiple = billingRate / effectiveRate;
-  const rateGapPercentage = (billingRate - effectiveRate) / effectiveRate * 100;
-
+  const rateGapPercentage = ((billingRate - effectiveRate) / effectiveRate) * 100;
+  
   // Determine efficiency level and color
   const getEfficiencyLevel = () => {
-    if (utilizationRate >= 75) return {
-      level: 'excellent',
-      color: 'green',
-      icon: CheckCircle2
-    };
-    if (utilizationRate >= 60) return {
-      level: 'good',
-      color: 'yellow',
-      icon: TrendingUp
-    };
-    return {
-      level: 'needs-improvement',
-      color: 'red',
-      icon: AlertTriangle
-    };
+    if (utilizationRate >= 75) return { level: 'excellent', color: 'green', icon: CheckCircle2 };
+    if (utilizationRate >= 60) return { level: 'good', color: 'yellow', icon: TrendingUp };
+    return { level: 'needs-improvement', color: 'red', icon: AlertTriangle };
   };
+  
   const efficiency = getEfficiencyLevel();
+
   const handleProjectWorkChange = (value: number) => {
     updateInput('projectWorkPct')(value);
   };
+
   const handleBdChange = (value: number) => {
     updateInput('bdPct')(value);
   };
+
   const handleInvoicingChange = (value: number) => {
     updateInput('invoicingPct')(value);
   };
+
   const handleAdminChange = (value: number) => {
     updateInput('adminPct')(value);
   };
-  return <JourneyStage stageNumber={2} title="Understanding Utilization" subtitle="How billable time affects what you need to charge" status={status} isActive={isActive} onEdit={onEdit}>
-      <div className="space-y-6">
+
+  return (
+    <JourneyStage
+      stageNumber={2}
+      title="Understanding Utilization"
+      subtitle="How billable time affects what you need to charge"
+      status={status}
+      isActive={isActive}
+      onEdit={onEdit}
+    >
+      <div className="space-y-6 mt-6">
         {/* Educational Context */}
-        <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+        <div className="mt-4 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-sm text-foreground font-medium mb-2">
             Why Utilization Rate Matters
           </p>
           <p className="text-sm text-muted-foreground">
             Fractional work isn't 100% billable. You need time for business development, invoicing, and administration. 
-            <strong> Most new fractional leaders start below 50% billable time</strong> as they build their client base.
+            <strong> Most new fractional leaders start around 50% billable time</strong> as they build their client base.
           </p>
         </div>
 
@@ -98,31 +102,76 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           <div className="space-y-4">
             {/* Project Work / Utilization Rate */}
             <div className="space-y-2">
-              <NumberInput label={<div className="flex items-center gap-2">
+              <NumberInput
+                label={
+                  <div className="flex items-center gap-2">
                     Project Work / Utilization Rate
-                    <InfoTooltip content={<>
+                    <InfoTooltip content={
+                      <>
                         The <strong>percentage of your working hours</strong> that are directly billable to clients. This is the core metric that determines your required billing rate.
-                      </>} />
-                  </div>} value={projectWorkPct} onChange={handleProjectWorkChange} suffix="%" min={0} max={1} step={0.05} />
-              
+                      </>
+                    } />
+                  </div>
+                }
+                value={projectWorkPct}
+                onChange={handleProjectWorkChange}
+                suffix="%"
+                min={0}
+                max={1}
+                step={0.05}
+              />
+              <div className="flex items-center justify-between p-3 bg-primary/10 rounded-lg border border-primary/20">
+                <span className="text-xs font-medium text-muted-foreground">Utilization Rate:</span>
+                <span className="text-lg font-bold text-primary">{utilizationRate.toFixed(0)}%</span>
+              </div>
             </div>
 
             {/* Non-billable Time Breakdown */}
             <div className="pt-4 border-t border-border">
               <h4 className="text-xs font-medium text-muted-foreground mb-3">Non-Billable Time Allocation</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <NumberInput label={<div className="flex items-center gap-2">
+                <NumberInput
+                  label={
+                    <div className="flex items-center gap-2">
                       Business Development
                       <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
-                    </div>} value={bdPct} onChange={handleBdChange} suffix="%" min={0} max={1} step={0.05} />
-                <NumberInput label={<div className="flex items-center gap-2">
+                    </div>
+                  }
+                  value={bdPct}
+                  onChange={handleBdChange}
+                  suffix="%"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                />
+                <NumberInput
+                  label={
+                    <div className="flex items-center gap-2">
                       Invoicing/Finances
                       <InfoTooltip content="Billing, accounting, and financial management" />
-                    </div>} value={invoicingPct} onChange={handleInvoicingChange} suffix="%" min={0} max={1} step={0.05} />
-                <NumberInput label={<div className="flex items-center gap-2">
+                    </div>
+                  }
+                  value={invoicingPct}
+                  onChange={handleInvoicingChange}
+                  suffix="%"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                />
+                <NumberInput
+                  label={
+                    <div className="flex items-center gap-2">
                       Admin/Networking
                       <InfoTooltip content="General admin and relationship building" />
-                    </div>} value={adminPct} onChange={handleAdminChange} suffix="%" min={0} max={1} step={0.05} />
+                    </div>
+                  }
+                  value={adminPct}
+                  onChange={handleAdminChange}
+                  suffix="%"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                />
               </div>
             </div>
 
@@ -148,11 +197,19 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
         </div>
 
         {/* Rate Gap / Efficiency Visualization */}
-        <div className={`p-6 rounded-xl border-2 animate-fade-in ${efficiency.color === 'red' ? 'bg-red-500/10 border-red-500/30' : efficiency.color === 'yellow' ? 'bg-amber-500/10 border-amber-500/30' : 'bg-green-500/10 border-green-500/30'}`}>
+        <div className={`p-6 rounded-xl border-2 animate-fade-in ${
+          efficiency.color === 'red' ? 'bg-red-500/10 border-red-500/30' :
+          efficiency.color === 'yellow' ? 'bg-amber-500/10 border-amber-500/30' :
+          'bg-green-500/10 border-green-500/30'
+        }`}>
           <div className="flex items-start gap-3 mb-4">
-            {React.createElement(efficiency.icon, {
-            className: `w-6 h-6 flex-shrink-0 ${efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' : efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`
-          })}
+            {React.createElement(efficiency.icon, { 
+              className: `w-6 h-6 flex-shrink-0 ${
+                efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' :
+                efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' :
+                'text-green-600 dark:text-green-400'
+              }`
+            })}
             <div className="flex-1">
               <h4 className="text-sm font-semibold text-foreground mb-1">Rate Gap / Efficiency</h4>
               <p className="text-xs text-muted-foreground">
@@ -179,13 +236,21 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           <div className="p-4 bg-background/70 rounded-lg space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-foreground">Rate Multiple:</span>
-              <span className={`text-2xl font-bold ${efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' : efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+              <span className={`text-2xl font-bold ${
+                efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' :
+                efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' :
+                'text-green-600 dark:text-green-400'
+              }`}>
                 {rateMultiple.toFixed(2)}x
               </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-xs text-muted-foreground">Gap Percentage:</span>
-              <span className={`text-lg font-semibold ${efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' : efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+              <span className={`text-lg font-semibold ${
+                efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' :
+                efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' :
+                'text-green-600 dark:text-green-400'
+              }`}>
                 +{rateGapPercentage.toFixed(0)}%
               </span>
             </div>
@@ -193,15 +258,21 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
 
           {/* Efficiency Status Message */}
           <div className="mt-4 p-3 bg-background/70 rounded-lg">
-            <p className={`text-sm font-medium ${efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' : efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+            <p className={`text-sm font-medium ${
+              efficiency.color === 'red' ? 'text-red-600 dark:text-red-400' :
+              efficiency.color === 'yellow' ? 'text-amber-600 dark:text-amber-400' :
+              'text-green-600 dark:text-green-400'
+            }`}>
               {efficiency.level === 'excellent' && '✓ Excellent utilization! You have great efficiency.'}
               {efficiency.level === 'good' && '✓ Good utilization. Typical for established fractional professionals.'}
               {efficiency.level === 'needs-improvement' && '⚠ Low utilization detected'}
             </p>
-            {efficiency.level === 'needs-improvement' && <p className="text-sm text-muted-foreground mt-2">
+            {efficiency.level === 'needs-improvement' && (
+              <p className="text-sm text-muted-foreground mt-2">
                 <strong>We recommend that you find ways to increase your utilization rate.</strong> 
                 Consider focusing more time on billable client work or exploring solutions to help you secure more consistent engagements.
-              </p>}
+              </p>
+            )}
           </div>
         </div>
 
@@ -218,15 +289,25 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button onClick={onComplete} size="lg" className="flex-1">
+          <Button
+            onClick={onComplete}
+            size="lg"
+            className="flex-1"
+          >
             Fine-tune the details
             <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
-          <Button onClick={onSkip} size="lg" variant="outline" className="sm:w-auto">
+          <Button
+            onClick={onSkip}
+            size="lg"
+            variant="outline"
+            className="sm:w-auto"
+          >
             Skip details
             <SkipForward className="ml-2 w-4 h-4" />
           </Button>
         </div>
       </div>
-    </JourneyStage>;
+    </JourneyStage>
+  );
 };
