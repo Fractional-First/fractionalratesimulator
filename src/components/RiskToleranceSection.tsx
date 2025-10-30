@@ -166,7 +166,11 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       );
                       const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                       const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                      const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                      const bdPct = inputs.bdPct ?? 0.15;
+                      const invoicingPct = inputs.invoicingPct ?? 0.10;
+                      const adminPct = inputs.adminPct ?? 0.15;
+                      const nonBillablePct = bdPct + invoicingPct + adminPct;
+                      const billingRate = directHourly / (1 - nonBillablePct);
                       const riskAdjustedRate = billingRate / (inputs.riskTolerancePct || 0.50);
                       const percentageIncrease = ((riskAdjustedRate - billingRate) / billingRate) * 100;
                       const warning = getWarningLevel(percentageIncrease);
@@ -198,7 +202,11 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                         );
                         const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                         const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                        const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                        const bdPct = inputs.bdPct ?? 0.15;
+                        const invoicingPct = inputs.invoicingPct ?? 0.10;
+                        const adminPct = inputs.adminPct ?? 0.15;
+                        const nonBillablePct = bdPct + invoicingPct + adminPct;
+                        const billingRate = directHourly / (1 - nonBillablePct);
                         return billingRate / (inputs.riskTolerancePct || 0.50);
                       })()
                     )}
@@ -214,7 +222,11 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                     );
                     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                     const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                    const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                    const bdPct = inputs.bdPct ?? 0.15;
+                    const invoicingPct = inputs.invoicingPct ?? 0.10;
+                    const adminPct = inputs.adminPct ?? 0.15;
+                    const nonBillablePct = bdPct + invoicingPct + adminPct;
+                    const billingRate = directHourly / (1 - nonBillablePct);
                     const riskAdjustedRate = billingRate / (inputs.riskTolerancePct || 0.50);
                     const percentageIncrease = ((riskAdjustedRate - billingRate) / billingRate) * 100;
                     const warning = getWarningLevel(percentageIncrease);
