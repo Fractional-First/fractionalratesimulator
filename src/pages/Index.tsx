@@ -5,7 +5,7 @@ const Index = () => {
     <div className="min-h-screen bg-background section-spacing">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8 md:mb-12 animate-fade-in">
+        <div className="text-center mb-8 md:mb-12 pt-12 md:pt-16 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h1 className="text-foreground">
               Guided Fractional Rate Calculator
