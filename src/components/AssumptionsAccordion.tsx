@@ -87,7 +87,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
 
           {/* Assumptions Table */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-foreground pb-2">Assumptions</h4>
+            
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
