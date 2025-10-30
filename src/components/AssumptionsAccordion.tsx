@@ -113,7 +113,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                         Overhead Cost
                         <InfoTooltip content={
                           <>
-                            Your <strong>business operating costs</strong> as a percentage of revenue. Includes health insurance, retirement contributions, taxes, and other benefits you'll pay as an independent contractor. Typically <strong>20-35%</strong>.
+                            The <strong>typical extra cost</strong> that a business in your country pays on top of an employee's salary to employ someone. This includes benefits, insurance, payroll taxes, and other overhead expenses. For example, if your target salary is $100,000 and overhead is 25%, the organization's total cost to employ you would be $125,000. This represents the <strong>necessary business expense</strong> for professional services and sets the foundation for understanding your fractional rate as a professional services charge. Typically <strong>20-35%</strong> depending on country and benefits package.
                           </>
                         } />
                       </div>

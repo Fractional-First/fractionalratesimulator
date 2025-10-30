@@ -47,6 +47,29 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
       
       <CollapsibleContent className="mt-4">
         <div className="p-6 bg-card rounded-lg border border-border space-y-6">
+          {/* Educational Note - Moved to top */}
+          <div className="p-4 bg-muted/30 rounded-lg">
+            <h4 className="text-sm font-medium text-foreground mb-2">Understanding Risk in Fractional Work</h4>
+            <ul className="space-y-2 text-xs text-muted-foreground">
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Income gaps:</strong> Time between projects when you're not earning</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Variable utilization:</strong> Not all weeks are billable weeks</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Market volatility:</strong> Economic conditions affect demand for fractional talent</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-primary">•</span>
+                <span><strong>Risk premium:</strong> Higher rates compensate for these uncertainties</span>
+              </li>
+            </ul>
+          </div>
+
           <div className="space-y-4">
             <div className="space-y-3">
               <label className="text-sm font-medium flex items-center gap-2 text-foreground">
@@ -129,28 +152,6 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
               <p className="text-xs text-amber-700 dark:text-amber-400">
                 <strong>Note:</strong> This risk-adjusted rate is theoretical and helps you understand how risk tolerance affects pricing decisions. Market rates may differ based on industry, experience, and demand.
               </p>
-            </div>
-
-            <div className="p-4 bg-muted/30 rounded-lg">
-              <h4 className="text-sm font-medium text-foreground mb-2">Understanding Risk in Fractional Work</h4>
-              <ul className="space-y-2 text-xs text-muted-foreground">
-                <li className="flex gap-2">
-                  <span className="text-primary">•</span>
-                  <span><strong>Income gaps:</strong> Time between projects when you're not earning</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary">•</span>
-                  <span><strong>Variable utilization:</strong> Not all weeks are billable weeks</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary">•</span>
-                  <span><strong>Market volatility:</strong> Economic conditions affect demand for fractional talent</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-primary">•</span>
-                  <span><strong>Risk premium:</strong> Higher rates compensate for these uncertainties</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
