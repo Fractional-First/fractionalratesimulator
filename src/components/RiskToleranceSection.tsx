@@ -11,11 +11,11 @@ interface RiskToleranceSectionProps {
 }
 
 const riskToleranceOptions = [
-  { value: 1.0, label: "Very comfortable with income gaps (0% premium)" },
-  { value: 0.8, label: "Comfortable with some uncertainty (25% premium)" },
-  { value: 0.67, label: "Somewhat comfortable (50% premium)" },
-  { value: 0.57, label: "Need more stability (75% premium)" },
-  { value: 0.5, label: "Require steady income (100% premium)" }
+  { value: 1.0, label: "Low Risk: Very comfortable with income gaps (0% premium)" },
+  { value: 0.8, label: "Low-Medium Risk: Comfortable with some uncertainty (25% premium)" },
+  { value: 0.67, label: "Medium Risk: Somewhat comfortable (50% premium)" },
+  { value: 0.57, label: "Medium-High Risk: Need more stability (75% premium)" },
+  { value: 0.5, label: "High Risk: Require steady income (100% premium)" }
 ];
 
 export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
