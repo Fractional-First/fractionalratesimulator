@@ -53,10 +53,10 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
                 <p className="text-xs font-medium text-foreground">
-                  {showFullyLoaded ? 'Organization Cost' : 'Personal Rate'}
+                  {showFullyLoaded ? 'Show Personal Rate' : 'Show Organization Cost'}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {showFullyLoaded ? 'Includes overhead & benefits' : 'Your direct compensation'}
+                  {showFullyLoaded ? 'Your direct compensation' : 'Includes overhead & benefits'}
                 </p>
               </div>
               <Switch
