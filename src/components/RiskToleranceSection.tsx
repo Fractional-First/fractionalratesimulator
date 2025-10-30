@@ -166,9 +166,9 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       );
                       const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                       const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                      const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
-                      const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
-                      const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
+                      const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                      const riskAdjustedRate = billingRate / (inputs.riskTolerancePct || 0.50);
+                      const percentageIncrease = ((riskAdjustedRate - billingRate) / billingRate) * 100;
                       const warning = getWarningLevel(percentageIncrease);
                       
                       return (
@@ -190,7 +190,7 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                       maximumFractionDigits: 2,
                     }).format(
                       (() => {
-                        const workingDays = 52*5 - (
+                         const workingDays = 52*5 - (
                           (inputs.vacationDays || 21) + 
                           (inputs.publicHolidays || 15) + 
                           (inputs.otherLeaveDays || 10) + 
@@ -198,15 +198,15 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                         );
                         const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                         const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                        const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
-                        return directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
+                        const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                        return billingRate / (inputs.riskTolerancePct || 0.50);
                       })()
                     )}
                     <span className="text-sm font-normal text-muted-foreground">/hr</span>
                   </div>
                   
                   {(() => {
-                    const workingDays = 52*5 - (
+                     const workingDays = 52*5 - (
                       (inputs.vacationDays || 21) + 
                       (inputs.publicHolidays || 15) + 
                       (inputs.otherLeaveDays || 10) + 
@@ -214,9 +214,9 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                     );
                     const totalComp = (inputs.baseSalary || 0) + (inputs.annualBonus || 0) + (inputs.annualEquityFmv || 0);
                     const directHourly = totalComp / (Math.max(1, workingDays) * (inputs.hoursPerDay || 8));
-                    const directEffectiveHourly = directHourly * (1 - (inputs.nonBillablePct || 0.30));
-                    const riskAdjustedRate = directEffectiveHourly / (inputs.riskTolerancePct || 0.50);
-                    const percentageIncrease = ((riskAdjustedRate - directEffectiveHourly) / directEffectiveHourly) * 100;
+                    const billingRate = directHourly / (1 - (inputs.nonBillablePct || 0.30));
+                    const riskAdjustedRate = billingRate / (inputs.riskTolerancePct || 0.50);
+                    const percentageIncrease = ((riskAdjustedRate - billingRate) / billingRate) * 100;
                     const warning = getWarningLevel(percentageIncrease);
                     
                     return (
