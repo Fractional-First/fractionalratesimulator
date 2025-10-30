@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
 import { type JourneyStage } from './JourneyContainer';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
 interface LiveResultsPanelProps {
   inputs: Inputs;
   results: Results;
@@ -97,16 +96,22 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                       {formatCurrency(gap)}/hr
                     </span>
                   </div>
-                  <Badge className={cn(
-                    "text-xs font-medium",
-                    gapPercentage < 25 && "bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30",
-                    gapPercentage >= 25 && gapPercentage < 50 && "bg-primary/20 text-primary border-primary/30",
-                    gapPercentage >= 50 && "bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30"
-                  )}>
+                  <div className="space-y-1">
+                    <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-primary to-amber-500 transition-all duration-500" style={{
+                  width: `${Math.min(100, gapPercentage)}%`
+                }} />
+                    </div>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Low Impact</span>
+                      <span>High Impact</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
                     {gapPercentage < 25 && "Great utilization!"}
                     {gapPercentage >= 25 && gapPercentage < 50 && "Typical for fractional work"}
                     {gapPercentage >= 50 && "Consider ways to increase billable time"}
-                  </Badge>
+                  </p>
                 </div>}
             </div>}
 
