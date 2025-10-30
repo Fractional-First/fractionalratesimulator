@@ -45,7 +45,7 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
         {showEffectiveRate && <div className="mb-4 p-3 bg-muted/30 rounded-lg border border-border">
             <div className="flex items-center justify-between gap-3">
               <div className="flex-1">
-                <p className="text-xs font-medium text-foreground">Show Fully Loaded Rate</p>
+                <p className="text-xs font-medium text-foreground">Show Effective Rate</p>
                 <p className="text-xs text-muted-foreground">
                   {showFullyLoaded ? 'Your direct compensation' : 'Includes overhead & benefits'}
                 </p>
