@@ -89,7 +89,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           </p>
           <p className="text-sm text-muted-foreground">
             Fractional work isn't 100% billable. You need time for business development, invoicing, and administration. 
-            <strong> Most new fractional leaders start below 50% billable time</strong> as they build their client base.
+            <strong> Most new fractional leaders start around 50% billable time</strong> as they build their client base.
           </p>
         </div>
 
