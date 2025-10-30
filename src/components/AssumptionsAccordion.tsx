@@ -198,7 +198,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
           <div className="mt-4 flex justify-end">
             <Button variant="outline" size="sm" onClick={handleResetToDefaults} className="gap-2">
               <RotateCcw className="h-4 w-4" />
-              Reset to Default
+              Reset to Default (Global)
             </Button>
           </div>
         </div>
