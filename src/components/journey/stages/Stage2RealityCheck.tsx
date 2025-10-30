@@ -83,7 +83,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
     >
       <div className="space-y-6">
         {/* Educational Context */}
-        <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+        <div className="mt-4 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-sm text-foreground font-medium mb-2">
             Why Utilization Rate Matters
           </p>
