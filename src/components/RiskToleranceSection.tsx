@@ -101,9 +101,6 @@ export const RiskToleranceSection: React.FC<RiskToleranceSectionProps> = ({
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">
-                How comfortable are you with income volatility and gaps between projects?
-              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
