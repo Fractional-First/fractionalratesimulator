@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { type Inputs, compute } from '@/utils/calculator';
 import { JourneyProgress } from './JourneyProgress';
 import { Stage1Foundation } from './stages/Stage1Foundation';
@@ -20,6 +20,8 @@ interface JourneyState {
 const STORAGE_KEY = 'fractional-journey-state';
 
 export const JourneyContainer: React.FC = () => {
+  const refinementsRef = useRef<HTMLDivElement>(null);
+  
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -75,6 +77,16 @@ export const JourneyContainer: React.FC = () => {
         visitedStages: newVisited
       };
     });
+
+    // Scroll to refinements stage when navigating to it
+    if (stage === 'refinements') {
+      setTimeout(() => {
+        refinementsRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }, 100);
+    }
   };
 
   const completeStage = (stage: JourneyStage) => {
@@ -186,17 +198,19 @@ export const JourneyContainer: React.FC = () => {
               }}
             />
 
-            <Stage3Refinements
-              isActive={journeyState.currentStage === 'refinements'}
-              status={journeyState.stageStatus.refinements}
-              inputs={journeyState.inputs}
-              updateInput={updateInput}
-              onComplete={() => {
-                completeStage('refinements');
-                goToStage('solution');
-              }}
-              onEdit={() => goToStage('refinements')}
-            />
+            <div ref={refinementsRef}>
+              <Stage3Refinements
+                isActive={journeyState.currentStage === 'refinements'}
+                status={journeyState.stageStatus.refinements}
+                inputs={journeyState.inputs}
+                updateInput={updateInput}
+                onComplete={() => {
+                  completeStage('refinements');
+                  goToStage('solution');
+                }}
+                onEdit={() => goToStage('refinements')}
+              />
+            </div>
 
             <Stage4Solution
               isActive={journeyState.currentStage === 'solution'}
