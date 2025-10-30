@@ -96,13 +96,18 @@ export const LiveResultsPanel: React.FC<LiveResultsPanelProps> = ({
                       {formatCurrency(gap)}/hr
                     </span>
                   </div>
-                  <p className="text-xs font-medium text-muted-foreground mb-1.5">Utilization Impact</p>
-                  <div className="w-full h-2 bg-muted rounded-full overflow-hidden mb-1.5">
-                    <div className="h-full bg-gradient-to-r from-primary to-amber-500 transition-all duration-500" style={{
-                width: `${Math.min(100, gapPercentage)}%`
-              }} />
+                  <div className="space-y-1">
+                    <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-primary to-amber-500 transition-all duration-500" style={{
+                  width: `${Math.min(100, gapPercentage)}%`
+                }} />
+                    </div>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Low Impact</span>
+                      <span>High Impact</span>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground mt-2">
                     {gapPercentage < 25 && "Great utilization!"}
                     {gapPercentage >= 25 && gapPercentage < 50 && "Typical for fractional work"}
                     {gapPercentage >= 50 && "Consider ways to increase billable time"}
