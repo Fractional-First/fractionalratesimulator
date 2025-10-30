@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Anchor, Edit3 } from 'lucide-react';
+import { ExternalLink, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Anchor } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
 import { type JourneyStage as JourneyStageType } from '../JourneyContainer';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 interface Stage4SolutionProps {
   isActive: boolean;
@@ -96,9 +95,6 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   onEditStage,
   onReset
 }) => {
-  // Salary anchor override state
-  const [useCustomRate, setUseCustomRate] = useState(false);
-  const [customEffectiveRate, setCustomEffectiveRate] = useState(results.nominalHourly);
 
   // BD Pipeline health state
   const [pipelineHealth, setPipelineHealth] = useState<BDPipelineHealth>('fair');
@@ -107,7 +103,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const adminPct = inputs.adminPct ?? 0.15;
   const nonBillablePct = bdPct + invoicingPct + adminPct;
   const utilizationRate = (1 - nonBillablePct) * 100;
-  const effectiveRate = useCustomRate ? customEffectiveRate : results.nominalHourly;
+  const effectiveRate = results.nominalHourly;
   const billingRate = effectiveRate / (1 - nonBillablePct);
 
   // Get personalized advice
@@ -117,53 +113,23 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
   return <JourneyStage stageNumber={4} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6">
-        {/* Effective Rate with Anchor Override */}
+        {/* Effective Rate */}
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Anchor className="w-5 h-5 text-primary" />
-              <h3 className="text-lg font-bold text-foreground">What you should charge clients</h3>
-            </div>
-            <Button variant="ghost" size="sm" onClick={() => {
-            setUseCustomRate(!useCustomRate);
-            if (!useCustomRate) {
-              setCustomEffectiveRate(results.nominalHourly);
-            }
-          }} className="text-xs">
-              <Edit3 className="w-3 h-3 mr-1" />
-              {useCustomRate ? 'Reset to Calculated' : 'Test Custom Rate'}
-            </Button>
+          <div className="flex items-center gap-2 mb-4">
+            <Anchor className="w-5 h-5 text-primary" />
+            <h3 className="text-lg font-bold text-foreground">What you should charge clients</h3>
           </div>
-
-          {!useCustomRate ? <div>
-              <p className="text-xs text-muted-foreground mb-3">
-                Based on your full-time salary target of <strong>{formatCurrency(inputs.baseSalary || 0)}</strong>
-              </p>
-              <p className="text-4xl font-bold text-primary mb-1">
-                {formatCurrencyDecimal(results.nominalHourly)}
-                <span className="text-lg font-normal text-muted-foreground">/hr</span>
-              </p>
-              <p className="text-sm text-muted-foreground">Your calculated take-home hourly rate</p>
-            </div> : <div className="space-y-3">
-              <p className="text-xs text-muted-foreground">
-                Test different effective rate scenarios:
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="flex-1">
-                  <Label htmlFor="custom-rate" className="text-xs">Custom Effective Rate</Label>
-                  <Input id="custom-rate" type="number" value={customEffectiveRate} onChange={e => setCustomEffectiveRate(Number(e.target.value))} className="mt-1" />
-                </div>
-                <div className="pt-5">
-                  <p className="text-2xl font-bold text-primary">
-                    {formatCurrencyDecimal(customEffectiveRate)}
-                    <span className="text-sm font-normal text-muted-foreground">/hr</span>
-                  </p>
-                </div>
-              </div>
-              <p className="text-xs text-amber-600 dark:text-amber-400">
-                Scenario testing: This overrides your salary-based calculation
-              </p>
-            </div>}
+          
+          <div>
+            <p className="text-xs text-muted-foreground mb-3">
+              Based on your full-time salary target of <strong>{formatCurrency(inputs.baseSalary || 0)}</strong>
+            </p>
+            <p className="text-4xl font-bold text-primary mb-1">
+              {formatCurrencyDecimal(results.nominalHourly)}
+              <span className="text-lg font-normal text-muted-foreground">/hr</span>
+            </p>
+            <p className="text-sm text-muted-foreground">Your calculated take-home hourly rate</p>
+          </div>
         </div>
 
         {/* Required Billing Rate */}
