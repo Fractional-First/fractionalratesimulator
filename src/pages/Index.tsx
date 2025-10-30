@@ -8,14 +8,14 @@ const Index = () => {
         <div className="text-center mb-8 md:mb-12 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h1 className="text-foreground">
-              Fractional Rate Calculator
+              Guided Fractional Rate Calculator: The 4-Stage Journey
             </h1>
           </div>
           
           {/* Journey description */}
           <div className="max-w-4xl mx-auto mb-8">
             <p className="body-text text-muted-foreground leading-relaxed">
-              Discover what you're really worth as a fractional professional through our guided 4-stage journey. We'll start with your compensation, reveal the reality of billable time, fine-tune the details, and show you the path forward.
+              Stop guessing what to charge. This powerful calculator is reframed as a guided, four-stage journey that converts your full-time compensation into a defensible fractional billing rate. We start with your total earnings, reveal the hidden costs of utilization, fine-tune for your local market and lifestyle, and empower you with the exact, strategic rate you need to succeed.
             </p>
           </div>
         </div>
