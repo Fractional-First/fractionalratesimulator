@@ -232,37 +232,10 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
         </div>
 
-        {/* Summary Stats */}
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="p-4 bg-muted/30 rounded-lg border border-border">
-            <p className="text-xs font-medium text-muted-foreground mb-1">Utilization Rate</p>
-            <p className="text-2xl font-bold text-foreground">
-              {utilizationRate.toFixed(0)}%
-            </p>
-          </div>
-          
-          <div className="p-4 bg-muted/30 rounded-lg border border-border">
-            <p className="text-xs font-medium text-muted-foreground mb-1">Pipeline Health</p>
-            <p className="text-2xl font-bold text-foreground capitalize">
-              {pipelineHealth}
-            </p>
-          </div>
-          
-          <div className="p-4 bg-muted/30 rounded-lg border border-border">
-            <p className="text-xs font-medium text-muted-foreground mb-1">Annual Target</p>
-            <p className="text-2xl font-bold text-foreground">
-              {formatCurrency(results.annualCostIncludingOH)}
-            </p>
-          </div>
-        </div>
-
         {/* Additional Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          <Button size="lg" variant="outline" onClick={onReset} className="flex-1">
+        <div className="flex justify-center pt-4">
+          <Button size="lg" variant="outline" onClick={onReset}>
             Start Over
-          </Button>
-          <Button size="lg" variant="outline" onClick={() => onEditStage('foundation')} className="flex-1">
-            Edit Inputs
           </Button>
         </div>
       </div>
