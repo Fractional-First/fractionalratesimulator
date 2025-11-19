@@ -127,150 +127,154 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
             
             {/* LEFT COLUMN - Overhead Parameters */}
-            <div className="space-y-3">
-          <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-            <DollarSign className="h-4 w-4 text-foreground" />
-            Adjust Overhead Cost
-          </div>
+            <div className="p-4 rounded-lg border border-border/50 bg-background/50">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+                  <DollarSign className="h-4 w-4 text-foreground" />
+                  Adjust Overhead Cost
+                </div>
 
-          <div className="space-y-3">
-            {/* Overhead Cost Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Overhead Cost</span>
-                  <InfoTooltip content="The percentage added on top of your base compensation to cover benefits, taxes, equipment, and other employer costs. For example, 25% means your employer pays an additional $25 for every $100 in your salary." />
+                <div className="space-y-3">
+                  {/* Overhead Cost Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Overhead Cost</span>
+                        <InfoTooltip content="The percentage added on top of your base compensation to cover benefits, taxes, equipment, and other employer costs. For example, 25% means your employer pays an additional $25 for every $100 in your salary." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.overheadPct || 0.25}
+                        onChange={updateInput('overheadPct')}
+                        min={0}
+                        max={2}
+                        step={0.01}
+                        suffix="%"
+                        compact
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.overheadPct || 0.25}
-                  onChange={updateInput('overheadPct')}
-                  min={0}
-                  max={2}
-                  step={0.01}
-                  suffix="%"
-                  compact
-                />
-              </div>
-            </div>
-          </div>
-          </div> {/* Close left column */}
+            </div> {/* Close left column */}
 
             {/* RIGHT COLUMN - Working Hours Parameters */}
-            <div className="space-y-3">
-          <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-            <Clock className="h-4 w-4 text-foreground" />
-            Adjust Working Time
-          </div>
+            <div className="p-4 rounded-lg border border-border/50 bg-background/50">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+                  <Clock className="h-4 w-4 text-foreground" />
+                  Adjust Working Time
+                </div>
 
-          <div className="space-y-3">
-            {/* Hours per Day Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Hours per Day</span>
-                  <InfoTooltip content="The number of billable hours you work per day. This is different from your total work hours - it only counts time you can directly bill to clients." />
+                <div className="space-y-3">
+                  {/* Hours per Day Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Hours per Day</span>
+                        <InfoTooltip content="The number of billable hours you work per day. This is different from your total work hours - it only counts time you can directly bill to clients." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.hoursPerDay || 8}
+                        onChange={updateInput('hoursPerDay')}
+                        min={1}
+                        max={24}
+                        step={0.5}
+                        suffix="hrs"
+                        compact
+                      />
+                    </div>
+                  </div>
+
+                  {/* Vacation Days Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Vacation Days</span>
+                        <InfoTooltip content="Annual paid time off for vacations and personal days. These are days you don't work but still consider part of your employment year." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.vacationDays || 15}
+                        onChange={updateInput('vacationDays')}
+                        min={0}
+                        max={365}
+                        step={1}
+                        suffix="days"
+                        compact
+                      />
+                    </div>
+                  </div>
+
+                  {/* Public Holidays Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Public Holidays</span>
+                        <InfoTooltip content="Official public holidays when you typically don't work. This varies by country and region." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.publicHolidays || 10}
+                        onChange={updateInput('publicHolidays')}
+                        min={0}
+                        max={365}
+                        step={1}
+                        suffix="days"
+                        compact
+                      />
+                    </div>
+                  </div>
+
+                  {/* Other Leave Days Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Other Leave Days</span>
+                        <InfoTooltip content="Additional non-working days such as sick leave, personal days, or other scheduled time off throughout the year." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.otherLeaveDays || 5}
+                        onChange={updateInput('otherLeaveDays')}
+                        min={0}
+                        max={365}
+                        step={1}
+                        suffix="days"
+                        compact
+                      />
+                    </div>
+                  </div>
+
+                  {/* Training Days Input */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-sm font-medium">Training Days</span>
+                        <InfoTooltip content="Days dedicated to professional development, conferences, courses, or skill-building activities. These are important for maintaining your expertise but aren't billable." />
+                      </div>
+                    </div>
+                    <div className="w-24">
+                      <NumberInput
+                        value={inputs.trainingDays || 5}
+                        onChange={updateInput('trainingDays')}
+                        min={0}
+                        max={365}
+                        step={1}
+                        suffix="days"
+                        compact
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.hoursPerDay || 8}
-                  onChange={updateInput('hoursPerDay')}
-                  min={1}
-                  max={24}
-                  step={0.5}
-                  suffix="hrs"
-                  compact
-                />
-              </div>
-            </div>
-
-            {/* Vacation Days Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Vacation Days</span>
-                  <InfoTooltip content="Annual paid time off for vacations and personal days. These are days you don't work but still consider part of your employment year." />
-                </div>
-              </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.vacationDays || 15}
-                  onChange={updateInput('vacationDays')}
-                  min={0}
-                  max={365}
-                  step={1}
-                  suffix="days"
-                  compact
-                />
-              </div>
-            </div>
-
-            {/* Public Holidays Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Public Holidays</span>
-                  <InfoTooltip content="Official public holidays when you typically don't work. This varies by country and region." />
-                </div>
-              </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.publicHolidays || 10}
-                  onChange={updateInput('publicHolidays')}
-                  min={0}
-                  max={365}
-                  step={1}
-                  suffix="days"
-                  compact
-                />
-              </div>
-            </div>
-
-            {/* Other Leave Days Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Other Leave Days</span>
-                  <InfoTooltip content="Additional non-working days such as sick leave, personal days, or other scheduled time off throughout the year." />
-                </div>
-              </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.otherLeaveDays || 5}
-                  onChange={updateInput('otherLeaveDays')}
-                  min={0}
-                  max={365}
-                  step={1}
-                  suffix="days"
-                  compact
-                />
-              </div>
-            </div>
-
-            {/* Training Days Input */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-sm font-medium">Training Days</span>
-                  <InfoTooltip content="Days dedicated to professional development, conferences, courses, or skill-building activities. These are important for maintaining your expertise but aren't billable." />
-                </div>
-              </div>
-              <div className="w-24">
-                <NumberInput
-                  value={inputs.trainingDays || 5}
-                  onChange={updateInput('trainingDays')}
-                  min={0}
-                  max={365}
-                  step={1}
-                  suffix="days"
-                  compact
-                />
-              </div>
-            </div>
-          </div>
-          </div> {/* Close right column */}
+            </div> {/* Close right column */}
           </div> {/* Close grid */}
 
           {/* Reset Button */}
