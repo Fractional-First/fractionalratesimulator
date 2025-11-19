@@ -190,6 +190,83 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           </p>
         </div>
 
+        {/* Utilization Impact Comparison */}
+        <div className="p-6 bg-muted/30 rounded-xl border border-border">
+          <h3 className="text-sm font-semibold text-foreground mb-4">
+            Utilization Impact on Your Rate
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* 100% Utilization - Theoretical */}
+            <div className="p-4 bg-background rounded-lg border border-border">
+              <div className="text-xs font-medium text-muted-foreground mb-2">
+                100% Utilization (Unrealistic)
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <div className="text-sm text-muted-foreground">Direct compensation</div>
+                  <div className="text-2xl font-bold text-foreground">
+                    {formatCurrencyDecimal(results.directHourly)}<span className="text-sm font-normal">/hr</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Fully-loaded rate</div>
+                  <div className="text-2xl font-bold text-foreground">
+                    {formatCurrencyDecimal(results.fullyLoadedHourly)}<span className="text-sm font-normal">/hr</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">Theoretical baseline</p>
+            </div>
+
+            {/* Current Utilization - Realistic */}
+            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+              <div className="text-xs font-medium text-muted-foreground mb-2">
+                {utilizationRate.toFixed(0)}% Utilization (Your Current Rate)
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <div className="text-sm text-muted-foreground">Direct compensation</div>
+                  <div className="text-2xl font-bold text-primary">
+                    {formatCurrencyDecimal(results.directHourly / projectWorkPct)}<span className="text-sm font-normal">/hr</span>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Fully-loaded rate</div>
+                  <div className="text-2xl font-bold text-primary">
+                    {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}<span className="text-sm font-normal">/hr</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">Based on your time allocation</p>
+            </div>
+          </div>
+
+          {/* Realistic Utilization Guidelines */}
+          <div className="p-4 bg-background rounded-lg border border-border">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
+              What's a Realistic Utilization Rate?
+            </h4>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-start gap-2">
+                <span className="font-medium text-foreground min-w-[80px]">40–60%:</span>
+                <span className="text-muted-foreground">Acceptable for new fractional leaders</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-medium text-foreground min-w-[80px]">60–70%:</span>
+                <span className="text-muted-foreground">Good utilization rate</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-medium text-foreground min-w-[80px]">70–85%:</span>
+                <span className="text-muted-foreground">Great utilization rate</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-medium text-foreground min-w-[80px]">85%+:</span>
+                <span className="text-muted-foreground">It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
