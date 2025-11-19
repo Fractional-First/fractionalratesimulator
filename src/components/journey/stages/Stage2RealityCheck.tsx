@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, AlertTriangle, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
@@ -6,8 +6,6 @@ import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrencyDecimal } from '@/utils/calculator';
 import { NumberInput } from '@/components/NumberInput';
 import { InfoTooltip } from '@/components/InfoTooltip';
-import { AssumptionsAccordion } from '@/components/AssumptionsAccordion';
-import { countryDefaults } from '@/utils/countryDefaults';
 
 interface Stage2RealityCheckProps {
   isActive: boolean;
@@ -28,18 +26,6 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   onComplete,
   onEdit,
 }) => {
-  const [selectedCountry, setSelectedCountry] = useState('US');
-
-  const handleCountryChange = (countryCode: string) => {
-    setSelectedCountry(countryCode);
-    const defaults = countryDefaults[countryCode] || countryDefaults['OTHER'];
-    updateInput('overheadPct')(defaults.overheadPct);
-    updateInput('hoursPerDay')(defaults.hoursPerDay);
-    updateInput('vacationDays')(defaults.vacationDays);
-    updateInput('publicHolidays')(defaults.publicHolidays);
-    updateInput('otherLeaveDays')(defaults.otherLeaveDays);
-    updateInput('trainingDays')(defaults.trainingDays);
-  };
 
   // Get time allocation percentages from inputs (decimals 0-1)
   const projectWorkPct = inputs.projectWorkPct ?? 0.6;
@@ -283,28 +269,6 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               </p>
             )}
           </div>
-        </div>
-
-        {/* Assumptions & Refinements Section */}
-        <div className="space-y-4 mt-8">
-          <div className="p-4 bg-muted/30 rounded-lg border border-border">
-            <p className="text-sm text-foreground font-medium mb-2">
-              Assumptions & Refinements
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Every situation is unique. These defaults work for most people, but you can adjust them to match your specific circumstances.
-            </p>
-            <p className="text-xs text-muted-foreground mt-2 italic">
-              Optional but recommended for accurate results
-            </p>
-          </div>
-
-          <AssumptionsAccordion
-            inputs={inputs}
-            updateInput={updateInput}
-            selectedCountry={selectedCountry}
-            onCountryChange={handleCountryChange}
-          />
         </div>
 
         {/* Progress Indicator */}
