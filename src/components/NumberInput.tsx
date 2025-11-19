@@ -39,19 +39,42 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   const displayMax = isPercentage && max !== undefined ? max * 100 : max;
   const displayStep = isPercentage ? step * 100 : step;
 
-  const formatNumber = (num: number): string => {
-    if (num === 0) return '';
-    return new Intl.NumberFormat('en-US', {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 0
-    }).format(num);
-  };
+  const [localValue, setLocalValue] = React.useState('');
+  const [isFocused, setIsFocused] = React.useState(false);
 
-  const displayValue = formatNumber(numericValue);
+  React.useEffect(() => {
+    if (!isFocused) {
+      // Only format when not focused
+      const formatted = numericValue === 0 ? '0' : new Intl.NumberFormat('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 0
+      }).format(numericValue);
+      setLocalValue(formatted);
+    }
+  }, [numericValue, isFocused]);
+
+  const displayValue = isFocused ? localValue : (numericValue === 0 ? '0' : new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  }).format(numericValue));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cleanedValue = e.target.value.replace(/[^0-9.]/g, '');
-    let inputValue = parseFloat(cleanedValue) || 0;
+    const rawValue = e.target.value;
+    setLocalValue(rawValue);
+    
+    // Allow empty string during editing
+    if (rawValue === '' || rawValue === '.') {
+      onChange(0);
+      return;
+    }
+    
+    const cleanedValue = rawValue.replace(/[^0-9.]/g, '');
+    let inputValue = parseFloat(cleanedValue);
+    
+    if (isNaN(inputValue)) {
+      onChange(0);
+      return;
+    }
     
     // Apply min/max constraints on display value
     if (displayMin !== undefined && inputValue < displayMin) inputValue = displayMin;
@@ -62,6 +85,15 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     onChange(stateValue);
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+    setLocalValue(numericValue === 0 ? '' : numericValue.toString());
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   if (compact) {
     return (
       <div className={cn("relative", className)}>
@@ -69,6 +101,8 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           type="text"
           value={displayValue}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           placeholder={placeholder}
           className={cn(
             "h-9 text-right transition-all duration-200 hover:border-primary/50 focus:border-primary border-border bg-background rounded-lg",
@@ -96,6 +130,8 @@ export const NumberInput: React.FC<NumberInputProps> = ({
           type="text"
           value={displayValue}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           placeholder={placeholder}
           className={cn(
             "h-12 text-right transition-all duration-200 hover:border-primary/50 focus:border-primary border-border bg-background touch-target rounded-xl",
