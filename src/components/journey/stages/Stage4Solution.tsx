@@ -51,7 +51,7 @@ const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHeal
   }
   if (isMedUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
     return {
-      title: 'Strategic Support Needed',
+      title: 'Let\'s Build Your Foundation',
       description: 'You\'re achieving decent utilization, but your pipeline health suggests this may not be sustainable. Let\'s build a foundation for consistent, long-term success.',
       recommendations: ['Pipeline development and lead generation support', 'Client qualification and matching services', 'Build a sustainable, recurring client base'],
       ctaText: 'Build a Sustainable Practice',
@@ -161,7 +161,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="poor" id="poor" className="mt-0.5" />
                 <Label htmlFor="poor" className="flex-1 cursor-pointer">
-                  <span className="font-medium text-foreground">Poor</span>
+                  <span className="font-medium text-foreground">Early Stage / Building</span>
                   <p className="text-xs text-muted-foreground mt-1">
                     Struggling to find leads; inconsistent pipeline; often unsure where next client will come from
                   </p>
@@ -171,7 +171,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="fair" id="fair" className="mt-0.5" />
                 <Label htmlFor="fair" className="flex-1 cursor-pointer">
-                  <span className="font-medium text-foreground">Fair</span>
+                  <span className="font-medium text-foreground">Developing / Inconsistent</span>
                   <p className="text-xs text-muted-foreground mt-1">
                     Some leads but inconsistent; spending significant time on BD; pipeline has gaps
                   </p>
@@ -181,7 +181,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="good" id="good" className="mt-0.5" />
                 <Label htmlFor="good" className="flex-1 cursor-pointer">
-                  <span className="font-medium text-foreground">Good</span>
+                  <span className="font-medium text-foreground">Steady</span>
                   <p className="text-xs text-muted-foreground mt-1">
                     Steady flow of qualified leads; reasonable pipeline visibility; BD is manageable but time-consuming
                   </p>
@@ -191,7 +191,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="excellent" id="excellent" className="mt-0.5" />
                 <Label htmlFor="excellent" className="flex-1 cursor-pointer">
-                  <span className="font-medium text-foreground">Excellent</span>
+                  <span className="font-medium text-foreground">Strong</span>
                   <p className="text-xs text-muted-foreground mt-1">
                     Strong, consistent pipeline; clients seeking you out; confident in future bookings
                   </p>
