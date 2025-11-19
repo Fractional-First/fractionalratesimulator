@@ -53,7 +53,7 @@ const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHeal
     return {
       title: 'Strategic Support Needed',
       description: 'You\'re achieving decent utilization, but your pipeline health suggests this may not be sustainable. Let\'s build a foundation for consistent, long-term success.',
-      recommendations: ['Pipeline development and lead generation support', 'Client qualification and matching services', 'Reduce business development time by 60-70%', 'Build a sustainable, recurring client base'],
+      recommendations: ['Pipeline development and lead generation support', 'Client qualification and matching services', 'Build a sustainable, recurring client base'],
       ctaText: 'Build a Sustainable Practice',
       severity: 'warning'
     };
