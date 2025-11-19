@@ -10,6 +10,10 @@ interface SegmentContent {
   icon: React.ElementType;
   colorClass: string;
   bgClass: string;
+  definitions?: Array<{
+    term: string;
+    definition: string;
+  }>;
 }
 
 const segmentContent: Record<SegmentType, SegmentContent> = {
@@ -18,7 +22,17 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     description: 'We start with a (rather arbitrary) anchor: A full-time compensation package you may have earned or may consider to be reflective of your earning power.',
     icon: DollarSign,
     colorClass: 'text-primary',
-    bgClass: 'bg-primary/10'
+    bgClass: 'bg-primary/10',
+    definitions: [
+      {
+        term: 'Effective Rate',
+        definition: 'Your total earnings divided by the number of hours worked across the same period. This is Total earnings / Total billable + nonbillable hours worked.'
+      },
+      {
+        term: 'Fully Loaded Rate',
+        definition: 'This is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour. This is computed by dividing the fully loaded costs - usually expressed as a certain % above-and-beyond the cash compensation - by the number of hours worked in a year.'
+      }
+    ]
   },
   'assumptions': {
     title: 'Assumptions & Refinements',
@@ -32,7 +46,17 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     description: 'We also reveal the effects of utilization rates (the proportion of your time spent on billable hours) on your effective hourly rate.',
     icon: PieChart,
     colorClass: 'text-blue-600 dark:text-blue-400',
-    bgClass: 'bg-blue-500/10'
+    bgClass: 'bg-blue-500/10',
+    definitions: [
+      {
+        term: 'Utilization Rate (%)',
+        definition: 'The percentage of your available working hours that you spend on billable work.'
+      },
+      {
+        term: 'Billing Rate',
+        definition: 'The rate you (as a fractional leader) charge per hour/day, whether it\'s explicit or whether it\'s implicit as part of a package. In the case where it\'s implicit, it may not even be visible to the client.'
+      }
+    ]
   },
   'path-forward': {
     title: 'Your Path Forward',
@@ -67,6 +91,22 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
       <p className="text-sm text-muted-foreground leading-relaxed">
         {content.description}
       </p>
+
+      {/* Definitions - if available */}
+      {content.definitions && content.definitions.length > 0 && (
+        <div className="mt-4 space-y-3">
+          {content.definitions.map((def, index) => (
+            <div key={index} className="text-sm">
+              <dt className="font-semibold text-foreground mb-1">
+                {def.term}
+              </dt>
+              <dd className="text-muted-foreground leading-relaxed">
+                {def.definition}
+              </dd>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
