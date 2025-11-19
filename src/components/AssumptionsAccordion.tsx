@@ -88,33 +88,33 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
           {/* Two Column Summary - Overhead vs Working Hours */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Overhead Percentage Column */}
-            <div className="p-6 bg-primary/5 rounded-xl border-2 border-primary/20">
+            <div className="p-6 bg-muted/30 rounded-xl">
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <DollarSign className="h-4 w-4 text-primary" />
+                <div className="p-2 bg-muted rounded-lg">
+                  <DollarSign className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-foreground">Overhead Cost</h4>
                   <p className="text-xs text-muted-foreground">Benefits & employer costs</p>
                 </div>
               </div>
-              <div className="text-3xl font-bold text-primary mt-2">
+              <div className="text-3xl font-bold text-foreground mt-2">
                 {Math.round((inputs.overheadPct || 0.25) * 100)}%
               </div>
             </div>
 
             {/* Working Hours Column */}
-            <div className="p-6 bg-purple-500/5 rounded-xl border-2 border-purple-500/20 md:translate-y-2">
+            <div className="p-6 bg-muted/30 rounded-xl md:translate-y-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-2 bg-purple-500/10 rounded-lg">
-                  <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                <div className="p-2 bg-muted rounded-lg">
+                  <Clock className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold text-foreground">Annual Working Hours</h4>
                   <p className="text-xs text-muted-foreground">Updates as you adjust below</p>
                 </div>
               </div>
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mt-2">
+              <div className="text-3xl font-bold text-foreground mt-2">
                 {workingHoursPerYear.toLocaleString()}
               </div>
               <p className="text-xs text-muted-foreground mt-2">
@@ -155,6 +155,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               </div>
             </div>
           </div>
+          </div> {/* Close left column */}
 
             {/* RIGHT COLUMN - Working Hours Parameters */}
             <div className="space-y-3">
@@ -269,6 +270,21 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               </div>
             </div>
           </div>
+          </div> {/* Close right column */}
+          </div> {/* Close grid */}
+
+          {/* Reset Button */}
+          <div className="pt-6 border-t border-border">
+            <Button
+              onClick={handleResetToDefaults}
+              variant="outline"
+              className="w-full"
+            >
+              <RotateCcw className="h-4 w-4 mr-2" />
+              Reset to Default Values
+            </Button>
+          </div>
+        </div> {/* Close main content div */}
       </CollapsibleContent>
     </Collapsible>
   );
