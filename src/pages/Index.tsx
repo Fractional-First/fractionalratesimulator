@@ -15,7 +15,7 @@ const Index = () => {
           {/* Journey description */}
           <div className="max-w-4xl mx-auto mb-8">
             <p className="body-text text-muted-foreground leading-relaxed">
-              Stop guessing what to charge. This powerful simulator is a guided, four-stage journey that converts your full-time compensation into a defensible fractional billing rate. We start with your total earnings, reveal the hidden costs of utilization, fine-tune for your local market and lifestyle, and explore options for pricing your time, either explicitly or as part of a value-priced service package. We've designed the Fractional Rate Simulator as a guided, four-stage journey to help you understand the moving pieces that define a sustainable fractional practice. By the end, you will have the exact, strategic rate you need to succeed.
+              Explore options for pricing your time, either explicitly or as part of a value-priced service package. We've designed the Fractional Rate Simulator as a guided, four-stage journey to help you understand the moving pieces that define a sustainable fractional practice. The goal isn't to give you a final number, but to provide insights into the factors that impact your pricing and earnings.
             </p>
           </div>
         </div>
