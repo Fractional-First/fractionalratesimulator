@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, SkipForward, AlertTriangle, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, AlertTriangle, TrendingUp, CheckCircle2 } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrencyDecimal } from '@/utils/calculator';
 import { NumberInput } from '@/components/NumberInput';
 import { InfoTooltip } from '@/components/InfoTooltip';
+import { AssumptionsAccordion } from '@/components/AssumptionsAccordion';
+import { countryDefaults } from '@/utils/countryDefaults';
 
 interface Stage2RealityCheckProps {
   isActive: boolean;
@@ -15,7 +17,6 @@ interface Stage2RealityCheckProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
-  onSkip: () => void;
 }
 
 export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
@@ -26,8 +27,20 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   updateInput,
   onComplete,
   onEdit,
-  onSkip,
 }) => {
+  const [selectedCountry, setSelectedCountry] = useState('US');
+
+  const handleCountryChange = (countryCode: string) => {
+    setSelectedCountry(countryCode);
+    const defaults = countryDefaults[countryCode] || countryDefaults['OTHER'];
+    updateInput('overheadPct')(defaults.overheadPct);
+    updateInput('hoursPerDay')(defaults.hoursPerDay);
+    updateInput('vacationDays')(defaults.vacationDays);
+    updateInput('publicHolidays')(defaults.publicHolidays);
+    updateInput('otherLeaveDays')(defaults.otherLeaveDays);
+    updateInput('trainingDays')(defaults.trainingDays);
+  };
+
   // Get time allocation percentages from inputs (decimals 0-1)
   const projectWorkPct = inputs.projectWorkPct ?? 0.6;
   const bdPct = inputs.bdPct ?? 0.15;
@@ -272,37 +285,47 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           </div>
         </div>
 
+        {/* Assumptions & Refinements Section */}
+        <div className="space-y-4 mt-8">
+          <div className="p-4 bg-muted/30 rounded-lg border border-border">
+            <p className="text-sm text-foreground font-medium mb-2">
+              Assumptions & Refinements
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Every situation is unique. These defaults work for most people, but you can adjust them to match your specific circumstances.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2 italic">
+              Optional but recommended for accurate results
+            </p>
+          </div>
+
+          <AssumptionsAccordion
+            inputs={inputs}
+            updateInput={updateInput}
+            selectedCountry={selectedCountry}
+            onCountryChange={handleCountryChange}
+          />
+        </div>
+
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <div className="flex gap-1">
             <div className="w-2 h-2 rounded-full bg-primary"></div>
             <div className="w-2 h-2 rounded-full bg-primary"></div>
             <div className="w-2 h-2 rounded-full bg-muted"></div>
-            <div className="w-2 h-2 rounded-full bg-muted"></div>
           </div>
-          <span>2 of 4 complete</span>
+          <span>2 of 3 complete</span>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button
-            onClick={onComplete}
-            size="lg"
-            className="flex-1"
-          >
-            Fine-tune the details
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
-          <Button
-            onClick={onSkip}
-            size="lg"
-            variant="outline"
-            className="sm:w-auto"
-          >
-            Skip details
-            <SkipForward className="ml-2 w-4 h-4" />
-          </Button>
-        </div>
+        {/* Action Button */}
+        <Button
+          onClick={onComplete}
+          size="lg"
+          className="w-full md:w-auto"
+        >
+          See path forward
+          <ArrowRight className="ml-2 w-4 h-4" />
+        </Button>
       </div>
     </JourneyStage>
   );
