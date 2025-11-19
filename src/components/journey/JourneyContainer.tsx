@@ -5,7 +5,6 @@ import { Stage1Foundation } from './stages/Stage1Foundation';
 import { Stage2RealityCheck } from './stages/Stage2RealityCheck';
 import { Stage3Refinements } from './stages/Stage3Refinements';
 import { Stage4Solution } from './stages/Stage4Solution';
-import { LiveResultsPanel } from './LiveResultsPanel';
 
 export type JourneyStage = 'foundation' | 'reality' | 'refinements' | 'solution';
 export type StageStatus = 'locked' | 'active' | 'completed';
@@ -241,18 +240,6 @@ export const JourneyContainer: React.FC = () => {
                 onReset={resetJourney}
               />
             </div>
-          </div>
-
-          {/* Right: Live Results Panel (Desktop) */}
-          <div className="hidden lg:block lg:w-80 xl:w-96">
-            <LiveResultsPanel
-              inputs={journeyState.inputs}
-              results={results}
-              completedStages={Object.entries(journeyState.stageStatus)
-                .filter(([_, status]) => status === 'completed')
-                .map(([stage]) => stage as JourneyStage)}
-              hasFoundationInputs={hasFoundationInputs}
-            />
           </div>
         </div>
       </div>
