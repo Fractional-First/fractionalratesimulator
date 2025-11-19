@@ -285,7 +285,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               className="w-full"
             >
               <RotateCcw className="h-4 w-4 mr-2" />
-              Reset to Default Values
+              Reset to Default Values (Global)
             </Button>
           </div>
         </div> {/* Close main content div */}
