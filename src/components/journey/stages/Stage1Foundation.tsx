@@ -79,17 +79,34 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
 
           {hasFullTimeInputs && (
             <>
-              <div className="mt-6 p-6 bg-primary/10 rounded-xl border-2 border-primary/20 animate-fade-in">
-                <p className="text-sm font-medium text-muted-foreground mb-2">
-                  Your Effective Rate
-                </p>
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {formatCurrencyDecimal(results.nominalHourly)}
-                  <span className="text-lg font-normal text-muted-foreground">/hr</span>
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+                {/* Your Effective Rate */}
+                <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-2">
+                    Your Effective Rate
+                  </p>
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    {formatCurrencyDecimal(results.directHourly)}
+                    <span className="text-lg font-normal text-muted-foreground">/hr</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    With these inputs, you make an equivalent of {formatCurrencyDecimal(results.directHourly)}/hour in direct compensation.
+                  </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  This is your apples-to-apples hourly comparison rate
-                </p>
+
+                {/* Fully-Loaded Rate */}
+                <div className="p-6 bg-purple-500/10 rounded-xl border-2 border-purple-500/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-2">
+                    Fully-Loaded Rate
+                  </p>
+                  <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                    {formatCurrencyDecimal(results.fullyLoadedHourly)}
+                    <span className="text-lg font-normal text-muted-foreground">/hr</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    You make {formatCurrencyDecimal(results.fullyLoadedHourly)}/hour in direct compensation plus benefits and other overhead paid by your employer. This is the true cost of employing you.
+                  </p>
+                </div>
               </div>
 
               <div className="mt-6 animate-fade-in">
