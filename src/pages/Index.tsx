@@ -8,7 +8,7 @@ const Index = () => {
         <div className="text-center mb-8 md:mb-12 pt-12 md:pt-16 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h1 className="text-foreground">
-              Guided Fractional Rate Simulator
+              The Fractional Rate Simulator
             </h1>
           </div>
           
