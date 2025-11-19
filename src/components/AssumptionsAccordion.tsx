@@ -123,177 +123,192 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             </div>
           </div>
 
-          {/* Detailed Adjustments */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground pt-2">
-              <Settings className="h-4 w-4 text-muted-foreground" />
-              Fine-tune Parameters
+          {/* Two Column Parameters */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            
+            {/* LEFT COLUMN - Overhead Parameters */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm font-semibold">
+                <DollarSign className="h-4 w-4 text-primary" />
+                Adjust Overhead Cost
+              </div>
+              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20 space-y-3">
+                {/* Overhead Cost Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Overhead Cost</span>
+                      <InfoTooltip content={
+                        <>
+                          The <strong>typical extra cost</strong> that a business in your country pays on top of an employee's salary to employ someone. This includes benefits, insurance, payroll taxes, and other overhead expenses. For example, if your target salary is $100,000 and overhead is 25%, the organization's total cost to employ you would be $125,000. This represents the <strong>necessary business expense</strong> for professional services and sets the foundation for understanding your fractional rate as a professional services charge. Typically <strong>20-35%</strong> depending on country and benefits package.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.overheadPct || 0.25}
+                      onChange={updateInput('overheadPct')}
+                      min={0}
+                      max={1}
+                      step={0.01}
+                      suffix="%"
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {Math.round((inputs.overheadPct || 0.25) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-0 hover:bg-transparent">
-                    <TableHead className="text-xs font-semibold w-[35%]">Parameter</TableHead>
-                    <TableHead className="text-xs font-semibold text-center">Value</TableHead>
-                    <TableHead className="text-xs font-semibold w-[10%]"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Overhead Cost
-                        <InfoTooltip content={
-                          <>
-                            The <strong>typical extra cost</strong> that a business in your country pays on top of an employee's salary to employ someone. This includes benefits, insurance, payroll taxes, and other overhead expenses. For example, if your target salary is $100,000 and overhead is 25%, the organization's total cost to employ you would be $125,000. This represents the <strong>necessary business expense</strong> for professional services and sets the foundation for understanding your fractional rate as a professional services charge. Typically <strong>20-35%</strong> depending on country and benefits package.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.overheadPct || 0} 
-                        onChange={updateInput('overheadPct')} 
-                        min={0} 
-                        max={1} 
-                        step={0.05} 
-                        suffix="%" 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {Math.round((inputs.overheadPct || 0) * 100)}%
-                    </TableCell>
-                  </TableRow>
 
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Hours per Day
-                        <InfoTooltip content={
-                          <>
-                            Your <strong>typical working hours</strong> per day when fully engaged. Most fractional leaders work <strong>6-8 hours</strong> per day to maintain effectiveness across multiple clients.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.hoursPerDay || 0} 
-                        onChange={updateInput('hoursPerDay')} 
-                        min={1} 
-                        max={24} 
-                        step={0.5} 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {inputs.hoursPerDay || 0} hrs
-                    </TableCell>
-                  </TableRow>
+            {/* RIGHT COLUMN - Working Hours Parameters */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-sm font-semibold">
+                <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                Adjust Working Time
+              </div>
+              <div className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20 space-y-3">
+                
+                {/* Hours per Day Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Hours per Day</span>
+                      <InfoTooltip content={
+                        <>
+                          Your <strong>typical working hours</strong> per day when fully engaged. Most fractional leaders work <strong>6-8 hours</strong> per day to maintain effectiveness across multiple clients.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.hoursPerDay || 8}
+                      onChange={updateInput('hoursPerDay')}
+                      min={1}
+                      max={24}
+                      step={0.5}
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {inputs.hoursPerDay || 8} hrs
+                    </span>
+                  </div>
+                </div>
 
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Vacation Days
-                        <InfoTooltip content={
-                          <>
-                            <strong>Paid time off</strong> you plan to take annually. As a fractional leader, you control your schedule but should plan for rest and rejuvenation. Typical range is <strong>15-25 days</strong>.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.vacationDays || 0} 
-                        onChange={updateInput('vacationDays')} 
-                        min={0} 
-                        max={365} 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {inputs.vacationDays || 0} days
-                    </TableCell>
-                  </TableRow>
+                {/* Vacation Days Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Vacation Days</span>
+                      <InfoTooltip content={
+                        <>
+                          Annual <strong>paid vacation days</strong> you plan to take. In many countries, this is <strong>20-25 days</strong> per year, separate from public holidays.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.vacationDays || 21}
+                      onChange={updateInput('vacationDays')}
+                      min={0}
+                      max={365}
+                      step={1}
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {inputs.vacationDays || 21} days
+                    </span>
+                  </div>
+                </div>
 
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Public Holidays
-                        <InfoTooltip content={
-                          <>
-                            <strong>National and local holidays</strong> when you typically don't work. In the US, this is usually <strong>10-15 days</strong> including major holidays like Christmas, New Year's, and Thanksgiving.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.publicHolidays || 0} 
-                        onChange={updateInput('publicHolidays')} 
-                        min={0} 
-                        max={365} 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {inputs.publicHolidays || 0} days
-                    </TableCell>
-                  </TableRow>
+                {/* Public Holidays Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Public Holidays</span>
+                      <InfoTooltip content={
+                        <>
+                          <strong>Official public holidays</strong> in your country. Typically <strong>10-15 days</strong> per year, varying by region and country.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.publicHolidays || 15}
+                      onChange={updateInput('publicHolidays')}
+                      min={0}
+                      max={365}
+                      step={1}
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {inputs.publicHolidays || 15} days
+                    </span>
+                  </div>
+                </div>
 
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Other Leave Days
-                        <InfoTooltip content={
-                          <>
-                            <strong>Sick days and personal leave</strong> you expect to take. Even healthy people should plan for <strong>5-15 days</strong> annually for illness, family emergencies, or personal matters.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.otherLeaveDays || 0} 
-                        onChange={updateInput('otherLeaveDays')} 
-                        min={0} 
-                        max={365} 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {inputs.otherLeaveDays || 0} days
-                    </TableCell>
-                  </TableRow>
+                {/* Other Leave Days Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Other Leave Days</span>
+                      <InfoTooltip content={
+                        <>
+                          <strong>Sick leave, personal days</strong>, and other unplanned time off. Budget <strong>5-10 days</strong> per year for health and personal matters.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.otherLeaveDays || 10}
+                      onChange={updateInput('otherLeaveDays')}
+                      min={0}
+                      max={365}
+                      step={1}
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {inputs.otherLeaveDays || 10} days
+                    </span>
+                  </div>
+                </div>
 
-                  <TableRow className="border-0 hover:bg-muted/30">
-                    <TableCell className="py-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        Training Days
-                        <InfoTooltip content={
-                          <>
-                            <strong>Professional development time</strong> to stay current with industry trends and improve your skills. Successful fractional leaders invest <strong>3-10 days</strong> annually in learning and networking.
-                          </>
-                        } />
-                      </div>
-                    </TableCell>
-                    <TableCell className="py-2">
-                      <NumberInput 
-                        value={inputs.trainingDays || 0} 
-                        onChange={updateInput('trainingDays')} 
-                        min={0} 
-                        max={365} 
-                        compact 
-                      />
-                    </TableCell>
-                    <TableCell className="py-2 text-xs text-muted-foreground">
-                      {inputs.trainingDays || 0} days
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+                {/* Training Days Input */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-sm font-medium">Training Days</span>
+                      <InfoTooltip content={
+                        <>
+                          <strong>Professional development and training</strong> days. Fractional leaders typically invest <strong>3-5 days</strong> per year in learning and skill development.
+                        </>
+                      } />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <NumberInput
+                      value={inputs.trainingDays || 4}
+                      onChange={updateInput('trainingDays')}
+                      min={0}
+                      max={365}
+                      step={1}
+                      compact
+                    />
+                    <span className="text-xs text-muted-foreground min-w-[50px]">
+                      {inputs.trainingDays || 4} days
+                    </span>
+                  </div>
+                </div>
+
+              </div>
             </div>
+            
           </div>
 
           <div className="mt-4 flex justify-end">
