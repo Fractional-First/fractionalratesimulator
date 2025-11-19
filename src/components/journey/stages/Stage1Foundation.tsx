@@ -17,6 +17,8 @@ interface Stage1FoundationProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
+  establishingRateRef: React.RefObject<HTMLDivElement>;
+  assumptionsRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
@@ -27,6 +29,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   updateInput,
   onComplete,
   onEdit,
+  establishingRateRef,
+  assumptionsRef,
 }) => {
   const [selectedCountry, setSelectedCountry] = useState('US');
 
@@ -54,7 +58,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
-        <div className="space-y-4">
+        <div className="space-y-4" ref={establishingRateRef} data-segment="establishing-rate">
           <div className="grid gap-4">
             <CurrencyInput
               label="Base Salary"
@@ -109,7 +113,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                 </div>
               </div>
 
-              <div className="mt-6 animate-fade-in">
+              <div className="mt-6 animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
                 <AssumptionsAccordion
                   inputs={inputs}
                   updateInput={updateInput}

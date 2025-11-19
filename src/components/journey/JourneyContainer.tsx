@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { type Inputs, compute } from '@/utils/calculator';
 import { JourneyProgress } from './JourneyProgress';
+import { JourneySidebar } from './JourneySidebar';
 import { Stage1Foundation } from './stages/Stage1Foundation';
 import { Stage2RealityCheck } from './stages/Stage2RealityCheck';
 import { Stage4Solution } from './stages/Stage4Solution';
@@ -21,6 +22,14 @@ export const JourneyContainer: React.FC = () => {
   const foundationRef = useRef<HTMLDivElement>(null);
   const realityRef = useRef<HTMLDivElement>(null);
   const solutionRef = useRef<HTMLDivElement>(null);
+  
+  // Refs for segment detection
+  const establishingRateRef = useRef<HTMLDivElement>(null);
+  const assumptionsRef = useRef<HTMLDivElement>(null);
+  const utilizationRef = useRef<HTMLDivElement>(null);
+  const pathForwardRef = useRef<HTMLDivElement>(null);
+  
+  const [activeSegment, setActiveSegment] = useState<'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward'>('establishing-rate');
   
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
@@ -57,6 +66,49 @@ export const JourneyContainer: React.FC = () => {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
   }, [journeyState]);
+
+  // Intersection Observer for segment detection
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-100px 0px -50% 0px',
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const segmentId = entry.target.getAttribute('data-segment');
+          if (segmentId) {
+            setActiveSegment(segmentId as 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward');
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    const refs = [
+      { ref: establishingRateRef, id: 'establishing-rate' },
+      { ref: assumptionsRef, id: 'assumptions' },
+      { ref: utilizationRef, id: 'utilization' },
+      { ref: pathForwardRef, id: 'path-forward' }
+    ];
+
+    refs.forEach(({ ref }) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      refs.forEach(({ ref }) => {
+        if (ref.current) {
+          observer.unobserve(ref.current);
+        }
+      });
+    };
+  }, []);
 
   const updateInput = (field: keyof Inputs) => (value: number) => {
     setJourneyState(prev => ({
@@ -168,7 +220,7 @@ export const JourneyContainer: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Journey Stages */}
-          <div className="flex-1 space-y-6">
+          <div className="flex-1 space-y-6 lg:max-w-3xl">
             {/* Disclaimer */}
             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
               <p className="text-sm text-amber-700 dark:text-amber-400">
@@ -188,6 +240,8 @@ export const JourneyContainer: React.FC = () => {
             goToStage('reality');
           }}
           onEdit={() => goToStage('foundation')}
+          establishingRateRef={establishingRateRef}
+          assumptionsRef={assumptionsRef}
         />
       </div>
 
@@ -203,6 +257,7 @@ export const JourneyContainer: React.FC = () => {
                   goToStage('solution');
                 }}
                 onEdit={() => goToStage('reality')}
+                utilizationRef={utilizationRef}
               />
             </div>
 
@@ -214,7 +269,15 @@ export const JourneyContainer: React.FC = () => {
                 results={results}
                 onEditStage={goToStage}
                 onReset={resetJourney}
+                pathForwardRef={pathForwardRef}
               />
+            </div>
+          </div>
+
+          {/* Right: Contextual Sidebar */}
+          <div className="hidden lg:block lg:w-80 xl:w-96">
+            <div className="sticky top-24">
+              <JourneySidebar activeSegment={activeSegment} />
             </div>
           </div>
         </div>

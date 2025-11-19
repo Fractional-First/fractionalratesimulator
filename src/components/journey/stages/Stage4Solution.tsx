@@ -14,6 +14,7 @@ interface Stage4SolutionProps {
   results: Results;
   onEditStage: (stage: JourneyStageType) => void;
   onReset: () => void;
+  pathForwardRef: React.RefObject<HTMLDivElement>;
 }
 type BDPipelineHealth = 'poor' | 'fair' | 'good' | 'excellent';
 interface AdviceContent {
@@ -93,7 +94,8 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   inputs,
   results,
   onEditStage,
-  onReset
+  onReset,
+  pathForwardRef
 }) => {
 
   // BD Pipeline health state
@@ -112,7 +114,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' : advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
   const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
-      <div className="space-y-6 mt-6">
+      <div className="space-y-6 mt-6" ref={pathForwardRef} data-segment="path-forward">
         {/* Effective Rate */}
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
           <h3 className="text-lg font-bold text-foreground mb-4">Your Effective Rate</h3>
