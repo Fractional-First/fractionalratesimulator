@@ -3,10 +3,9 @@ import { type Inputs, compute } from '@/utils/calculator';
 import { JourneyProgress } from './JourneyProgress';
 import { Stage1Foundation } from './stages/Stage1Foundation';
 import { Stage2RealityCheck } from './stages/Stage2RealityCheck';
-import { Stage3Refinements } from './stages/Stage3Refinements';
 import { Stage4Solution } from './stages/Stage4Solution';
 
-export type JourneyStage = 'foundation' | 'reality' | 'refinements' | 'solution';
+export type JourneyStage = 'foundation' | 'reality' | 'solution';
 export type StageStatus = 'locked' | 'active' | 'completed';
 
 interface JourneyState {
@@ -21,7 +20,6 @@ const STORAGE_KEY = 'fractional-journey-state';
 export const JourneyContainer: React.FC = () => {
   const foundationRef = useRef<HTMLDivElement>(null);
   const realityRef = useRef<HTMLDivElement>(null);
-  const refinementsRef = useRef<HTMLDivElement>(null);
   const solutionRef = useRef<HTMLDivElement>(null);
   
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
@@ -44,7 +42,6 @@ export const JourneyContainer: React.FC = () => {
       stageStatus: {
         foundation: 'active',
         reality: 'locked',
-        refinements: 'locked',
         solution: 'locked'
       },
       inputs: {},
@@ -85,7 +82,6 @@ export const JourneyContainer: React.FC = () => {
       const stageRefs = {
         foundation: foundationRef,
         reality: realityRef,
-        refinements: refinementsRef,
         solution: solutionRef
       };
       
@@ -109,7 +105,7 @@ export const JourneyContainer: React.FC = () => {
       newStatus[stage] = 'completed';
       
       // Unlock next stage
-      const stages: JourneyStage[] = ['foundation', 'reality', 'refinements', 'solution'];
+      const stages: JourneyStage[] = ['foundation', 'reality', 'solution'];
       const currentIndex = stages.indexOf(stage);
       if (currentIndex < stages.length - 1) {
         const nextStage = stages[currentIndex + 1];
@@ -131,7 +127,6 @@ export const JourneyContainer: React.FC = () => {
       stageStatus: {
         foundation: prev.stageStatus.foundation,
         reality: 'active',
-        refinements: 'active',
         solution: 'active'
       }
     }));
@@ -143,7 +138,6 @@ export const JourneyContainer: React.FC = () => {
       stageStatus: {
         foundation: 'active',
         reality: 'locked',
-        refinements: 'locked',
         solution: 'locked'
       },
       inputs: {},
@@ -206,27 +200,9 @@ export const JourneyContainer: React.FC = () => {
                 updateInput={updateInput}
                 onComplete={() => {
                   completeStage('reality');
-                  goToStage('refinements');
+                  goToStage('solution');
                 }}
                 onEdit={() => goToStage('reality')}
-                onSkip={() => {
-                  unlockAllStages();
-                  goToStage('solution');
-                }}
-              />
-            </div>
-
-            <div ref={refinementsRef}>
-              <Stage3Refinements
-                isActive={journeyState.currentStage === 'refinements'}
-                status={journeyState.stageStatus.refinements}
-                inputs={journeyState.inputs}
-                updateInput={updateInput}
-                onComplete={() => {
-                  completeStage('refinements');
-                  goToStage('solution');
-                }}
-                onEdit={() => goToStage('refinements')}
               />
             </div>
 

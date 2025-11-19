@@ -111,7 +111,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : advice.severity === 'warning' ? TrendingUp : CheckCircle2;
   const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' : advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
   const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
-  return <JourneyStage stageNumber={4} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
+  return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6">
         {/* Effective Rate */}
         <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
