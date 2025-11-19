@@ -88,8 +88,8 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
           {/* Two Column Summary - Overhead vs Working Hours */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Overhead Percentage Column */}
-            <div className="p-5 bg-primary/5 rounded-xl border-2 border-primary/20">
-              <div className="flex items-center gap-2 mb-3">
+            <div className="p-6 bg-primary/5 rounded-xl border-2 border-primary/20">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="p-2 bg-primary/10 rounded-lg">
                   <DollarSign className="h-4 w-4 text-primary" />
                 </div>
@@ -98,14 +98,14 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                   <p className="text-xs text-muted-foreground">Benefits & employer costs</p>
                 </div>
               </div>
-              <div className="text-3xl font-bold text-primary">
+              <div className="text-3xl font-bold text-primary mt-2">
                 {Math.round((inputs.overheadPct || 0.25) * 100)}%
               </div>
             </div>
 
             {/* Working Hours Column */}
-            <div className="p-5 bg-purple-500/5 rounded-xl border-2 border-purple-500/20 md:translate-y-2">
-              <div className="flex items-center gap-2 mb-3">
+            <div className="p-6 bg-purple-500/5 rounded-xl border-2 border-purple-500/20 md:translate-y-2">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="p-2 bg-purple-500/10 rounded-lg">
                   <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 </div>
@@ -114,17 +114,17 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                   <p className="text-xs text-muted-foreground">Updates as you adjust below</p>
                 </div>
               </div>
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mt-2">
                 {workingHoursPerYear.toLocaleString()}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-2">
                 {workingDaysPerYear} days × {inputs.hoursPerDay || 8} hrs/day
               </p>
             </div>
           </div>
 
           {/* Two Column Parameters */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
             
             {/* LEFT COLUMN - Overhead Parameters */}
             <div className="space-y-3">
@@ -132,7 +132,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                 <DollarSign className="h-4 w-4 text-primary" />
                 Adjust Overhead Cost
               </div>
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20 space-y-3">
+              <div className="p-5 bg-primary/5 rounded-lg border border-primary/20 space-y-3">
                 {/* Overhead Cost Input */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
@@ -145,7 +145,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.overheadPct || 0.25}
                       onChange={updateInput('overheadPct')}
@@ -155,9 +155,6 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       suffix="%"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {Math.round((inputs.overheadPct || 0.25) * 100)}%
-                    </span>
                   </div>
                 </div>
               </div>
@@ -169,7 +166,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                 <Clock className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 Adjust Working Time
               </div>
-              <div className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20 space-y-3">
+              <div className="p-5 bg-purple-500/5 rounded-lg border border-purple-500/20 space-y-3">
                 
                 {/* Hours per Day Input */}
                 <div className="flex items-start justify-between gap-3">
@@ -183,18 +180,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.hoursPerDay || 8}
                       onChange={updateInput('hoursPerDay')}
                       min={1}
                       max={24}
                       step={0.5}
+                      suffix="hrs"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {inputs.hoursPerDay || 8} hrs
-                    </span>
                   </div>
                 </div>
 
@@ -210,18 +205,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.vacationDays || 21}
                       onChange={updateInput('vacationDays')}
                       min={0}
                       max={365}
                       step={1}
+                      suffix="days"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {inputs.vacationDays || 21} days
-                    </span>
                   </div>
                 </div>
 
@@ -237,18 +230,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.publicHolidays || 15}
                       onChange={updateInput('publicHolidays')}
                       min={0}
                       max={365}
                       step={1}
+                      suffix="days"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {inputs.publicHolidays || 15} days
-                    </span>
                   </div>
                 </div>
 
@@ -264,18 +255,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.otherLeaveDays || 10}
                       onChange={updateInput('otherLeaveDays')}
                       min={0}
                       max={365}
                       step={1}
+                      suffix="days"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {inputs.otherLeaveDays || 10} days
-                    </span>
                   </div>
                 </div>
 
@@ -291,18 +280,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       } />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="w-24">
                     <NumberInput
                       value={inputs.trainingDays || 4}
                       onChange={updateInput('trainingDays')}
                       min={0}
                       max={365}
                       step={1}
+                      suffix="days"
                       compact
                     />
-                    <span className="text-xs text-muted-foreground min-w-[50px]">
-                      {inputs.trainingDays || 4} days
-                    </span>
                   </div>
                 </div>
 
