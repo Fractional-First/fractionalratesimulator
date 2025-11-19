@@ -94,7 +94,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
         {/* Time Allocation Section */}
         <div className="p-6 bg-muted/30 rounded-xl">
           <h3 className="text-sm font-semibold text-foreground mb-4">
-            How You Spend Your Time
+            How You Spend Your Working Time
           </h3>
           
           <div className="space-y-4">
