@@ -190,20 +190,6 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           </p>
         </div>
 
-        {/* Utilization Impact on Your Rate */}
-        <div className="p-6 bg-muted/30 rounded-xl border border-border">
-          <h3 className="text-sm font-semibold text-foreground mb-4">
-            Utilization Impact on Your Rate
-          </h3>
-          <div className="space-y-3 text-sm">
-            <p className="text-muted-foreground">
-              <span className="font-medium text-foreground">At 100% utilization as a fractional leader (unrealistic):</span> you would need to charge {formatCurrencyDecimal(results.directHourly)}/hr to match the same direct compensation as your full-time role. To match your fully-loaded rate, you would need {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
-            </p>
-            <p className="text-muted-foreground">
-              <span className="font-medium text-foreground">At 60% utilization:</span> you would need to charge {formatCurrencyDecimal(results.directHourly / 0.60)}/hr to earn the same direct compensation as your full-time role. To match your fully-loaded rate, you would need {formatCurrencyDecimal(results.fullyLoadedHourly / 0.60)}/hr.
-            </p>
-          </div>
-        </div>
 
         {/* Progress Indicator */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">

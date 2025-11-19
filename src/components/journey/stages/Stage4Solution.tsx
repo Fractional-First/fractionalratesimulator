@@ -199,40 +199,6 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </RadioGroup>
         </div>
 
-        {/* Realistic Utilization Guidelines */}
-        {pipelineHealth && (
-          <div className="p-6 bg-blue-500/10 rounded-xl border border-blue-500/20">
-            <h4 className="text-sm font-semibold text-foreground mb-3">
-              What&apos;s a Realistic Utilization Rate?
-            </h4>
-            <p className="text-sm text-muted-foreground mb-3">Is this realistic?</p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-foreground font-medium shrink-0">40–60% utilization:</span>
-                <span>Acceptable.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-foreground font-medium shrink-0">60–70% utilization:</span>
-                <span>Good.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-foreground font-medium shrink-0">70–85% utilization:</span>
-                <span>Great.</span>
-              </li>
-              <li className="flex flex-col gap-1">
-                <div className="flex items-start gap-2">
-                  <span className="text-foreground font-medium shrink-0">85%+ utilization:</span>
-                  <span>It depends:</span>
-                </div>
-                <ul className="ml-6 space-y-1 text-xs">
-                  <li>• If you have outsourced pipeline development and can focus mostly on delivery, this is excellent—you might even increase your billing rate.</li>
-                  <li>• If pipeline development is neglected due to high utilization, you risk not having enough projects in the pipeline.</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        )}
-
         {/* Personalized Advice Matrix */}
         <div className={`p-6 rounded-xl border-2 ${severityBg}`}>
           <div className="flex items-start gap-3 mb-4">
