@@ -31,6 +31,9 @@ export const JourneyContainer: React.FC = () => {
   
   const [activeSegment, setActiveSegment] = useState<'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward'>('establishing-rate');
   
+  // Track all intersecting segments with their intersection data
+  const intersectingSegmentsRef = useRef<Map<string, IntersectionObserverEntry>>(new Map());
+  
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -71,19 +74,43 @@ export const JourneyContainer: React.FC = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-100px 0px -50% 0px',
-      threshold: 0
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      // Update the map of intersecting segments
       entries.forEach((entry) => {
+        const segmentId = entry.target.getAttribute('data-segment');
+        if (!segmentId) return;
+        
         if (entry.isIntersecting) {
-          const segmentId = entry.target.getAttribute('data-segment');
-          if (segmentId) {
-            setActiveSegment(segmentId as 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward');
-          }
+          intersectingSegmentsRef.current.set(segmentId, entry);
+        } else {
+          intersectingSegmentsRef.current.delete(segmentId);
         }
       });
+      
+      // Determine which segment should be active
+      if (intersectingSegmentsRef.current.size > 0) {
+        // Find the segment with the highest position (closest to top of viewport)
+        let bestSegment: string | null = null;
+        let bestPosition = Infinity;
+        
+        intersectingSegmentsRef.current.forEach((entry, segmentId) => {
+          const rect = entry.boundingClientRect;
+          // Use the top position as the deciding factor
+          // Segments closer to the top of the viewport (smaller top value) win
+          if (rect.top < bestPosition) {
+            bestPosition = rect.top;
+            bestSegment = segmentId;
+          }
+        });
+        
+        if (bestSegment) {
+          setActiveSegment(bestSegment as 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward');
+        }
+      }
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
