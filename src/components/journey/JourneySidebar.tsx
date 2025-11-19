@@ -15,7 +15,7 @@ interface SegmentContent {
 const segmentContent: Record<SegmentType, SegmentContent> = {
   'establishing-rate': {
     title: 'Establishing Your Rate',
-    description: 'We start with a (rather arbitrary) anchor: A full-time compensation package you may have earned or may consider to be reflective of your earning power. Your Fully Loaded Rate is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour. This is computed by dividing the fully loaded costs (usually expressed as a certain % above-and-beyond the cash compensation) by the number of hours worked in a year.',
+    description: 'We start with a (rather arbitrary) anchor: A full-time compensation package you may have earned or may consider to be reflective of your earning power.',
     icon: DollarSign,
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10'
