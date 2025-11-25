@@ -178,18 +178,35 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           </div>
         </div>
 
-        {/* Required Billing Rate */}
-        <div className="p-6 bg-amber-500/10 rounded-xl border-2 border-amber-500/20 animate-fade-in">
-          <p className="text-sm font-medium text-muted-foreground mb-2">
-            Billing Rate
-          </p>
-          <div className="text-4xl font-bold text-amber-700 dark:text-amber-400 mb-2">
-            {formatCurrencyDecimal(billingRate)}
-            <span className="text-lg font-normal text-muted-foreground">/hr</span>
+        {/* Required Billing Rate - Two Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+          {/* Green Card - Take-home Rate Based */}
+          <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
+            <p className="text-sm font-medium text-muted-foreground mb-2">
+              Billing Rate (Take-home Based)
+            </p>
+            <div className="text-4xl font-bold text-primary mb-3">
+              {formatCurrencyDecimal(results.directHourly / 0.6)}
+              <span className="text-lg font-normal text-muted-foreground">/hr</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              At 60% utilization rate, you would need to bill {formatCurrencyDecimal(results.directHourly / 0.6)}/hr in order to achieve an equivalent of your full-time annual take-home pay. This means at a billing rate of {formatCurrencyDecimal(results.directHourly / 0.6)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.directHourly)}/hr.
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            To achieve your effective rate at {utilizationRate.toFixed(0)}% utilization
-          </p>
+
+          {/* Purple Card - Fully-loaded Rate Based */}
+          <div className="p-6 bg-purple-500/10 rounded-xl border-2 border-purple-500/20">
+            <p className="text-sm font-medium text-muted-foreground mb-2">
+              Billing Rate (Fully-loaded Based)
+            </p>
+            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-3">
+              {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}
+              <span className="text-lg font-normal text-muted-foreground">/hr</span>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              At 60% utilization rate, you would need to bill {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}/hr in order to achieve an equivalent of your full-time annual fully-loaded pay. This means at a billing rate of {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
+            </p>
+          </div>
         </div>
 
         {/* Utilization Impact Comparison */}
