@@ -124,8 +124,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                 </div>
                 
                 {/* Calculation Footnote */}
-                <p className="text-xs text-muted-foreground italic mt-3 text-center">
-                  These calculations are affected by the assumptions below.
+                <p className="text-xs text-muted-foreground mt-3 text-center">
+                  These rate calculations are affected by the assumptions below.
                 </p>
               </div>
 
