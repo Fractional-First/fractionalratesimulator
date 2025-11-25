@@ -169,24 +169,200 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </RadioGroup>
         </div>
 
-        {/* Personalized Advice Matrix */}
-        <div className={`p-6 rounded-xl border-2 ${severityBg}`}>
-          <div className="flex items-start gap-3 mb-4">
-            <SeverityIcon className={`w-6 h-6 ${severityColor} flex-shrink-0 mt-0.5`} />
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
-              <p className="text-sm text-muted-foreground">{advice.description}</p>
+        {/* Personalized Advice Matrix - Comparison Table */}
+        <div className="p-6 bg-card rounded-xl border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-4">
+            Your Personalized Recommendations Matrix
+          </h3>
+          <p className="text-sm text-muted-foreground mb-6">
+            Based on your utilization rate ({Math.round(utilizationRate)}%) and pipeline health ({pipelineHealth}), here's where you stand and what we recommend.
+          </p>
+          
+          {/* Responsive Table */}
+          <div className="overflow-x-auto -mx-2">
+            <table className="w-full border-collapse text-xs">
+              <thead>
+                <tr>
+                  <th className="p-3 text-left bg-muted/50 border border-border font-semibold text-foreground">
+                    Pipeline / Utilization Rate
+                  </th>
+                  <th className="p-3 bg-amber-100/50 dark:bg-amber-950/30 border border-border font-semibold text-foreground">
+                    below 40%
+                  </th>
+                  <th className="p-3 bg-yellow-100/50 dark:bg-yellow-950/30 border border-border font-semibold text-foreground">
+                    40–60%<br/>
+                    <span className="font-normal text-muted-foreground">Acceptable for new fractional leaders</span>
+                  </th>
+                  <th className="p-3 bg-green-100/50 dark:bg-green-950/30 border border-border font-semibold text-foreground">
+                    60–70%<br/>
+                    <span className="font-normal text-muted-foreground">Good utilization rate</span>
+                  </th>
+                  <th className="p-3 bg-emerald-100/50 dark:bg-emerald-950/30 border border-border font-semibold text-foreground">
+                    70–85%<br/>
+                    <span className="font-normal text-muted-foreground">Great utilization rate</span>
+                  </th>
+                  <th className="p-3 bg-blue-100/50 dark:bg-blue-950/30 border border-border font-semibold text-foreground">
+                    85%+<br/>
+                    <span className="font-normal text-muted-foreground">It depends</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Row 1: Early Stage / Building */}
+                <tr>
+                  <td className="p-3 bg-red-50/50 dark:bg-red-950/20 border border-border font-medium text-foreground">
+                    <div className="font-semibold">Early Stage / Building</div>
+                    <div className="text-xs text-muted-foreground mt-1">Struggling to find leads; inconsistent pipeline; often unsure where next client will come from</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is low and your pipeline visibility is low.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is in the acceptable range, and your pipeline visibility is low.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is fairly strong, and your pipeline visibility is low.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is very strong, and your pipeline visibility is low.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is excellent, and your pipeline visibility is low.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                </tr>
+                
+                {/* Row 2: Developing / Inconsistent */}
+                <tr>
+                  <td className="p-3 bg-amber-50/50 dark:bg-amber-950/20 border border-border font-medium text-foreground">
+                    <div className="font-semibold">Developing / Inconsistent</div>
+                    <div className="text-xs text-muted-foreground mt-1">Some leads but inconsistent; spending significant time on BD; pipeline has gaps</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is low, and your pipeline visibility is developing but not yet highly predictable.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is in the acceptable range, and your pipeline visibility is developing and not yet highly predictable.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is fairly strong, and your pipeline visibility is developing and not yet highly predictable.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is very strong, and your pipeline visibility is developing and not yet highly predictable.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is excellent, and your pipeline visibility is developing and not yet highly predictable.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                </tr>
+                
+                {/* Row 3: Steady */}
+                <tr>
+                  <td className="p-3 bg-blue-50/50 dark:bg-blue-950/20 border border-border font-medium text-foreground">
+                    <div className="font-semibold">Steady</div>
+                    <div className="text-xs text-muted-foreground mt-1">Steady flow of qualified leads; reasonable pipeline visibility; BD is manageable but time-consuming</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is low but your pipeline is showing promise.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is in the acceptable range, and your pipeline visibility is steady and visible.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is fairly strong, and your pipeline visibility is steady and visible.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is very strong, and your pipeline visibility is steady and visible.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is excellent, and your pipeline visibility is steady and visible. You are in pretty good shape.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                    <ul className="list-disc list-inside mt-1 space-y-0.5">
+                      <li>Keep doing what you are doing! Well done.</li>
+                      <li>You may want to assess how you can balance between your current deliverables and making sure BD is streamlined and efficient.</li>
+                      <li>You may want to consider increasing your rate gradually to benefit from higher compensation.</li>
+                      <li>You may want to carefully and strategically evaluate if you can outsource or insource routine tasks to free up your time.</li>
+                      <li>You may want to help the community of fractional leaders by sharing your experience.</li>
+                    </ul>
+                  </td>
+                </tr>
+                
+                {/* Row 4: Strong */}
+                <tr>
+                  <td className="p-3 bg-green-50/50 dark:bg-green-950/20 border border-border font-medium text-foreground">
+                    <div className="font-semibold">Strong</div>
+                    <div className="text-xs text-muted-foreground mt-1">Strong, consistent pipeline; clients seeking you out; confident in future bookings</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is low but your pipeline seems strong.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is in the acceptable range, and your pipeline seems strong.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate is fairly strong, and your pipeline seems strong.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate and pipeline seem strong.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                  </td>
+                  <td className="p-3 border border-border bg-background align-top">
+                    <div className="text-foreground mb-1">Your current XX utilization rate and pipeline are impressive. You are in great shape and you have healthy demand for your work.</div>
+                    <div className="text-muted-foreground">Recommendations:</div>
+                    <ul className="list-disc list-inside mt-1 space-y-0.5">
+                      <li>Keep doing what you are doing! Well done.</li>
+                      <li>You may want to consider increasing your rate gradually to benefit from higher compensation.</li>
+                      <li>You may want to carefully and strategically evaluate if you can outsource or insource routine tasks to free up your time.</li>
+                      <li>You may want to help the community of fractional leaders by sharing your experience.</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          {/* Highlighted Current Position */}
+          <div className="mt-6 p-4 bg-primary/10 rounded-lg border-2 border-primary/20">
+            <div className="flex items-start gap-3">
+              <SeverityIcon className={`w-6 h-6 ${severityColor} flex-shrink-0 mt-0.5`} />
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-foreground mb-2">Your Current Position</h4>
+                <p className="text-sm text-muted-foreground">
+                  Utilization Rate: <strong>{Math.round(utilizationRate)}%</strong> | Pipeline Health: <strong className="capitalize">{pipelineHealth}</strong>
+                </p>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="mt-6 space-y-4">
+        {/* CTA */}
+        <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
+          <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
+          <p className="text-sm text-muted-foreground mb-4">{advice.description}</p>
+          
+          <div className="space-y-4">
             <div>
               <h4 className="text-sm font-semibold text-foreground mb-3">
                 How Fractional First Can Help You:
               </h4>
               <ul className="space-y-2">
                 {advice.recommendations.map((rec, idx) => <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className={`${severityColor} mt-0.5`}>✓</span>
+                    <span className="text-primary mt-0.5">✓</span>
                     <span>{rec}</span>
                   </li>)}
               </ul>
