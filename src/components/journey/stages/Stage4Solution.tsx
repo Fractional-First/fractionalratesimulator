@@ -115,38 +115,6 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6" ref={pathForwardRef} data-segment="path-forward">
-        {/* Effective Rate */}
-        <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
-          <h3 className="text-lg font-bold text-foreground mb-4">Your Effective Rate</h3>
-          
-          <div>
-            <p className="text-xs text-muted-foreground mb-3">
-              Based on your full-time salary target of <strong>{formatCurrency(inputs.baseSalary || 0)}</strong>
-            </p>
-            <p className="text-4xl font-bold text-primary mb-1">
-              {formatCurrencyDecimal(results.nominalHourly)}
-              <span className="text-lg font-normal text-muted-foreground">/hr</span>
-            </p>
-            <p className="text-sm text-muted-foreground">Your calculated take-home hourly rate</p>
-          </div>
-        </div>
-
-        {/* Required Billing Rate */}
-        <div className="p-6 bg-gradient-to-br from-amber-500/5 to-amber-500/10 rounded-xl border-2 border-amber-500/20">
-          <h3 className="text-lg font-bold text-foreground mb-4">Required Billing Rate</h3>
-          
-          <div>
-            <p className="text-xs text-muted-foreground mb-3">
-              To achieve your effective rate at <strong>{Math.round(utilizationRate)}% utilization</strong>
-            </p>
-            <p className="text-4xl font-bold text-amber-700 dark:text-amber-400 mb-1">
-              {formatCurrencyDecimal(billingRate)}
-              <span className="text-lg font-normal text-muted-foreground">/hr</span>
-            </p>
-            <p className="text-sm text-muted-foreground">Rate needed to cover non-billable time</p>
-          </div>
-        </div>
-
         {/* BD Pipeline Health Assessment */}
         <div className="p-6 bg-card rounded-xl border border-border">
           <h3 className="text-lg font-bold text-foreground mb-3">
