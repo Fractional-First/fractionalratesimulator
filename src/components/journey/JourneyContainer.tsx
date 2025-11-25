@@ -245,44 +245,34 @@ export const JourneyContainer: React.FC = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        {/* Disclaimer */}
-        <div className="p-4 mb-6 bg-amber-500/10 border border-amber-500/20 rounded-lg max-w-7xl mx-auto">
-          <p className="text-sm text-amber-700 dark:text-amber-400">
-            <strong>Note:</strong> Your results are only as good as your inputs. This calculator provides estimates based on the data you provide.
-          </p>
-        </div>
-
-        {/* Stage 1 with integrated sidebar */}
-        <div ref={foundationRef} className="mb-6">
-          <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
-            <div className="flex-1 lg:max-w-3xl">
-              <Stage1Foundation
-                isActive={journeyState.currentStage === 'foundation'}
-                status={journeyState.stageStatus.foundation}
-                inputs={journeyState.inputs}
-                results={results}
-                updateInput={updateInput}
-                onComplete={() => {
-                  completeStage('foundation');
-                  goToStage('reality');
-                }}
-                onEdit={() => goToStage('foundation')}
-                establishingRateRef={establishingRateRef}
-                assumptionsRef={assumptionsRef}
-              />
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left: Journey Stages */}
+          <div className="flex-1 space-y-6 lg:max-w-3xl">
+            {/* Disclaimer */}
+            <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+              <p className="text-sm text-amber-700 dark:text-amber-400">
+                <strong>Note:</strong> Your results are only as good as your inputs. This calculator provides estimates based on the data you provide.
+              </p>
             </div>
-            <div className="hidden lg:block lg:w-80 xl:w-96">
-              <div className="sticky top-24">
-                <JourneySidebar activeSegment={activeSegment} />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Stage 2 with integrated sidebar */}
-        <div ref={realityRef} className="mb-6">
-          <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
-            <div className="flex-1 lg:max-w-3xl">
+      <div ref={foundationRef}>
+        <Stage1Foundation
+          isActive={journeyState.currentStage === 'foundation'}
+          status={journeyState.stageStatus.foundation}
+          inputs={journeyState.inputs}
+          results={results}
+          updateInput={updateInput}
+          onComplete={() => {
+            completeStage('foundation');
+            goToStage('reality');
+          }}
+          onEdit={() => goToStage('foundation')}
+          establishingRateRef={establishingRateRef}
+          assumptionsRef={assumptionsRef}
+        />
+      </div>
+
+            <div ref={realityRef}>
               <Stage2RealityCheck
                 isActive={journeyState.currentStage === 'reality'}
                 status={journeyState.stageStatus.reality}
@@ -297,18 +287,8 @@ export const JourneyContainer: React.FC = () => {
                 utilizationRef={utilizationRef}
               />
             </div>
-            <div className="hidden lg:block lg:w-80 xl:w-96">
-              <div className="sticky top-24">
-                <JourneySidebar activeSegment={activeSegment} />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Stage 3 with integrated sidebar */}
-        <div ref={solutionRef}>
-          <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
-            <div className="flex-1 lg:max-w-3xl">
+            <div ref={solutionRef}>
               <Stage4Solution
                 isActive={journeyState.currentStage === 'solution'}
                 status={journeyState.stageStatus.solution}
@@ -319,10 +299,12 @@ export const JourneyContainer: React.FC = () => {
                 pathForwardRef={pathForwardRef}
               />
             </div>
-            <div className="hidden lg:block lg:w-80 xl:w-96">
-              <div className="sticky top-24">
-                <JourneySidebar activeSegment={activeSegment} />
-              </div>
+          </div>
+
+          {/* Right: Contextual Sidebar */}
+          <div className="hidden lg:block lg:w-80 xl:w-96">
+            <div className="sticky top-24">
+              <JourneySidebar activeSegment={activeSegment} />
             </div>
           </div>
         </div>
