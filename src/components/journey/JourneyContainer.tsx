@@ -34,6 +34,9 @@ export const JourneyContainer: React.FC = () => {
   // Track all intersecting segments with their intersection data
   const intersectingSegmentsRef = useRef<Map<string, IntersectionObserverEntry>>(new Map());
   
+  // Define segment order for prioritization
+  const segmentOrder = ['establishing-rate', 'assumptions', 'utilization', 'path-forward'];
+  
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -93,19 +96,41 @@ export const JourneyContainer: React.FC = () => {
       
       // Determine which segment should be active
       if (intersectingSegmentsRef.current.size > 0) {
-        // Find the segment with the best intersection ratio and position
+        // Find the topmost visible segment in the observation zone
         let bestSegment: string | null = null;
-        let bestScore = -1;
+        let bestScore = -Infinity;
         
         intersectingSegmentsRef.current.forEach((entry, segmentId) => {
           const rect = entry.boundingClientRect;
           const intersectionRatio = entry.intersectionRatio;
           
-          // Calculate a score based on intersection ratio and position
-          // Higher intersection ratio = more visible = higher priority
-          // Segments in the active zone (near top but not too far) get bonus
-          const positionScore = rect.top < 200 && rect.top > -100 ? 1 : 0.5;
-          const score = intersectionRatio * 100 + positionScore * 10;
+          // Priority scoring system:
+          // 1. Segments with top edge in the active zone (0-300px from top) are heavily favored
+          // 2. Among those, the one closest to the top wins
+          // 3. Use segment order as tiebreaker
+          
+          // Calculate position score - higher for segments near the top
+          let positionScore = 0;
+          if (rect.top >= 0 && rect.top <= 300) {
+            // In active zone: higher score for being closer to top
+            positionScore = 1000 - rect.top;
+          } else if (rect.top < 0 && rect.bottom > 100) {
+            // Segment has scrolled past top but is still significantly visible
+            // Score based on how much is still visible below the top
+            positionScore = 500 + Math.min(rect.bottom, 500);
+          } else if (rect.top > 300) {
+            // Below active zone - lower priority
+            positionScore = 100 - (rect.top - 300) * 0.1;
+          }
+          
+          // Intersection ratio bonus - segments that are more visible get boost
+          const visibilityBonus = intersectionRatio * 200;
+          
+          // Document order tiebreaker - earlier segments win when scores are close
+          const orderIndex = segmentOrder.indexOf(segmentId);
+          const orderPenalty = orderIndex * 0.1;
+          
+          const score = positionScore + visibilityBonus - orderPenalty;
           
           if (score > bestScore) {
             bestScore = score;
