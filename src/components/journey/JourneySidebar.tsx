@@ -26,11 +26,19 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     definitions: [
       {
         term: 'Take-home Rate',
-        definition: 'Your total earnings divided by the number of hours worked across the same period. This is Total earnings / Total billable + nonbillable hours worked.'
+        definition: 'Your total earnings divided by the number of hours worked across the same period.'
+      },
+      {
+        term: 'Formula',
+        definition: '(Base Salary + Annual Bonus + Annual Equity) ÷ (Working Days × Hours Per Day)'
       },
       {
         term: 'Fully Loaded Rate',
-        definition: 'This is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour. This is computed by dividing the fully loaded costs - usually expressed as a certain % above-and-beyond the cash compensation - by the number of hours worked in a year.'
+        definition: 'This is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour.'
+      },
+      {
+        term: 'Formula',
+        definition: '(Base Salary × (1 + Overhead %) + Bonus + Equity) ÷ (Working Days × Hours Per Day)'
       }
     ]
   },
@@ -39,7 +47,17 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     description: 'We reveal estimated "overhead" costs in your market to demonstrate the fully loaded costs, including benefits, perks, equipment, etc., that your employer would pay to retain you. This number could also be interpreted as your full-time compensation.',
     icon: Settings,
     colorClass: 'text-purple-600 dark:text-purple-400',
-    bgClass: 'bg-purple-500/10'
+    bgClass: 'bg-purple-500/10',
+    definitions: [
+      {
+        term: 'Overhead Cost Impact',
+        definition: 'Overhead % represents additional costs beyond direct compensation (benefits, equipment, office space, etc.)'
+      },
+      {
+        term: 'Working Hours Calculation',
+        definition: '(52 weeks × 5 days) - (Vacation + Holidays + Leave + Training Days) = Annual Working Days'
+      }
+    ]
   },
   'utilization': {
     title: 'Understanding Utilization',
@@ -53,8 +71,12 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         definition: 'The percentage of your available working hours that you spend on billable work.'
       },
       {
-        term: 'Billing Rate',
-        definition: 'The rate you (as a fractional leader) charge per hour/day, whether it\'s explicit or whether it\'s implicit as part of a package. In the case where it\'s implicit, it may not even be visible to the client.'
+        term: 'Required Billing Rate',
+        definition: 'Hourly Rate ÷ Utilization Rate = Billing Rate needed to achieve target compensation'
+      },
+      {
+        term: 'Example',
+        definition: 'At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)'
       }
     ]
   },
@@ -100,7 +122,10 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
               <dt className="font-semibold text-foreground mb-1">
                 {def.term}
               </dt>
-              <dd className="text-muted-foreground leading-relaxed">
+              <dd className={cn(
+                "text-muted-foreground leading-relaxed",
+                def.term === 'Formula' || def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
+              )}>
                 {def.definition}
               </dd>
             </div>
