@@ -64,19 +64,19 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
               label="Base Salary"
               value={inputs.baseSalary || 0}
               onChange={updateInput('baseSalary')}
-              placeholder="150000"
+              placeholder="enter your base salary"
             />
             <CurrencyInput
               label="Annual Bonus"
               value={inputs.annualBonus || 0}
               onChange={updateInput('annualBonus')}
-              placeholder="30000"
+              placeholder="enter your annual bonus"
             />
             <CurrencyInput
               label="Annual Equity (FMV)"
               value={inputs.annualEquityFmv || 0}
               onChange={updateInput('annualEquityFmv')}
-              placeholder="20000"
+              placeholder="enter your annual equity"
               helperText="Fair Market Value of equity grants vesting this year"
             />
           </div>
