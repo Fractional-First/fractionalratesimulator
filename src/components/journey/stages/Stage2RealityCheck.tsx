@@ -181,7 +181,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
         {/* Required Billing Rate */}
         <div className="p-6 bg-amber-500/10 rounded-xl border-2 border-amber-500/20 animate-fade-in">
           <p className="text-sm font-medium text-muted-foreground mb-2">
-            Your Sustainable Billing Rate
+            Billing Rate
           </p>
           <div className="text-4xl font-bold text-amber-700 dark:text-amber-400 mb-2">
             {formatCurrencyDecimal(billingRate)}
