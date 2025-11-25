@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { NumberInput } from './NumberInput';
 import { InfoTooltip } from './InfoTooltip';
-import { Settings, RotateCcw, ChevronDown, Globe, DollarSign, Clock } from 'lucide-react';
+import { Settings, RotateCcw, ChevronDown, Globe, DollarSign, Clock, MapPin } from 'lucide-react';
 import { type Inputs } from '@/utils/calculator';
 import { countryOptions } from '@/utils/countryDefaults';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -14,13 +14,17 @@ interface AssumptionsAccordionProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   selectedCountry: string;
   onCountryChange: (countryCode: string) => void;
+  currentCountryLabel?: string;
+  isDetectingLocation?: boolean;
 }
 
 export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
   inputs,
   updateInput,
   selectedCountry,
-  onCountryChange
+  onCountryChange,
+  currentCountryLabel,
+  isDetectingLocation = false
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   
@@ -53,7 +57,16 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             </div>
             <div className="text-left">
               <h3 className="text-sm font-semibold text-foreground">Assumptions & Refinements (Default Settings)</h3>
-              <p className="text-xs text-muted-foreground">Adjust calculation parameters</p>
+              <div className="flex items-center gap-2 mt-1">
+                <MapPin className="h-3 w-3 text-muted-foreground" />
+                <p className="text-xs text-muted-foreground">
+                  {isDetectingLocation ? (
+                    "Detecting location..."
+                  ) : (
+                    <>Current country setting: <span className="font-medium text-foreground">{currentCountryLabel || 'Global'}</span></>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
           <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />

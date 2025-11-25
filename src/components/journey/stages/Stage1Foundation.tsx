@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results } from '@/utils/calculator';
 import { CurrencyInput } from '@/components/CurrencyInput';
 import { formatCurrencyDecimal } from '@/utils/calculator';
 import { AssumptionsAccordion } from '@/components/AssumptionsAccordion';
-import { countryDefaults } from '@/utils/countryDefaults';
+import { countryDefaults, countryOptions } from '@/utils/countryDefaults';
 
 interface Stage1FoundationProps {
   isActive: boolean;
@@ -32,17 +32,50 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   establishingRateRef,
   assumptionsRef,
 }) => {
-  const [selectedCountry, setSelectedCountry] = useState('US');
+  const [selectedCountry, setSelectedCountry] = useState('GLOBAL');
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false);
+
+  // Auto-detect user location on mount
+  useEffect(() => {
+    const detectLocation = async () => {
+      setIsDetectingLocation(true);
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        const countryCode = data.country_code;
+        
+        // Check if detected country is in our list
+        const countryExists = countryOptions.some(opt => opt.value === countryCode);
+        if (countryExists) {
+          handleCountryChange(countryCode);
+        } else {
+          // Keep GLOBAL as default if country not found
+          setSelectedCountry('GLOBAL');
+        }
+      } catch (error) {
+        // Silently fail and keep GLOBAL as default
+        console.log('Location detection not available, using Global defaults');
+      } finally {
+        setIsDetectingLocation(false);
+      }
+    };
+
+    detectLocation();
+  }, []);
 
   const handleCountryChange = (countryCode: string) => {
     setSelectedCountry(countryCode);
-    const defaults = countryDefaults[countryCode] || countryDefaults['OTHER'];
+    const defaults = countryDefaults[countryCode] || countryDefaults['GLOBAL'];
     updateInput('overheadPct')(defaults.overheadPct);
     updateInput('hoursPerDay')(defaults.hoursPerDay);
     updateInput('vacationDays')(defaults.vacationDays);
     updateInput('publicHolidays')(defaults.publicHolidays);
     updateInput('otherLeaveDays')(defaults.otherLeaveDays);
     updateInput('trainingDays')(defaults.trainingDays);
+  };
+
+  const getCurrentCountryLabel = () => {
+    return countryOptions.find(opt => opt.value === selectedCountry)?.label || 'Global';
   };
 
   const hasFullTimeInputs = (inputs.baseSalary || 0) > 0;
@@ -136,6 +169,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                   updateInput={updateInput}
                   selectedCountry={selectedCountry}
                   onCountryChange={handleCountryChange}
+                  currentCountryLabel={getCurrentCountryLabel()}
+                  isDetectingLocation={isDetectingLocation}
                 />
               </div>
             </>
