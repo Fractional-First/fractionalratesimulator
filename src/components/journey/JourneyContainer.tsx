@@ -93,16 +93,22 @@ export const JourneyContainer: React.FC = () => {
       
       // Determine which segment should be active
       if (intersectingSegmentsRef.current.size > 0) {
-        // Find the segment with the highest position (closest to top of viewport)
+        // Find the segment with the best intersection ratio and position
         let bestSegment: string | null = null;
-        let bestPosition = Infinity;
+        let bestScore = -1;
         
         intersectingSegmentsRef.current.forEach((entry, segmentId) => {
           const rect = entry.boundingClientRect;
-          // Use the top position as the deciding factor
-          // Segments closer to the top of the viewport (smaller top value) win
-          if (rect.top < bestPosition) {
-            bestPosition = rect.top;
+          const intersectionRatio = entry.intersectionRatio;
+          
+          // Calculate a score based on intersection ratio and position
+          // Higher intersection ratio = more visible = higher priority
+          // Segments in the active zone (near top but not too far) get bonus
+          const positionScore = rect.top < 200 && rect.top > -100 ? 1 : 0.5;
+          const score = intersectionRatio * 100 + positionScore * 10;
+          
+          if (score > bestScore) {
+            bestScore = score;
             bestSegment = segmentId;
           }
         });
