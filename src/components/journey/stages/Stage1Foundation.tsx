@@ -110,7 +110,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                       <span className="text-lg font-normal text-muted-foreground">/hr</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      You make {formatCurrencyDecimal(results.fullyLoadedHourly)}/hour in direct compensation plus benefits and other overhead paid by your employer. This is the true cost of employing you.
+                      As a full-time employee, you make {formatCurrencyDecimal(results.fullyLoadedHourly)}/hour in direct compensation and indirect compensation plus benefits and other overhead paid by your employer. This is the true cost of employing you.
                     </p>
                   </div>
                 </div>
