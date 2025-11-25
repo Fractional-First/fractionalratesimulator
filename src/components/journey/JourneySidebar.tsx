@@ -77,6 +77,26 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       {
         term: 'Example',
         definition: 'At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)'
+      },
+      {
+        term: "What's a Realistic Utilization Rate?",
+        definition: ''
+      },
+      {
+        term: '40–60%',
+        definition: 'Acceptable for new fractional leaders'
+      },
+      {
+        term: '60–70%',
+        definition: 'Good utilization rate'
+      },
+      {
+        term: '70–85%',
+        definition: 'Great utilization rate'
+      },
+      {
+        term: '85%+',
+        definition: "It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected"
       }
     ]
   },
@@ -119,15 +139,24 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         <div className="mt-4 space-y-3">
           {content.definitions.map((def, index) => (
             <div key={index} className="text-sm">
-              <dt className="font-semibold text-foreground mb-1">
-                {def.term}
-              </dt>
-              <dd className={cn(
-                "text-muted-foreground leading-relaxed",
-                def.term === 'Formula' || def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
-              )}>
-                {def.definition}
-              </dd>
+              {def.definition === '' ? (
+                // Section header (no definition text)
+                <h4 className="font-semibold text-foreground mt-4 mb-2 text-base">
+                  {def.term}
+                </h4>
+              ) : (
+                <>
+                  <dt className="font-semibold text-foreground mb-1">
+                    {def.term}
+                  </dt>
+                  <dd className={cn(
+                    "text-muted-foreground leading-relaxed",
+                    def.term === 'Formula' || def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
+                  )}>
+                    {def.definition}
+                  </dd>
+                </>
+              )}
             </div>
           ))}
         </div>
