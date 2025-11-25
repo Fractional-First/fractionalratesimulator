@@ -96,7 +96,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                       <span className="text-lg font-normal text-muted-foreground">/hr</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      You make an equivalent of {formatCurrencyDecimal(results.directHourly)}/hour in direct compensation.
+                      As a full-time employee, you make an equivalent of {formatCurrencyDecimal(results.directHourly)}/hour in direct compensation.
                     </p>
                   </div>
 
