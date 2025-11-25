@@ -25,7 +25,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     bgClass: 'bg-primary/10',
     definitions: [
       {
-        term: 'Effective Rate',
+        term: 'Take-home Rate',
         definition: 'Your total earnings divided by the number of hours worked across the same period. This is Total earnings / Total billable + nonbillable hours worked.'
       },
       {
