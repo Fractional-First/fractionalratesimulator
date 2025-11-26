@@ -13,25 +13,25 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
     switch (type) {
       case 'take-home-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
-            <div className="flex flex-col items-center space-y-2">
+          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
-              <div className="text-center py-2">
-                <span className="text-sm font-medium text-foreground">Base Salary</span>
-                <span className="text-muted-foreground mx-1.5">+</span>
-                <span className="text-sm font-medium text-foreground">Annual Bonus</span>
-                <span className="text-muted-foreground mx-1.5">+</span>
-                <span className="text-sm font-medium text-foreground">Annual Equity</span>
+              <div className="text-center py-1">
+                <span className="text-xs font-medium text-foreground">Base Salary</span>
+                <span className="text-muted-foreground mx-1">+</span>
+                <span className="text-xs font-medium text-foreground">Bonus</span>
+                <span className="text-muted-foreground mx-1">+</span>
+                <span className="text-xs font-medium text-foreground">Equity</span>
               </div>
               
               {/* Divider */}
               <div className="w-full border-t border-foreground/30" />
               
               {/* Denominator */}
-              <div className="text-center py-2">
-                <span className="text-sm font-medium text-foreground">Working Days</span>
-                <span className="text-muted-foreground mx-1.5">×</span>
-                <span className="text-sm font-medium text-foreground">Hours Per Day</span>
+              <div className="text-center py-1">
+                <span className="text-xs font-medium text-foreground">Working Days</span>
+                <span className="text-muted-foreground mx-1">×</span>
+                <span className="text-xs font-medium text-foreground">Hours Per Day</span>
               </div>
             </div>
           </div>
@@ -39,27 +39,27 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'fully-loaded-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
-            <div className="flex flex-col items-center space-y-2">
+          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
-              <div className="text-center py-2 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1">
-                <span className="text-sm font-medium text-foreground">Base Salary</span>
+              <div className="text-center py-1 flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5">
+                <span className="text-xs font-medium text-foreground">Base Salary</span>
                 <span className="text-muted-foreground">×</span>
-                <span className="text-sm font-medium text-foreground">(1 + Overhead %)</span>
+                <span className="text-xs font-medium text-foreground">(1 + Overhead %)</span>
                 <span className="text-muted-foreground">+</span>
-                <span className="text-sm font-medium text-foreground">Bonus</span>
+                <span className="text-xs font-medium text-foreground">Bonus</span>
                 <span className="text-muted-foreground">+</span>
-                <span className="text-sm font-medium text-foreground">Equity</span>
+                <span className="text-xs font-medium text-foreground">Equity</span>
               </div>
               
               {/* Divider */}
               <div className="w-full border-t border-foreground/30" />
               
               {/* Denominator */}
-              <div className="text-center py-2">
-                <span className="text-sm font-medium text-foreground">Working Days</span>
-                <span className="text-muted-foreground mx-1.5">×</span>
-                <span className="text-sm font-medium text-foreground">Hours Per Day</span>
+              <div className="text-center py-1">
+                <span className="text-xs font-medium text-foreground">Working Days</span>
+                <span className="text-muted-foreground mx-1">×</span>
+                <span className="text-xs font-medium text-foreground">Hours Per Day</span>
               </div>
             </div>
           </div>
@@ -67,10 +67,10 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'working-hours':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
-            <div className="flex flex-col items-center space-y-3">
+          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <div className="flex flex-col items-center space-y-1.5">
               {/* Calculation */}
-              <div className="text-center flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-sm">
+              <div className="text-center flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 text-xs">
                 <span className="font-medium text-foreground">(52 weeks × 5 days)</span>
                 <span className="text-muted-foreground">−</span>
                 <span className="font-medium text-foreground">Vacation</span>
@@ -83,11 +83,11 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               </div>
               
               {/* Arrow */}
-              <div className="text-muted-foreground text-lg">↓</div>
+              <div className="text-muted-foreground text-sm">↓</div>
               
               {/* Result */}
               <div className="text-center">
-                <span className="text-sm font-semibold text-foreground">Annual Working Days</span>
+                <span className="text-xs font-semibold text-foreground">Annual Working Days</span>
               </div>
             </div>
           </div>
@@ -95,23 +95,23 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'billing-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
-            <div className="flex flex-col items-center space-y-2">
+          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
-              <div className="text-center py-2">
-                <span className="text-sm font-medium text-foreground">Hourly Rate</span>
+              <div className="text-center py-1">
+                <span className="text-xs font-medium text-foreground">Hourly Rate</span>
               </div>
               
               {/* Divider */}
               <div className="w-full border-t border-foreground/30" />
               
               {/* Denominator */}
-              <div className="text-center py-2">
-                <span className="text-sm font-medium text-foreground">Utilization Rate</span>
+              <div className="text-center py-1">
+                <span className="text-xs font-medium text-foreground">Utilization Rate</span>
               </div>
               
               {/* Result */}
-              <div className="text-center pt-2 text-sm font-semibold text-foreground">
+              <div className="text-center pt-1 text-xs font-semibold text-foreground">
                 = Billing Rate
               </div>
             </div>
