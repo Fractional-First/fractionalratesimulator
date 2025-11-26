@@ -1,6 +1,7 @@
 import React from 'react';
 import { DollarSign, Settings, PieChart, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FormulaVisual, FormulaType } from './FormulaVisual';
 
 export type SegmentType = 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward';
 
@@ -13,6 +14,7 @@ interface SegmentContent {
   definitions?: Array<{
     term: string;
     definition: string;
+    formulaType?: FormulaType;
   }>;
 }
 
@@ -30,7 +32,8 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Formula',
-        definition: '(Base Salary + Annual Bonus + Annual Equity) ÷ (Working Days × Hours Per Day)'
+        definition: '',
+        formulaType: 'take-home-rate'
       },
       {
         term: 'Fully Loaded Rate',
@@ -38,7 +41,8 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Formula',
-        definition: '(Base Salary × (1 + Overhead %) + Bonus + Equity) ÷ (Working Days × Hours Per Day)'
+        definition: '',
+        formulaType: 'fully-loaded-rate'
       }
     ]
   },
@@ -55,7 +59,8 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Working Hours Calculation',
-        definition: '(52 weeks × 5 days) - (Vacation + Holidays + Leave + Training Days) = Annual Working Days'
+        definition: '',
+        formulaType: 'working-hours'
       }
     ]
   },
@@ -72,7 +77,12 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Required Billing Rate',
-        definition: 'Hourly Rate ÷ Utilization Rate = Billing Rate needed to achieve target compensation'
+        definition: 'Billing Rate needed to achieve target compensation'
+      },
+      {
+        term: 'Formula',
+        definition: '',
+        formulaType: 'billing-rate'
       },
       {
         term: 'Example',
@@ -139,19 +149,28 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         <div className="mt-4 space-y-3">
           {content.definitions.map((def, index) => (
             <div key={index} className="text-sm">
-              {def.definition === '' ? (
-                // Section header (no definition text)
+              {def.definition === '' && !def.formulaType ? (
+                // Section header (no definition text, no formula)
                 <h4 className="font-semibold text-foreground mt-4 mb-2 text-base">
                   {def.term}
                 </h4>
+              ) : def.formulaType ? (
+                // Formula visualization
+                <>
+                  <dt className="font-semibold text-foreground mb-2">
+                    {def.term}
+                  </dt>
+                  <FormulaVisual type={def.formulaType} />
+                </>
               ) : (
+                // Regular definition
                 <>
                   <dt className="font-semibold text-foreground mb-1">
                     {def.term}
                   </dt>
                   <dd className={cn(
                     "text-muted-foreground leading-relaxed",
-                    def.term === 'Formula' || def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
+                    def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
                   )}>
                     {def.definition}
                   </dd>
