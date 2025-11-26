@@ -128,36 +128,36 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
   const Icon = content.icon;
 
   return (
-    <div className="p-6 bg-muted/30 border border-border rounded-xl animate-fade-in">
+    <div className="p-4 bg-muted/30 border border-border rounded-xl animate-fade-in max-h-[calc(100vh-8rem)] overflow-y-auto">
       {/* Icon */}
-      <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center mb-4", content.bgClass)}>
-        <Icon className={cn("w-6 h-6", content.colorClass)} />
+      <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", content.bgClass)}>
+        <Icon className={cn("w-5 h-5", content.colorClass)} />
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-semibold text-foreground mb-3">
+      <h3 className="text-lg font-semibold text-foreground mb-2">
         {content.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground leading-relaxed">
+      <p className="text-xs text-muted-foreground leading-relaxed">
         {content.description}
       </p>
 
       {/* Definitions - if available */}
       {content.definitions && content.definitions.length > 0 && (
-        <div className="mt-4 space-y-3">
+        <div className="mt-3 space-y-2">
           {content.definitions.map((def, index) => (
-            <div key={index} className="text-sm">
+            <div key={index} className="text-xs">
               {def.definition === '' && !def.formulaType ? (
                 // Section header (no definition text, no formula)
-                <h4 className="font-semibold text-foreground mt-4 mb-2 text-base">
+                <h4 className="font-semibold text-foreground mt-3 mb-1.5 text-sm">
                   {def.term}
                 </h4>
               ) : def.formulaType ? (
                 // Formula visualization
                 <>
-                  <dt className="font-semibold text-foreground mb-2">
+                  <dt className="font-semibold text-foreground mb-1.5 text-xs">
                     {def.term}
                   </dt>
                   <FormulaVisual type={def.formulaType} />
@@ -165,12 +165,12 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
               ) : (
                 // Regular definition
                 <>
-                  <dt className="font-semibold text-foreground mb-1">
+                  <dt className="font-semibold text-foreground mb-0.5 text-xs">
                     {def.term}
                   </dt>
                   <dd className={cn(
-                    "text-muted-foreground leading-relaxed",
-                    def.term === 'Example' ? "font-mono text-xs bg-muted/50 p-2 rounded border border-border" : ""
+                    "text-muted-foreground leading-relaxed text-xs",
+                    def.term === 'Example' ? "font-mono text-[10px] bg-muted/50 p-1.5 rounded border border-border" : ""
                   )}>
                     {def.definition}
                   </dd>
