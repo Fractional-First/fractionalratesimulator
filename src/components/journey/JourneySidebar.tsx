@@ -55,11 +55,15 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     bgClass: 'bg-purple-500/10',
     definitions: [
       {
-        term: 'Overhead Cost Impact',
+        term: 'Overhead Cost',
         definition: 'Overhead % represents additional costs beyond direct compensation (benefits, equipment, office space, etc.)'
       },
       {
-        term: 'Working Hours Calculation',
+        term: 'Annual Working Hours',
+        definition: ''
+      },
+      {
+        term: 'Formula',
         definition: '',
         formulaType: 'working-hours'
       }
