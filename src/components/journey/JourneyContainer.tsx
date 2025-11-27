@@ -34,6 +34,10 @@ export const JourneyContainer: React.FC = () => {
   // Track all intersecting segments with their intersection data
   const intersectingSegmentsRef = useRef<Map<string, IntersectionObserverEntry>>(new Map());
   
+  // Track scroll direction for better segment detection
+  const lastScrollYRef = useRef(0);
+  const scrollDirectionRef = useRef<'up' | 'down'>('down');
+  
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -70,11 +74,23 @@ export const JourneyContainer: React.FC = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
   }, [journeyState]);
 
+  // Track scroll direction
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      scrollDirectionRef.current = currentScrollY > lastScrollYRef.current ? 'down' : 'up';
+      lastScrollYRef.current = currentScrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Intersection Observer for segment detection
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-15% 0px -60% 0px',
+      rootMargin: '-10% 0px -40% 0px', // Wider active zone (50% instead of 25%)
       threshold: Array.from({ length: 21 }, (_, i) => i * 0.05) // 0, 0.05, 0.1, ... 1.0
     };
 
@@ -94,8 +110,9 @@ export const JourneyContainer: React.FC = () => {
       // Determine which segment should be active
       if (intersectingSegmentsRef.current.size > 0) {
         const segmentOrder = ['establishing-rate', 'assumptions', 'utilization', 'path-forward'];
+        const scrollDirection = scrollDirectionRef.current;
         
-        // Find the best segment based on position and visibility
+        // Find the best segment based on position, visibility, and scroll direction
         let bestSegment: string | null = null;
         let bestScore = -Infinity;
         
@@ -103,20 +120,29 @@ export const JourneyContainer: React.FC = () => {
           const rect = entry.boundingClientRect;
           const intersectionRatio = entry.intersectionRatio;
           
-          // Calculate distance from ideal viewing position (slightly below top of viewport)
-          const idealTop = 150; // Sweet spot in viewport
+          // Calculate distance from ideal viewing position
+          const idealTop = 150;
           const distanceFromIdeal = Math.abs(rect.top - idealTop);
           
-          // Segments closer to ideal position get higher scores
-          // Intersection ratio ensures we show what's actually visible
+          // Base scores
           const positionScore = Math.max(0, 500 - distanceFromIdeal);
           const visibilityScore = intersectionRatio * 1000;
           
-          // Earlier segments get slight priority when scores are close (helps with scroll-up)
+          // Scroll direction bonus - strongly favor appropriate segments based on direction
           const orderIndex = segmentOrder.indexOf(segmentId);
-          const orderBonus = orderIndex >= 0 ? (segmentOrder.length - orderIndex) * 5 : 0;
+          let directionBonus = 0;
           
-          const totalScore = positionScore + visibilityScore + orderBonus;
+          if (orderIndex >= 0) {
+            if (scrollDirection === 'up') {
+              // When scrolling up, heavily favor earlier segments
+              directionBonus = (segmentOrder.length - orderIndex) * 100;
+            } else {
+              // When scrolling down, favor later segments
+              directionBonus = orderIndex * 50;
+            }
+          }
+          
+          const totalScore = positionScore + visibilityScore + directionBonus;
           
           if (totalScore > bestScore) {
             bestScore = totalScore;
