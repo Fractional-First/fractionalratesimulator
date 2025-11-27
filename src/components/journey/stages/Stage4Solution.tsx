@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Anchor } from 'lucide-react';
+import { ExternalLink, Sparkles, TrendingUp, AlertTriangle, CheckCircle2, Anchor, Activity, BarChart3, TrendingDown } from 'lucide-react';
 import { JourneyStage } from '../JourneyStage';
 import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from '@/utils/calculator';
@@ -173,10 +173,51 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const utilizationCategory = getUtilizationCategory(utilizationRate);
   const recommendation = getRecommendation(utilizationCategory, pipelineHealth);
   
+  // Replace XX% with actual utilization rate in the situation text
+  const situationWithRate = recommendation.situation.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`);
+  const recommendationsWithRate = recommendation.recommendations.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`);
+  
   const advice = getAdviceMatrix(utilizationRate, pipelineHealth);
   const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : advice.severity === 'warning' ? TrendingUp : CheckCircle2;
   const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' : advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
   const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
+  
+  // Pipeline health icon and styling
+  const getPipelineHealthDisplay = (health: BDPipelineHealth) => {
+    switch (health) {
+      case 'poor':
+        return {
+          icon: TrendingDown,
+          color: 'text-red-600 dark:text-red-400',
+          bg: 'bg-red-500/10',
+          label: 'Early Stage / Building'
+        };
+      case 'fair':
+        return {
+          icon: Activity,
+          color: 'text-amber-600 dark:text-amber-400',
+          bg: 'bg-amber-500/10',
+          label: 'Developing / Inconsistent'
+        };
+      case 'good':
+        return {
+          icon: BarChart3,
+          color: 'text-blue-600 dark:text-blue-400',
+          bg: 'bg-blue-500/10',
+          label: 'Steady'
+        };
+      case 'excellent':
+        return {
+          icon: TrendingUp,
+          color: 'text-green-600 dark:text-green-400',
+          bg: 'bg-green-500/10',
+          label: 'Strong'
+        };
+    }
+  };
+  
+  const pipelineDisplay = getPipelineHealthDisplay(pipelineHealth);
+  const PipelineIcon = pipelineDisplay.icon;
   
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6" ref={pathForwardRef} data-segment="path-forward">
@@ -251,44 +292,53 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           <h3 className="text-lg font-bold text-foreground mb-3">
             Your Personalized Recommendation
           </h3>
-          <div className="p-4 bg-muted/30 rounded-lg mb-4">
-            <p className="text-sm font-medium text-foreground mb-2">
-              Your Current Position
-            </p>
-            <p className="text-sm text-muted-foreground">
-              <strong>Utilization Rate:</strong> {Math.round(utilizationRate)}% ({utilizationFeedback.label}) | <strong>Pipeline Health:</strong> {' '}
-              {pipelineHealth === 'poor' && 'Early Stage / Building'}
-              {pipelineHealth === 'fair' && 'Developing / Inconsistent'}
-              {pipelineHealth === 'good' && 'Steady'}
-              {pipelineHealth === 'excellent' && 'Strong'}
-            </p>
+          <div className="p-4 bg-muted/30 rounded-lg mb-4 space-y-3">
+            <div>
+              <p className="text-xs font-medium text-muted-foreground uppercase mb-2">
+                Your Current Position
+              </p>
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <UtilFeedbackIcon className={`w-4 h-4 ${utilizationFeedback.color}`} />
+                  <span className="text-sm font-medium text-foreground">
+                    Utilization: {Math.round(utilizationRate)}%
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    ({utilizationFeedback.label})
+                  </span>
+                </div>
+                <div className="h-4 w-px bg-border"></div>
+                <div className="flex items-center gap-2">
+                  <PipelineIcon className={`w-4 h-4 ${pipelineDisplay.color}`} />
+                  <span className="text-sm font-medium text-foreground">
+                    Pipeline: {pipelineDisplay.label}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="pt-2 border-t border-border">
+              <p className="text-sm text-muted-foreground">{situationWithRate}</p>
+            </div>
           </div>
           
-          <div className="space-y-4">
-            <div>
-              <h4 className="text-sm font-semibold text-foreground mb-2">Your Situation:</h4>
-              <p className="text-sm text-muted-foreground">{recommendation.situation}</p>
-            </div>
-            
-            <div>
-              <h4 className="text-sm font-semibold text-foreground mb-2">Recommendations:</h4>
-              <div className="text-sm text-muted-foreground space-y-2">
-                {recommendation.recommendations.split('\n').map((line, idx) => {
-                  if (!line.trim()) return null;
-                  if (line.startsWith('Consider:')) {
-                    return <p key={idx} className="font-medium">{line}</p>;
-                  }
-                  if (line.startsWith('•')) {
-                    return (
-                      <div key={idx} className="flex items-start gap-2 ml-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        <span>{line.substring(1).trim()}</span>
-                      </div>
-                    );
-                  }
-                  return <p key={idx}>{line}</p>;
-                })}
-              </div>
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-3">Recommendations:</h4>
+            <div className="text-sm text-muted-foreground space-y-2">
+              {recommendationsWithRate.split('\n').map((line, idx) => {
+                if (!line.trim()) return null;
+                if (line.startsWith('Consider:')) {
+                  return <p key={idx} className="font-medium">{line}</p>;
+                }
+                if (line.startsWith('•')) {
+                  return (
+                    <div key={idx} className="flex items-start gap-2 ml-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>{line.substring(1).trim()}</span>
+                    </div>
+                  );
+                }
+                return <p key={idx}>{line}</p>;
+              })}
             </div>
           </div>
         </div>
