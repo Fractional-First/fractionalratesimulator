@@ -155,13 +155,10 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
                   {def.term}
                 </h4>
               ) : def.formulaType ? (
-                // Formula visualization
-                <>
-                  <dt className="font-semibold text-foreground mb-1.5 text-xs">
-                    {def.term}
-                  </dt>
+                // Formula visualization - no label, just the visual
+                <div className="mt-1.5">
                   <FormulaVisual type={def.formulaType} />
-                </>
+                </div>
               ) : (
                 // Regular definition
                 <>
