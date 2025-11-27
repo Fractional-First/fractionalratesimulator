@@ -74,8 +74,8 @@ export const JourneyContainer: React.FC = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-20% 0px -60% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1]
+      rootMargin: '-15% 0px -50% 0px', // More responsive active zone
+      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] // More granular detection
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
