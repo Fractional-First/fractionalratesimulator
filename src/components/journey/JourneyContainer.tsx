@@ -34,10 +34,6 @@ export const JourneyContainer: React.FC = () => {
   // Track all intersecting segments with their intersection data
   const intersectingSegmentsRef = useRef<Map<string, IntersectionObserverEntry>>(new Map());
   
-  // Track scroll direction for better segment detection
-  const lastScrollYRef = useRef(0);
-  const scrollDirectionRef = useRef<'up' | 'down'>('down');
-  
   const [journeyState, setJourneyState] = useState<JourneyState>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -74,24 +70,12 @@ export const JourneyContainer: React.FC = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
   }, [journeyState]);
 
-  // Track scroll direction
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      scrollDirectionRef.current = currentScrollY > lastScrollYRef.current ? 'down' : 'up';
-      lastScrollYRef.current = currentScrollY;
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Intersection Observer for segment detection
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-10% 0px -40% 0px', // Wider active zone (50% instead of 25%)
-      threshold: Array.from({ length: 21 }, (_, i) => i * 0.05) // 0, 0.05, 0.1, ... 1.0
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -107,61 +91,30 @@ export const JourneyContainer: React.FC = () => {
         }
       });
       
-      // Determine which segment should be active
+      // Determine which segment should be active - use simple top-most visible segment
       if (intersectingSegmentsRef.current.size > 0) {
         const segmentOrder = ['establishing-rate', 'assumptions', 'utilization', 'path-forward'];
-        const scrollDirection = scrollDirectionRef.current;
         
-        // Find the best segment based on position, visibility, and scroll direction
-        let bestSegment: string | null = null;
-        let bestScore = -Infinity;
+        // Find the segment closest to the top of the viewport
+        let topMostSegment: string | null = null;
+        let topMostPosition = Infinity;
         
         intersectingSegmentsRef.current.forEach((entry, segmentId) => {
           const rect = entry.boundingClientRect;
-          const intersectionRatio = entry.intersectionRatio;
           
-          // Calculate distance from ideal viewing position
-          const idealTop = 150;
-          const distanceFromIdeal = Math.abs(rect.top - idealTop);
-          
-          // Base scores
-          const positionScore = Math.max(0, 500 - distanceFromIdeal);
-          const visibilityScore = intersectionRatio * 1000;
-          
-          // Priority system: when scrolling down, later segments should strongly override earlier ones
-          const orderIndex = segmentOrder.indexOf(segmentId);
-          let directionBonus = 0;
-          
-          if (orderIndex >= 0) {
-            // When scrolling down, aggressively favor later segments to prevent jumping back
-            if (scrollDirection === 'down') {
-              directionBonus = orderIndex * 500; // Much stronger bonus for later segments
-            } else {
-              // When scrolling up, favor earlier segments but less aggressively
-              directionBonus = (segmentOrder.length - orderIndex) * 200;
+          // Consider segments that are meaningfully visible
+          if (entry.intersectionRatio > 0.1) {
+            // Use the top position - segment closest to top wins
+            if (rect.top < topMostPosition) {
+              topMostPosition = rect.top;
+              topMostSegment = segmentId;
             }
-          }
-          
-          // Special handling: if assumptions is visible and we're past the rate cards, 
-          // assumptions should always win over establishing-rate
-          if (segmentId === 'assumptions' && intersectingSegmentsRef.current.has('establishing-rate')) {
-            const assumptionsRect = entry.boundingClientRect;
-            // If assumptions section is meaningfully visible (not just sticky cards), boost it heavily
-            if (assumptionsRect.height > 100 && intersectionRatio > 0.1) {
-              directionBonus += 2000; // Massive boost to ensure it takes priority
-            }
-          }
-          
-          const totalScore = positionScore + visibilityScore + directionBonus;
-          
-          if (totalScore > bestScore) {
-            bestScore = totalScore;
-            bestSegment = segmentId;
           }
         });
         
-        if (bestSegment) {
-          setActiveSegment(bestSegment as 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward');
+        // If we found a valid segment, use it
+        if (topMostSegment) {
+          setActiveSegment(topMostSegment as 'establishing-rate' | 'assumptions' | 'utilization' | 'path-forward');
         }
       }
     };
