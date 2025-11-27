@@ -91,6 +91,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
+        {/* Establishing Rate Section - Separate segment */}
         <div className="space-y-4" ref={establishingRateRef} data-segment="establishing-rate">
           <div className="grid gap-4">
             <CurrencyInput
@@ -161,21 +162,23 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                   These rate calculations are affected by the assumptions below.
                 </p>
               </div>
-
-              {/* Assumptions Accordion - scrolls underneath sticky cards */}
-              <div className="animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
-                <AssumptionsAccordion
-                  inputs={inputs}
-                  updateInput={updateInput}
-                  selectedCountry={selectedCountry}
-                  onCountryChange={handleCountryChange}
-                  currentCountryLabel={getCurrentCountryLabel()}
-                  isDetectingLocation={isDetectingLocation}
-                />
-              </div>
             </>
           )}
         </div>
+
+        {/* Assumptions Section - Separate, non-nested segment */}
+        {hasFullTimeInputs && (
+          <div className="animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
+            <AssumptionsAccordion
+              inputs={inputs}
+              updateInput={updateInput}
+              selectedCountry={selectedCountry}
+              onCountryChange={handleCountryChange}
+              currentCountryLabel={getCurrentCountryLabel()}
+              isDetectingLocation={isDetectingLocation}
+            />
+          </div>
+        )}
 
         {canProceed && (
           <Button
