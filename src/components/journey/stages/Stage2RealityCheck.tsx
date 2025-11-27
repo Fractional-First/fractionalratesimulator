@@ -186,11 +186,11 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               Billing Rate (Take-home Based)
             </p>
             <div className="text-4xl font-bold text-primary mb-3">
-              {formatCurrencyDecimal(results.directHourly / 0.6)}
+              {formatCurrencyDecimal(results.directHourly / projectWorkPct)}
               <span className="text-lg font-normal text-muted-foreground">/hr</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              At 60% utilization rate, you would need to bill {formatCurrencyDecimal(results.directHourly / 0.6)}/hr in order to achieve an equivalent of your full-time annual take-home pay. This means at a billing rate of {formatCurrencyDecimal(results.directHourly / 0.6)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.directHourly)}/hr.
+              At {utilizationRate.toFixed(0)}% utilization rate, you would need to bill {formatCurrencyDecimal(results.directHourly / projectWorkPct)}/hr in order to achieve an equivalent of your full-time annual take-home pay. This means at a billing rate of {formatCurrencyDecimal(results.directHourly / projectWorkPct)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.directHourly)}/hr.
             </p>
           </div>
 
@@ -200,11 +200,11 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               Billing Rate (Fully-loaded Based)
             </p>
             <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-3">
-              {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}
+              {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}
               <span className="text-lg font-normal text-muted-foreground">/hr</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              At 60% utilization rate, you would need to bill {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}/hr in order to achieve an equivalent of your full-time annual fully-loaded pay. This means at a billing rate of {formatCurrencyDecimal(results.fullyLoadedHourly / 0.6)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
+              At {utilizationRate.toFixed(0)}% utilization rate, you would need to bill {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr in order to achieve an equivalent of your full-time annual fully-loaded pay. This means at a billing rate of {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
             </p>
           </div>
         </div>
