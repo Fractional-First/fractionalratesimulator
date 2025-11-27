@@ -74,8 +74,8 @@ export const JourneyContainer: React.FC = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-10% 0px -70% 0px',
-      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+      rootMargin: '-15% 0px -60% 0px',
+      threshold: Array.from({ length: 21 }, (_, i) => i * 0.05) // 0, 0.05, 0.1, ... 1.0
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -93,36 +93,34 @@ export const JourneyContainer: React.FC = () => {
       
       // Determine which segment should be active
       if (intersectingSegmentsRef.current.size > 0) {
-        // Define segment order
         const segmentOrder = ['establishing-rate', 'assumptions', 'utilization', 'path-forward'];
         
-        // Find the topmost intersecting segment (prioritize segments higher on page)
+        // Find the best segment based on position and visibility
         let bestSegment: string | null = null;
-        let smallestTop = Infinity;
-        let bestIntersectionRatio = 0;
+        let bestScore = -Infinity;
         
         intersectingSegmentsRef.current.forEach((entry, segmentId) => {
           const rect = entry.boundingClientRect;
           const intersectionRatio = entry.intersectionRatio;
           
-          // Only consider segments that are actually visible in the active zone
-          const isInActiveZone = rect.top >= 0 && rect.top <= 400;
+          // Calculate distance from ideal viewing position (slightly below top of viewport)
+          const idealTop = 150; // Sweet spot in viewport
+          const distanceFromIdeal = Math.abs(rect.top - idealTop);
           
-          if (isInActiveZone) {
-            // Strongly prioritize segments that are highest on the page
-            // When scrolling up, we want to show the segment that's closest to top
-            if (rect.top < smallestTop) {
-              smallestTop = rect.top;
-              bestSegment = segmentId;
-              bestIntersectionRatio = intersectionRatio;
-            } else if (Math.abs(rect.top - smallestTop) < 50) {
-              // If two segments are very close, pick the one with better intersection
-              if (intersectionRatio > bestIntersectionRatio) {
-                smallestTop = rect.top;
-                bestSegment = segmentId;
-                bestIntersectionRatio = intersectionRatio;
-              }
-            }
+          // Segments closer to ideal position get higher scores
+          // Intersection ratio ensures we show what's actually visible
+          const positionScore = Math.max(0, 500 - distanceFromIdeal);
+          const visibilityScore = intersectionRatio * 1000;
+          
+          // Earlier segments get slight priority when scores are close (helps with scroll-up)
+          const orderIndex = segmentOrder.indexOf(segmentId);
+          const orderBonus = orderIndex >= 0 ? (segmentOrder.length - orderIndex) * 5 : 0;
+          
+          const totalScore = positionScore + visibilityScore + orderBonus;
+          
+          if (totalScore > bestScore) {
+            bestScore = totalScore;
+            bestSegment = segmentId;
           }
         });
         
