@@ -15,7 +15,6 @@ interface Stage2RealityCheckProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
-  utilizationRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
@@ -26,7 +25,6 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
   updateInput,
   onComplete,
   onEdit,
-  utilizationRef,
 }) => {
 
   // Get time allocation percentages from inputs (decimals 0-1)
@@ -82,7 +80,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
       isActive={isActive}
       onEdit={onEdit}
     >
-      <div className="space-y-6 mt-6" ref={utilizationRef} data-segment="utilization">
+      <div className="space-y-6 mt-6">
         {/* Educational Context */}
         <div className="mt-4 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-sm text-foreground font-medium mb-2">

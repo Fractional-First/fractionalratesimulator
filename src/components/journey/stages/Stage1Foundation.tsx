@@ -17,8 +17,6 @@ interface Stage1FoundationProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
-  establishingRateRef: React.RefObject<HTMLDivElement>;
-  assumptionsRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
@@ -29,8 +27,6 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   updateInput,
   onComplete,
   onEdit,
-  establishingRateRef,
-  assumptionsRef,
 }) => {
   const [selectedCountry, setSelectedCountry] = useState('GLOBAL');
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
@@ -117,7 +113,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
 
           {/* Assumptions Section - Now above rate cards */}
           {hasFullTimeInputs && (
-            <div className="animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
+            <div className="animate-fade-in">
               <AssumptionsAccordion
                 inputs={inputs}
                 updateInput={updateInput}
@@ -132,7 +128,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
           {hasFullTimeInputs && (
             <>
               {/* Sticky Rate Cards Container */}
-              <div className="sticky top-16 md:top-20 z-10 pb-4 mb-6 transition-shadow" ref={establishingRateRef} data-segment="establishing-rate">
+              <div className="sticky top-16 md:top-20 z-10 pb-4 mb-6 transition-shadow">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
                   {/* Your Effective Rate */}
                   <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
