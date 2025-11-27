@@ -9,6 +9,10 @@ import { Stage4Solution } from './stages/Stage4Solution';
 export type JourneyStage = 'foundation' | 'reality' | 'solution';
 export type StageStatus = 'locked' | 'active' | 'completed';
 
+interface Stage1Props {
+  assumptionsRef: React.RefObject<HTMLDivElement>;
+}
+
 interface JourneyState {
   currentStage: JourneyStage;
   stageStatus: Record<JourneyStage, StageStatus>;
@@ -266,9 +270,6 @@ export const JourneyContainer: React.FC = () => {
         {/* Establishing Rate segment marker */}
         <div ref={establishingRateRef} data-segment="establishing-rate" />
         
-        {/* Assumptions segment marker - positioned to detect when accordion area is visible */}
-        <div ref={assumptionsRef} data-segment="assumptions" className="absolute" style={{ top: '60%' }} />
-        
         <Stage1Foundation
           isActive={journeyState.currentStage === 'foundation'}
           status={journeyState.stageStatus.foundation}
@@ -280,6 +281,7 @@ export const JourneyContainer: React.FC = () => {
             goToStage('reality');
           }}
           onEdit={() => goToStage('foundation')}
+          assumptionsRef={assumptionsRef}
         />
       </div>
 

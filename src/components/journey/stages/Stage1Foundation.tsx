@@ -17,6 +17,7 @@ interface Stage1FoundationProps {
   updateInput: (field: keyof Inputs) => (value: number) => void;
   onComplete: () => void;
   onEdit: () => void;
+  assumptionsRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
@@ -27,6 +28,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   updateInput,
   onComplete,
   onEdit,
+  assumptionsRef,
 }) => {
   const [selectedCountry, setSelectedCountry] = useState('GLOBAL');
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
@@ -114,6 +116,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
           {/* Assumptions Section - Now above rate cards */}
           {hasFullTimeInputs && (
             <div className="animate-fade-in">
+              <div ref={assumptionsRef} data-segment="assumptions" />
               <AssumptionsAccordion
                 inputs={inputs}
                 updateInput={updateInput}
