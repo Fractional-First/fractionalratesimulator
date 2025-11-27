@@ -322,11 +322,12 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             </div>
             
             <div>
+              <h4 className="text-sm font-semibold text-foreground mb-3">Consider:</h4>
               <div className="text-sm text-muted-foreground space-y-2">
                 {recommendationsWithRate.split('\n').map((line, idx) => {
                   if (!line.trim()) return null;
                   if (line.startsWith('Consider:')) {
-                    return null; // Skip the "Consider:" line
+                    return null; // Skip the "Consider:" line as we have it as heading
                   }
                   if (line.startsWith('•')) {
                     return (
