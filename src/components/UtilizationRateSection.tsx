@@ -173,11 +173,11 @@ export const UtilizationRateSection: React.FC<UtilizationRateSectionProps> = ({
               </div>
             </div>
 
-            {/* Required Billing Rate */}
+            {/* Billing Rate */}
             <div className="p-4 bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg border border-primary/20">
               <div className="space-y-2">
                 <label className="text-sm font-medium flex items-center gap-2 text-foreground">
-                  Required Billing Rate
+                  Billing Rate
                   <InfoTooltip content={
                     <>
                       The <strong>hourly rate you must charge</strong> clients to achieve your effective rate, given your {projectWork}% billable time allocation.
