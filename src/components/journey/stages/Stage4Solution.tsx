@@ -158,7 +158,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
 }) => {
 
   // BD Pipeline health state
-  const [pipelineHealth, setPipelineHealth] = useState<BDPipelineHealth>('fair');
+  const [pipelineHealth, setPipelineHealth] = useState<BDPipelineHealth | null>(null);
   const bdPct = inputs.bdPct ?? 0.15;
   const invoicingPct = inputs.invoicingPct ?? 0.10;
   const adminPct = inputs.adminPct ?? 0.15;
@@ -242,7 +242,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             How would you describe the current health of your client pipeline and business development efforts?
           </p>
           
-          <RadioGroup value={pipelineHealth} onValueChange={value => setPipelineHealth(value as BDPipelineHealth)}>
+          <RadioGroup value={pipelineHealth || undefined} onValueChange={value => setPipelineHealth(value as BDPipelineHealth)}>
             <div className="space-y-3">
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="poor" id="poor" className="mt-0.5" />
@@ -287,90 +287,93 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </RadioGroup>
         </div>
 
-        {/* Personalized Recommendation */}
-        <div className="p-6 bg-card rounded-xl border border-border">
-          <h3 className="text-lg font-bold text-foreground mb-3">
-            Your Personalized Recommendation
-          </h3>
-          <div className="p-4 bg-muted/30 rounded-lg mb-4 space-y-3">
-            <div>
-              <p className="text-xs font-medium text-muted-foreground uppercase mb-2">
-                Your Current Position
-              </p>
-              <div className="flex items-center gap-4 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <UtilFeedbackIcon className={`w-4 h-4 ${utilizationFeedback.color}`} />
-                  <span className="text-sm font-medium text-foreground">
-                    Utilization: {Math.round(utilizationRate)}%
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    ({utilizationFeedback.label})
-                  </span>
-                </div>
-                <div className="h-4 w-px bg-border"></div>
-                <div className="flex items-center gap-2">
-                  <PipelineIcon className={`w-4 h-4 ${pipelineDisplay.color}`} />
-                  <span className="text-sm font-medium text-foreground">
-                    Pipeline: {pipelineDisplay.label}
-                  </span>
+        {/* Personalized Recommendation - only show when pipeline health is selected */}
+        {pipelineHealth && (
+          <div className="p-6 bg-card rounded-xl border border-border">
+            <h3 className="text-lg font-bold text-foreground mb-3">
+              Your Personalized Recommendation
+            </h3>
+            <div className="p-4 bg-muted/30 rounded-lg mb-4 space-y-3">
+              <div>
+                <p className="text-xs font-medium text-muted-foreground uppercase mb-2">
+                  Your Current Position
+                </p>
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <UtilFeedbackIcon className={`w-4 h-4 ${utilizationFeedback.color}`} />
+                    <span className="text-sm font-medium text-foreground">
+                      Utilization: {Math.round(utilizationRate)}%
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      ({utilizationFeedback.label})
+                    </span>
+                  </div>
+                  <div className="h-4 w-px bg-border"></div>
+                  <div className="flex items-center gap-2">
+                    <PipelineIcon className={`w-4 h-4 ${pipelineDisplay.color}`} />
+                    <span className="text-sm font-medium text-foreground">
+                      Pipeline: {pipelineDisplay.label}
+                    </span>
+                  </div>
                 </div>
               </div>
+              <div className="pt-2 border-t border-border">
+                <p className="text-sm text-muted-foreground">{situationWithRate}</p>
+              </div>
             </div>
-            <div className="pt-2 border-t border-border">
-              <p className="text-sm text-muted-foreground">{situationWithRate}</p>
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="text-sm font-semibold text-foreground mb-3">Consider:</h4>
-            <div className="text-sm text-muted-foreground space-y-2">
-              {recommendationsWithRate.split('\n').map((line, idx) => {
-                if (!line.trim()) return null;
-                if (line.startsWith('Consider:')) {
-                  return <p key={idx} className="font-medium">{line}</p>;
-                }
-                if (line.startsWith('•')) {
-                  return (
-                    <div key={idx} className="flex items-start gap-2 ml-2">
-                      <span className="text-primary mt-0.5">•</span>
-                      <span>{line.substring(1).trim()}</span>
-                    </div>
-                  );
-                }
-                return <p key={idx}>{line}</p>;
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
-          <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
-          <p className="text-sm text-muted-foreground mb-4">{advice.description}</p>
-          
-          <div className="space-y-4">
+            
             <div>
-              <h4 className="text-sm font-semibold text-foreground mb-3">
-                How Fractional First Can Help You:
-              </h4>
-              <ul className="space-y-2">
-                {advice.recommendations.map((rec, idx) => <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <span className="text-primary mt-0.5">✓</span>
-                    <span>{rec}</span>
-                  </li>)}
-              </ul>
-            </div>
-
-            <div className="pt-4 border-t border-border">
-              <Button size="lg" className="w-full" asChild>
-                <a href="https://talent.fractionalfirst.com/signup" target="_blank" rel="noopener noreferrer">
-                  {advice.ctaText}
-                  <ExternalLink className="ml-2 w-4 h-4" />
-                </a>
-              </Button>
+              <div className="text-sm text-muted-foreground space-y-2">
+                {recommendationsWithRate.split('\n').map((line, idx) => {
+                  if (!line.trim()) return null;
+                  if (line.startsWith('Consider:')) {
+                    return null; // Skip the "Consider:" line
+                  }
+                  if (line.startsWith('•')) {
+                    return (
+                      <div key={idx} className="flex items-start gap-2 ml-2">
+                        <span className="text-primary mt-0.5">•</span>
+                        <span>{line.substring(1).trim()}</span>
+                      </div>
+                    );
+                  }
+                  return <p key={idx}>{line}</p>;
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* CTA - only show when pipeline health is selected */}
+        {pipelineHealth && (
+          <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
+            <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
+            <p className="text-sm text-muted-foreground mb-4">{advice.description}</p>
+            
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-sm font-semibold text-foreground mb-3">
+                  How Fractional First Can Help You:
+                </h4>
+                <ul className="space-y-2">
+                  {advice.recommendations.map((rec, idx) => <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="text-primary mt-0.5">✓</span>
+                      <span>{rec}</span>
+                    </li>)}
+                </ul>
+              </div>
+
+              <div className="pt-4 border-t border-border">
+                <Button size="lg" className="w-full" asChild>
+                  <a href="https://talent.fractionalfirst.com/signup" target="_blank" rel="noopener noreferrer">
+                    {advice.ctaText}
+                    <ExternalLink className="ml-2 w-4 h-4" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Additional Actions */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
