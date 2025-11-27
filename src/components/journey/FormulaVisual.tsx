@@ -69,7 +69,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
             <div className="flex flex-col items-center space-y-1.5">
-              {/* Calculation */}
+              {/* Days Calculation */}
               <div className="text-center flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 text-xs">
                 <span className="font-medium text-foreground">(52 weeks × 5 days)</span>
                 <span className="text-muted-foreground">−</span>
@@ -82,12 +82,18 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
                 <span className="font-medium text-foreground">Training</span>
               </div>
               
+              {/* Multiply by hours */}
+              <div className="text-center flex items-center justify-center gap-x-1 text-xs">
+                <span className="text-muted-foreground">×</span>
+                <span className="font-medium text-foreground">Hours Per Day</span>
+              </div>
+              
               {/* Arrow */}
               <div className="text-muted-foreground text-sm">↓</div>
               
               {/* Result */}
               <div className="text-center">
-                <span className="text-xs font-semibold text-foreground">Annual Working Days</span>
+                <span className="text-xs font-semibold text-foreground">Annual Working Hours</span>
               </div>
             </div>
           </div>
