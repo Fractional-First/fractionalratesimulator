@@ -90,10 +90,6 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         formulaType: 'billing-rate'
       },
       {
-        term: 'Example',
-        definition: 'At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)'
-      },
-      {
         term: "What's a Realistic Utilization Rate?",
         definition: '',
         tableData: [
