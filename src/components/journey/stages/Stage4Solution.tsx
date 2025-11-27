@@ -167,20 +167,19 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const effectiveRate = results.nominalHourly;
   const billingRate = effectiveRate / (1 - nonBillablePct);
 
-  // Get utilization feedback and personalized recommendation
+  // Get utilization feedback (doesn't depend on pipeline health)
   const utilizationFeedback = getUtilizationFeedback(utilizationRate);
   const UtilFeedbackIcon = utilizationFeedback.icon;
+  
+  // Only compute pipeline-dependent values when pipeline health is selected
   const utilizationCategory = getUtilizationCategory(utilizationRate);
-  const recommendation = getRecommendation(utilizationCategory, pipelineHealth);
+  const recommendation = pipelineHealth ? getRecommendation(utilizationCategory, pipelineHealth) : null;
   
   // Replace XX% with actual utilization rate in the situation text
-  const situationWithRate = recommendation.situation.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`);
-  const recommendationsWithRate = recommendation.recommendations.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`);
+  const situationWithRate = recommendation ? recommendation.situation.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`) : '';
+  const recommendationsWithRate = recommendation ? recommendation.recommendations.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`) : '';
   
-  const advice = getAdviceMatrix(utilizationRate, pipelineHealth);
-  const SeverityIcon = advice.severity === 'critical' ? AlertTriangle : advice.severity === 'warning' ? TrendingUp : CheckCircle2;
-  const severityColor = advice.severity === 'critical' ? 'text-red-600 dark:text-red-400' : advice.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
-  const severityBg = advice.severity === 'critical' ? 'bg-red-500/10 border-red-500/20' : advice.severity === 'warning' ? 'bg-amber-500/10 border-amber-500/20' : 'bg-green-500/10 border-green-500/20';
+  const advice = pipelineHealth ? getAdviceMatrix(utilizationRate, pipelineHealth) : null;
   
   // Pipeline health icon and styling
   const getPipelineHealthDisplay = (health: BDPipelineHealth) => {
@@ -216,8 +215,8 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
     }
   };
   
-  const pipelineDisplay = getPipelineHealthDisplay(pipelineHealth);
-  const PipelineIcon = pipelineDisplay.icon;
+  const pipelineDisplay = pipelineHealth ? getPipelineHealthDisplay(pipelineHealth) : null;
+  const PipelineIcon = pipelineDisplay?.icon;
   
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6" ref={pathForwardRef} data-segment="path-forward">
@@ -288,7 +287,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
         </div>
 
         {/* Personalized Recommendation - only show when pipeline health is selected */}
-        {pipelineHealth && (
+        {pipelineHealth && pipelineDisplay && (
           <div className="p-6 bg-card rounded-xl border border-border">
             <h3 className="text-lg font-bold text-foreground mb-3">
               Your Personalized Recommendation
@@ -310,7 +309,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
                   </div>
                   <div className="h-4 w-px bg-border"></div>
                   <div className="flex items-center gap-2">
-                    <PipelineIcon className={`w-4 h-4 ${pipelineDisplay.color}`} />
+                    {PipelineIcon && <PipelineIcon className={`w-4 h-4 ${pipelineDisplay.color}`} />}
                     <span className="text-sm font-medium text-foreground">
                       Pipeline: {pipelineDisplay.label}
                     </span>
@@ -345,7 +344,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
         )}
 
         {/* CTA - only show when pipeline health is selected */}
-        {pipelineHealth && (
+        {pipelineHealth && advice && (
           <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border-2 border-primary/20">
             <h3 className="text-xl font-bold text-foreground mb-2">{advice.title}</h3>
             <p className="text-sm text-muted-foreground mb-4">{advice.description}</p>
