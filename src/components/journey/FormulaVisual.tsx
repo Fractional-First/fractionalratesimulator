@@ -100,8 +100,8 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
                 <span className="text-xs font-medium text-foreground">Hourly Rate</span>
               </div>
               
-              {/* Divider */}
-              <div className="w-full border-t border-foreground/30" />
+              {/* Divider - 50% width */}
+              <div className="w-1/2 border-t border-foreground/30" />
               
               {/* Denominator */}
               <div className="text-center py-1">
@@ -110,9 +110,9 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               
               {/* Example */}
               <div className="text-center pt-2 border-t border-border/30 mt-2 w-full">
-                <span className="text-[10px] text-muted-foreground font-mono">
-                  At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)
-                </span>
+                <div className="text-[10px] text-muted-foreground font-mono">
+                  <span className="font-semibold">Example:</span> At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)
+                </div>
               </div>
             </div>
           </div>
