@@ -115,6 +115,20 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
             />
           </div>
 
+          {/* Assumptions Section - Now above rate cards */}
+          {hasFullTimeInputs && (
+            <div className="animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
+              <AssumptionsAccordion
+                inputs={inputs}
+                updateInput={updateInput}
+                selectedCountry={selectedCountry}
+                onCountryChange={handleCountryChange}
+                currentCountryLabel={getCurrentCountryLabel()}
+                isDetectingLocation={isDetectingLocation}
+              />
+            </div>
+          )}
+
           {hasFullTimeInputs && (
             <>
               {/* Sticky Rate Cards Container */}
@@ -159,26 +173,12 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                 
                 {/* Calculation Footnote */}
                 <p className="text-xs text-muted-foreground mt-3 text-center">
-                  These rate calculations are affected by the assumptions below.
+                  These rate calculations are affected by the assumptions above.
                 </p>
               </div>
             </>
           )}
         </div>
-
-        {/* Assumptions Section - Separate, non-nested segment */}
-        {hasFullTimeInputs && (
-          <div className="animate-fade-in" ref={assumptionsRef} data-segment="assumptions">
-            <AssumptionsAccordion
-              inputs={inputs}
-              updateInput={updateInput}
-              selectedCountry={selectedCountry}
-              onCountryChange={handleCountryChange}
-              currentCountryLabel={getCurrentCountryLabel()}
-              isDetectingLocation={isDetectingLocation}
-            />
-          </div>
-        )}
 
         {canProceed && (
           <Button
