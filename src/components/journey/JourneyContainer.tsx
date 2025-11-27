@@ -128,17 +128,27 @@ export const JourneyContainer: React.FC = () => {
           const positionScore = Math.max(0, 500 - distanceFromIdeal);
           const visibilityScore = intersectionRatio * 1000;
           
-          // Scroll direction bonus - strongly favor appropriate segments based on direction
+          // Priority system: when scrolling down, later segments should strongly override earlier ones
           const orderIndex = segmentOrder.indexOf(segmentId);
           let directionBonus = 0;
           
           if (orderIndex >= 0) {
-            if (scrollDirection === 'up') {
-              // When scrolling up, heavily favor earlier segments
-              directionBonus = (segmentOrder.length - orderIndex) * 100;
+            // When scrolling down, aggressively favor later segments to prevent jumping back
+            if (scrollDirection === 'down') {
+              directionBonus = orderIndex * 500; // Much stronger bonus for later segments
             } else {
-              // When scrolling down, favor later segments
-              directionBonus = orderIndex * 50;
+              // When scrolling up, favor earlier segments but less aggressively
+              directionBonus = (segmentOrder.length - orderIndex) * 200;
+            }
+          }
+          
+          // Special handling: if assumptions is visible and we're past the rate cards, 
+          // assumptions should always win over establishing-rate
+          if (segmentId === 'assumptions' && intersectingSegmentsRef.current.has('establishing-rate')) {
+            const assumptionsRect = entry.boundingClientRect;
+            // If assumptions section is meaningfully visible (not just sticky cards), boost it heavily
+            if (assumptionsRect.height > 100 && intersectionRatio > 0.1) {
+              directionBonus += 2000; // Massive boost to ensure it takes priority
             }
           }
           
