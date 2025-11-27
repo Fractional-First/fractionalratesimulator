@@ -60,7 +60,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Annual Working Hours',
-        definition: ''
+        definition: 'Total working hours available per year after accounting for vacation, holidays, and other leave.'
       },
       {
         term: 'Formula',
