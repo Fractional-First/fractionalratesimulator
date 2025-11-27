@@ -322,7 +322,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
           
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-3">Recommendations:</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-3">Consider:</h4>
             <div className="text-sm text-muted-foreground space-y-2">
               {recommendationsWithRate.split('\n').map((line, idx) => {
                 if (!line.trim()) return null;
