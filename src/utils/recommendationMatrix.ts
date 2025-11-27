@@ -14,119 +14,92 @@ export const getRecommendation = (
   const matrix: Record<BDPipelineHealth, Record<UtilizationCategory, RecommendationContent>> = {
     poor: {
       'very-low': {
-        situation: 'Your current utilization rate is low and your pipeline visibility is low.',
-        recommendations:
-          'Focus on building your pipeline through consistent BD activities. Consider joining fractional communities and leveraging your network. Start with smaller engagements to build momentum and testimonials.',
+        situation: "Your current (XX)% utilization rate is low, and your pipeline viability is limited. You are still available.",
+        recommendations: "Consider:\n• Focusing 80% of your time on active Business Development (BD).\n• Reaching out to past colleagues and peers to let them know you have capacity.\n• Refining your value proposition to ensure it resonates with your ideal client profile.\n• Joining Fractional First workshops and coaching to accelerate your growth."
       },
       acceptable: {
-        situation: 'Your current utilization rate is in the acceptable range, and your pipeline visibility is low.',
-        recommendations:
-          'Your utilization is reasonable for early stage, but pipeline development needs attention. Allocate dedicated time each week for BD activities. Consider partnering with agencies or platforms that can provide leads.',
+        situation: "Your current (XX)% utilization rate is acceptable, but your pipeline viability is low. You are now delivering, but you need to watch the horizon.",
+        recommendations: "Consider:\n• Prioritizing lead generation to avoid a future income gap.\n• Asking current happy clients for referrals or testimonials.\n• Balancing delivery excellence with consistent daily outreach.\n• Joining Fractional First workshops to build a reliable pipeline engine."
       },
       good: {
-        situation: 'Your current utilization rate is fairly strong, and your pipeline visibility is low.',
-        recommendations:
-          'Strong utilization but weak pipeline is a warning sign. Without consistent BD, your utilization will drop when current projects end. Dedicate time now to pipeline development before it becomes critical.',
+        situation: "Your current (XX)% utilization rate is strong, but your pipeline viability is low. You are in the \"feast or famine\" danger zone.",
+        recommendations: "Consider:\n• Blocking specific time on your calendar for BD, even when busy.\n• Leveraging your current work to create case studies that attract inbound leads.\n• Reconnecting with \"warm\" leads from the past who weren't ready then.\n• Joining Fractional First coaching to prevent future gaps while you deliver."
       },
       great: {
-        situation: 'Your current utilization rate is very strong, and your pipeline visibility is low.',
-        recommendations:
-          'High utilization with weak pipeline is risky. You are too busy for BD, which will hurt future revenue. Consider outsourcing BD or administrative tasks to free up time for pipeline development.',
+        situation: "Your current (XX)% utilization rate is very strong, yet your pipeline viability is critically low. You risk an income \"cliff\" when projects end.",
+        recommendations: "Consider:\n• Aggressively scheduling networking chats during your non-billable hours.\n• Considering a retainer model for current clients to secure longer-term stability.\n• Signaling to your network that you will have availability in the coming months.\n• Leveraging Fractional First resources to quickly refill the pipeline or extend current work ends."
       },
       excellent: {
-        situation: 'Your current utilization rate is excellent, and your pipeline visibility is low.',
-        recommendations:
-          'Critical situation: Excellent utilization today but no pipeline means potential revenue cliff ahead. Immediately allocate resources to BD—consider hiring support or joining fractional platforms to maintain deal flow.',
-      },
+        situation: "Your current (XX)% utilization rate is excellent, but your pipeline viability is critically low. You risk an income \"cliff\" when projects end. (ideally reserve but risky if pipeline development is neglected)",
+        recommendations: "Consider:\n• Focusing on \"low-lift, high-impact\" marketing like posting thought leadership on LinkedIn.\n• Simplifying your referral network that you will have availability soon.\n• Saving excess revenue to cover potential gaps between contracts.\n• Leveraging Fractional First resources to rapidly secure your next opportunity, possibly with the help of Fractional First."
+      }
     },
     fair: {
       'very-low': {
-        situation:
-          'Your current utilization rate is low, and your pipeline visibility is developing but not yet highly predictable.',
-        recommendations:
-          'Your pipeline shows promise. Focus on converting leads more efficiently and reducing time spent on administrative tasks. Consider streamlining your sales process and onboarding procedures.',
+        situation: "Your current (XX)% utilization rate is low, and your pipeline is inconsistent. You are doing the work, but the results aren't predictable yet.",
+        recommendations: "Consider:\n• Analyzing your sales funnel to see where you are losing leads.\n• Increasing your volume of outreach to smooth out the inconsistency.\n• Partnering with Fractional First or other leaders to cross-refer opportunities.\n• Joining Fractional First workshops to stabilize your lead flow."
       },
       acceptable: {
-        situation:
-          'Your current utilization rate is in the acceptable range, and your pipeline visibility is developing and not yet highly predictable.',
-        recommendations:
-          'You are in a growth phase. Work on making your pipeline more predictable through consistent BD routines. Track conversion rates and optimize what is working. Build systems for repeatable success.',
+        situation: "Your current (XX)% utilization rate is acceptable, with a developing pipeline. You are heading in the right direction but need more stability.",
+        recommendations: "Consider:\n• Systematizing your BD routine to make it less time-consuming.\n• Focusing on nurturing the leads you have rather than just chasing new ones.\n• Reviewing your pricing to ensure you aren't underpricing just to gaps.\n• Engaging with Fractional First coaching to master business development efficiency."
       },
       good: {
-        situation:
-          'Your current utilization rate is fairly strong, and your pipeline visibility is developing and not yet highly predictable.',
-        recommendations:
-          'Good position but pipeline consistency needs work. Develop a structured BD cadence. Document what is working in your client acquisition so you can replicate it. Consider building partnerships for more consistent referrals.',
+        situation: "Your current (XX)% utilization rate is strong, and your pipeline is showing promise. You are doing well, but it feels a bit chaotic.",
+        recommendations: "Consider:\n• Being more selective with new leads, focusing on \"ideal\" clients.\n• Dedicating Friday afternoons to pipeline maintenance and documentation.\n• Preventing client delivery from bleeding into your sales time.\n• Leveraging Fractional First resources to optimize your time management."
       },
       great: {
-        situation:
-          'Your current utilization rate is very strong, and your pipeline visibility is developing and not yet highly predictable.',
-        recommendations:
-          'High utilization with developing pipeline requires attention to balance. Do not let current work completely crowd out BD time. Block dedicated time for pipeline development, even when busy.',
+        situation: "Your current (XX)% utilization rate is great, though your pipeline remains inconsistent. You risk burnout if you don't manage this carefully.",
+        recommendations: "Consider:\n• Pricing your limited availability at a premium.\n• Outsourcing the more task-oriented stuff to free up time, possibly with help from Fractional First.\n• Extending current contracts rather than finding net-new clients.\n• Moving away from \"hours for dollars\" toward value-based or flat-fee pricing."
       },
       excellent: {
-        situation:
-          'Your current utilization rate is excellent, and your pipeline visibility is developing and not yet highly predictable.',
-        recommendations:
-          'Excellent utilization but inconsistent pipeline is concerning. Build systems that allow BD to continue even when you are at capacity. Consider automation, partnerships, or support staff to maintain deal flow.',
-      },
+        situation: "Your current (XX)% utilization rate is exceptional, but your inconsistent pipeline is a risk. You might be over-servicing clients.",
+        recommendations: "Consider:\n• Maintaining consistency in BD to avoid dropping the ball.\n• Using your high utilization as social proof: \"I'm fully booked.\"\n• Outsourcing non-critical tasks or bringing in a junior, possibly with the help of Fractional First.\n• Referring weak leads to Fractional First to earn a fee."
+      }
     },
     good: {
       'very-low': {
-        situation: 'Your current utilization rate is low but your pipeline is showing promise.',
-        recommendations:
-          'Good pipeline with low utilization suggests operational inefficiency. Examine what is taking your non-billable time. Automate administrative tasks, streamline processes, and focus on converting your strong pipeline into revenue.',
+        situation: "Your current (XX)% utilization rate is low, but you have a steady flow of qualified leads. You are in a prime position to convert those without desperation.",
+        recommendations: "Consider:\n• Focusing on closing the best-fit clients rather than just filling the calendar.\n• Reviewing your sales process to ensure you are converting efficiently.\n• Setting clear boundaries to protect your delivery time from sales creep.\n• Leveraging Fractional First coaching to refine your closing techniques."
       },
       acceptable: {
-        situation: 'Your current utilization rate is in the acceptable range, and your pipeline visibility is steady and visible.',
-        recommendations:
-          'Solid foundation. Focus on gradual improvement—can you move from 60% to 65% utilization? Look for small efficiency gains in how you manage projects and client communications. Your steady pipeline gives you room to optimize.',
+        situation: "Your current (XX)% utilization rate is acceptable, and your pipeline is steady. You have found a sustainable rhythm.",
+        recommendations: "Consider:\n• Being selective; avoiding the rush to sign everyone.\n• Nudging your rates up for new clients.\n• Setting clear boundaries to protect your delivery time from sales creep.\n• Focusing on relationship building and high-leverage networking."
       },
       good: {
-        situation: 'Your current utilization rate is fairly strong, and your pipeline visibility is steady and visible.',
-        recommendations:
-          'You are in a healthy position. Maintain your current BD practices while looking for opportunities to increase efficiency. Consider whether you can raise rates or take on more strategic (higher-value) work.',
+        situation: "Your current (XX)% utilization rate is strong, supported by a steady pipeline. This is the \"Fractional Dream\" scenario.",
+        recommendations: "Consider:\n• Building a waitlist to increase your perceived value.\n• Giving yourself lower-paying clients—referring them to Fractional First for prioritization.\n• Focusing on relationship building and high-leverage networking."
       },
       great: {
-        situation: 'Your current utilization rate is very strong, and your pipeline visibility is steady and visible.',
-        recommendations:
-          'Strong performance. Focus on sustainability—ensure your BD systems can run even when you are busy. Consider if you are ready to increase rates or be more selective about projects. Protect your capacity for highest-value work.',
+        situation: "Your current (XX)% utilization rate is high, and your pipeline remains steady. You are approaching a tech-income.",
+        recommendations: "Consider:\n• Referring excess work to Fractional First to earn referral fees.\n• Increasing prices to naturally manage demand.\n• Assembling a bigger team to handle the load, possibly with the help of Fractional First.\n• Referring excess demand to Fractional First to monetize your overflow, via referral fees."
       },
       excellent: {
-        situation:
-          'Your current utilization rate is excellent, and your pipeline visibility is steady and visible. You are in pretty good shape.',
-        recommendations:
-          'Excellent position! Keep doing what you are doing. Consider: (1) Can you increase rates to benefit from higher compensation? (2) Can you outsource routine tasks to free up time? (3) Balance deliverables with efficient BD. (4) Share your experience to help the fractional community.',
-      },
+        situation: "Your current (XX)% utilization rate is excellent, and your pipeline remains steady. Supply and demand are in your favor.",
+        recommendations: "Consider:\n• Raising rates immediately for any new inquiries.\n• Switching \"passive versus active\" (exclusive/reactive) versus active outreach.\n• Outsourcing more \"low-lift, time-heavy tasks to free up time.\n• Helping the community of fractional leaders by sharing your experience to the Fractional First community, possibly with referrals."
+      }
     },
     excellent: {
       'very-low': {
-        situation: 'Your current utilization rate is low but your pipeline seems strong.',
-        recommendations:
-          'Strong pipeline with low utilization indicates operational issues or underpricing. Review your processes, pricing, and project scoping. You have demand—optimize to convert it into billable revenue more efficiently.',
+        situation: "Your current (XX)% utilization rate is low, but you have a steady, strong flow of qualified leads. You are in a prime position to convert those without desperation.",
+        recommendations: "Consider:\n• Maintaining confidence in your sales conversations.\n• Auditing your pricing and contracts; are you under-priced?\n• Reviewing your sales process to ensure you are efficiently converting.\n• Productizing services for better efficiency."
       },
       acceptable: {
-        situation: 'Your current utilization rate is in the acceptable range, and your pipeline seems strong.',
-        recommendations:
-          'Strong pipeline provides a solid foundation. Work on increasing utilization through better project scoping, efficient onboarding, and minimizing administrative overhead. You have the demand to grow revenue.',
+        situation: "Your current (XX)% utilization rate is healthy, and your pipeline is strong. You have found a sustainable rhythm.",
+        recommendations: "Consider:\n• Ensuring your BD efforts remain consistent so the flow doesn't dry up.\n• Productizing services for better efficiency.\n• Being more selective about which new projects you take on."
       },
       good: {
-        situation: 'Your current utilization rate is fairly strong, and your pipeline seems strong.',
-        recommendations:
-          'You are in a strong position. Consider strategic growth—can you increase rates? Take on higher-value projects? The strong pipeline gives you leverage to be more selective and strategic about opportunities.',
+        situation: "Your current (XX)% utilization rate is strong, and your pipeline is strong. This is a very healthy state.",
+        recommendations: "Consider:\n• Assessing upcoming leads for cultural fit and long-term potential.\n• Preparing for lower-paying clients—referring them to your network.\n• Focusing on capability building or cultural brand potential.\n• Reviewing your pricing before you get too busy."
       },
       great: {
-        situation: 'Your current utilization rate and pipeline seem strong.',
-        recommendations:
-          'Very strong position. Focus on strategic optimization—increase rates, be selective about projects, consider outsourcing tasks that do not require your expertise. You have the demand to command premium compensation.',
+        situation: "Your current (XX)% utilization rate and pipeline are both very strong. You are operating at peak performance.",
+        recommendations: "Consider:\n• Raising rates for all new incoming leads.\n• Switching \"passive outreach.\n• Increasing prices to naturally manage demand.\n• Moving away from \"hours for dollars\" toward value-based or flat-fee pricing.\n• Referring excess work to Fractional First to earn a referral fee."
       },
       excellent: {
-        situation:
-          'Your current utilization rate and pipeline are impressive. You are in great shape and you have healthy demand for your work.',
-        recommendations:
-          'Outstanding position! Recommendations: (1) Keep doing what you are doing—you have built something excellent. (2) Consider increasing rates to benefit from high demand. (3) Carefully evaluate outsourcing routine tasks to free up your time. (4) Share your experience to help the fractional community grow.',
-      },
-    },
+        situation: "Your current (XX)% utilization rate is maxed out, and you have healthy demand. You are in excellent shape.",
+        recommendations: "Consider:\n• Raising rates to capitalize on demand.\n• Assembling your team to scale your delivery, possibly with the help of Fractional First, to scale your delivery.\n• Referring excess demand to Fractional First to monetize your overflow, via referral fees.\n• Helping the community of fractional leaders by sharing your success story and lessons."
+      }
+    }
   };
 
   return matrix[pipelineHealth][utilizationCategory];
