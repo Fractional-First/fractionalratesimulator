@@ -119,83 +119,85 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
   const Icon = content.icon;
 
   return (
-    <div className="p-4 bg-muted/30 border border-border rounded-xl animate-fade-in max-h-[calc(100vh-8rem)] overflow-y-auto">
-      {/* Icon */}
-      <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", content.bgClass)}>
-        <Icon className={cn("w-5 h-5", content.colorClass)} />
-      </div>
+    <div className="p-4 bg-muted/30 border border-border rounded-xl max-h-[calc(100vh-8rem)] overflow-y-auto">
+      <div key={activeSegment} className="animate-fade-in">
+        {/* Icon */}
+        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", content.bgClass)}>
+          <Icon className={cn("w-5 h-5", content.colorClass)} />
+        </div>
 
-      {/* Title */}
-      <h3 className="text-lg font-semibold text-foreground mb-2">
-        {content.title}
-      </h3>
+        {/* Title */}
+        <h3 className="text-lg font-semibold text-foreground mb-2">
+          {content.title}
+        </h3>
 
-      {/* Description */}
-      <p className="text-xs text-muted-foreground leading-relaxed">
-        {content.description}
-      </p>
+        {/* Description */}
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          {content.description}
+        </p>
 
-      {/* Definitions - if available */}
-      {content.definitions && content.definitions.length > 0 && (
-        <div className="mt-3 space-y-2">
-          {content.definitions.map((def, index) => (
-            <div key={index} className="text-xs">
-              {def.definition === '' && !def.formulaType && !def.tableData ? (
-                // Section header (no definition text, no formula, no table)
-                <h4 className="font-semibold text-foreground mt-3 mb-1.5 text-sm">
-                  {def.term}
-                </h4>
-              ) : def.formulaType ? (
-                // Formula visualization - no label, just the visual
-                <div className="mt-1.5">
-                  <FormulaVisual type={def.formulaType} />
-                </div>
-              ) : def.tableData ? (
-                // Table display
-                <div className="mt-1.5">
-                  <h4 className="font-semibold text-foreground mb-2 text-sm">
+        {/* Definitions - if available */}
+        {content.definitions && content.definitions.length > 0 && (
+          <div className="mt-3 space-y-2">
+            {content.definitions.map((def, index) => (
+              <div key={index} className="text-xs">
+                {def.definition === '' && !def.formulaType && !def.tableData ? (
+                  // Section header (no definition text, no formula, no table)
+                  <h4 className="font-semibold text-foreground mt-3 mb-1.5 text-sm">
                     {def.term}
                   </h4>
-                  <div className="overflow-hidden rounded-md border border-border">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-border bg-muted/50">
-                          <th className="px-2 py-1.5 text-left font-semibold text-foreground">Rate</th>
-                          <th className="px-2 py-1.5 text-left font-semibold text-foreground">Assessment</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {def.tableData.map((row, rowIndex) => (
-                          <tr key={rowIndex} className={cn(
-                            "border-b border-border last:border-0",
-                            rowIndex % 2 === 0 ? "bg-background" : "bg-muted/30"
-                          )}>
-                            <td className="px-2 py-1.5 font-medium text-foreground whitespace-nowrap">{row.range}</td>
-                            <td className="px-2 py-1.5 text-muted-foreground leading-relaxed">{row.description}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                ) : def.formulaType ? (
+                  // Formula visualization - no label, just the visual
+                  <div className="mt-1.5">
+                    <FormulaVisual type={def.formulaType} />
                   </div>
-                </div>
-              ) : (
-                // Regular definition
-                <>
-                  <dt className="font-semibold text-foreground mb-0.5 text-xs">
-                    {def.term}
-                  </dt>
-                  <dd className={cn(
-                    "text-muted-foreground leading-relaxed text-xs",
-                    def.term === 'Example' ? "font-mono text-[10px] bg-muted/50 p-1.5 rounded border border-border" : ""
-                  )}>
-                    {def.definition}
-                  </dd>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+                ) : def.tableData ? (
+                  // Table display
+                  <div className="mt-1.5">
+                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                      {def.term}
+                    </h4>
+                    <div className="overflow-hidden rounded-md border border-border">
+                      <table className="w-full text-xs">
+                        <thead>
+                          <tr className="border-b border-border bg-muted/50">
+                            <th className="px-2 py-1.5 text-left font-semibold text-foreground">Rate</th>
+                            <th className="px-2 py-1.5 text-left font-semibold text-foreground">Assessment</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {def.tableData.map((row, rowIndex) => (
+                            <tr key={rowIndex} className={cn(
+                              "border-b border-border last:border-0",
+                              rowIndex % 2 === 0 ? "bg-background" : "bg-muted/30"
+                            )}>
+                              <td className="px-2 py-1.5 font-medium text-foreground whitespace-nowrap">{row.range}</td>
+                              <td className="px-2 py-1.5 text-muted-foreground leading-relaxed">{row.description}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ) : (
+                  // Regular definition
+                  <>
+                    <dt className="font-semibold text-foreground mb-0.5 text-xs">
+                      {def.term}
+                    </dt>
+                    <dd className={cn(
+                      "text-muted-foreground leading-relaxed text-xs",
+                      def.term === 'Example' ? "font-mono text-[10px] bg-muted/50 p-1.5 rounded border border-border" : ""
+                    )}>
+                      {def.definition}
+                    </dd>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
