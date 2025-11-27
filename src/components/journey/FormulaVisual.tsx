@@ -108,9 +108,11 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
                 <span className="text-xs font-medium text-foreground">Utilization Rate</span>
               </div>
               
-              {/* Result */}
-              <div className="text-center pt-1 text-xs font-semibold text-foreground">
-                = Billing Rate
+              {/* Example */}
+              <div className="text-center pt-2 border-t border-border/30 mt-2 w-full">
+                <span className="text-[10px] text-muted-foreground font-mono">
+                  At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)
+                </span>
               </div>
             </div>
           </div>
