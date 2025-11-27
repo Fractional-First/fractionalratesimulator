@@ -108,7 +108,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                     Project Work / Utilization Rate
                     <InfoTooltip content={
                       <>
-                        The <strong>percentage of your working hours</strong> that are directly billable to clients. This is the core metric that determines your required billing rate.
+                        The <strong>percentage of your working hours</strong> that are directly billable to clients. This is the core metric that determines your billing rate.
                       </>
                     } />
                   </div>

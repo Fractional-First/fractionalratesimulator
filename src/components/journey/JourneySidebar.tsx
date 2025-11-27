@@ -76,7 +76,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         definition: 'The percentage of your available working hours that you spend on billable work.'
       },
       {
-        term: 'Required Billing Rate',
+        term: 'Billing Rate',
         definition: 'Billing Rate needed to achieve target compensation'
       },
       {
