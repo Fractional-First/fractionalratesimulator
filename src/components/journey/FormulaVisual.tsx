@@ -87,14 +87,6 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
                 <span className="text-muted-foreground">×</span>
                 <span className="font-medium text-foreground">Hours Per Day</span>
               </div>
-              
-              {/* Arrow */}
-              <div className="text-muted-foreground text-sm">↓</div>
-              
-              {/* Result */}
-              <div className="text-center">
-                <span className="text-xs font-semibold text-foreground">Annual Working Hours</span>
-              </div>
             </div>
           </div>
         );
