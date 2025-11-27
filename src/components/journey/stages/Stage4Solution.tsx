@@ -14,7 +14,6 @@ interface Stage4SolutionProps {
   results: Results;
   onEditStage: (stage: JourneyStageType) => void;
   onReset: () => void;
-  pathForwardRef: React.RefObject<HTMLDivElement>;
 }
 import { getRecommendation, getUtilizationCategory, type BDPipelineHealth, type UtilizationCategory } from '@/utils/recommendationMatrix';
 
@@ -154,7 +153,6 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   results,
   onEditStage,
   onReset,
-  pathForwardRef
 }) => {
 
   // BD Pipeline health state
@@ -219,7 +217,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   const PipelineIcon = pipelineDisplay?.icon;
   
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
-      <div className="space-y-6 mt-6" ref={pathForwardRef} data-segment="path-forward">
+      <div className="space-y-6 mt-6">
         {/* Utilization Rate Feedback */}
         <div className={`p-6 rounded-xl border-2 ${utilizationFeedback.bgColor}`}>
           <div className="flex items-start gap-3 mb-3">

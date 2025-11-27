@@ -141,7 +141,7 @@ export const JourneyContainer: React.FC = () => {
         }
       });
     };
-  }, []);
+  }, [journeyState.stageStatus]); // Re-observe when stage visibility changes
 
   const updateInput = (field: keyof Inputs) => (value: number) => {
     setJourneyState(prev => ({
@@ -261,7 +261,14 @@ export const JourneyContainer: React.FC = () => {
               </p>
             </div>
 
+      {/* Foundation Stage with segment markers */}
       <div ref={foundationRef}>
+        {/* Establishing Rate segment marker */}
+        <div ref={establishingRateRef} data-segment="establishing-rate" />
+        
+        {/* Assumptions segment marker - positioned to detect when accordion area is visible */}
+        <div ref={assumptionsRef} data-segment="assumptions" className="absolute" style={{ top: '60%' }} />
+        
         <Stage1Foundation
           isActive={journeyState.currentStage === 'foundation'}
           status={journeyState.stageStatus.foundation}
@@ -273,12 +280,13 @@ export const JourneyContainer: React.FC = () => {
             goToStage('reality');
           }}
           onEdit={() => goToStage('foundation')}
-          establishingRateRef={establishingRateRef}
-          assumptionsRef={assumptionsRef}
         />
       </div>
 
+            {/* Reality Stage with segment marker */}
             <div ref={realityRef}>
+              <div ref={utilizationRef} data-segment="utilization" />
+              
               <Stage2RealityCheck
                 isActive={journeyState.currentStage === 'reality'}
                 status={journeyState.stageStatus.reality}
@@ -290,11 +298,13 @@ export const JourneyContainer: React.FC = () => {
                   goToStage('solution');
                 }}
                 onEdit={() => goToStage('reality')}
-                utilizationRef={utilizationRef}
               />
             </div>
 
+            {/* Solution Stage with segment marker */}
             <div ref={solutionRef}>
+              <div ref={pathForwardRef} data-segment="path-forward" />
+              
               <Stage4Solution
                 isActive={journeyState.currentStage === 'solution'}
                 status={journeyState.stageStatus.solution}
@@ -302,7 +312,6 @@ export const JourneyContainer: React.FC = () => {
                 results={results}
                 onEditStage={goToStage}
                 onReset={resetJourney}
-                pathForwardRef={pathForwardRef}
               />
             </div>
           </div>
