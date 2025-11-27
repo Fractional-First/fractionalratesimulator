@@ -91,8 +91,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
-        {/* Establishing Rate Section - Separate segment */}
-        <div className="space-y-4" ref={establishingRateRef} data-segment="establishing-rate">
+        {/* Input Fields Section */}
+        <div className="space-y-4">
           <div className="grid gap-4">
             <CurrencyInput
               label="Base Salary"
@@ -132,7 +132,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
           {hasFullTimeInputs && (
             <>
               {/* Sticky Rate Cards Container */}
-              <div className="sticky top-16 md:top-20 z-10 pb-4 mb-6 transition-shadow">
+              <div className="sticky top-16 md:top-20 z-10 pb-4 mb-6 transition-shadow" ref={establishingRateRef} data-segment="establishing-rate">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
                   {/* Your Effective Rate */}
                   <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
