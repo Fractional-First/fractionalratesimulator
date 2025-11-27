@@ -253,7 +253,7 @@ export const JourneyContainer: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Journey Stages */}
-          <div className="flex-1 space-y-6 lg:max-w-3xl">
+          <div className="flex-1 space-y-6 lg:max-w-2xl">
             {/* Disclaimer */}
             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
               <p className="text-sm text-amber-700 dark:text-amber-400">
@@ -308,7 +308,7 @@ export const JourneyContainer: React.FC = () => {
           </div>
 
           {/* Right: Contextual Sidebar */}
-          <div className="hidden lg:block lg:w-80 xl:w-96">
+          <div className="hidden lg:block lg:w-96 xl:w-[28rem]">
             <div className="sticky top-24">
               <JourneySidebar activeSegment={activeSegment} />
             </div>
