@@ -15,6 +15,7 @@ interface SegmentContent {
     term: string;
     definition: string;
     formulaType?: FormulaType;
+    tableData?: Array<{ range: string; description: string }>;
   }>;
 }
 
@@ -90,23 +91,13 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: "What's a Realistic Utilization Rate?",
-        definition: ''
-      },
-      {
-        term: '40–60%',
-        definition: 'Acceptable for new fractional leaders'
-      },
-      {
-        term: '60–70%',
-        definition: 'Good utilization rate'
-      },
-      {
-        term: '70–85%',
-        definition: 'Great utilization rate'
-      },
-      {
-        term: '85%+',
-        definition: "It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected"
+        definition: '',
+        tableData: [
+          { range: '40–60%', description: 'Acceptable for new fractional leaders' },
+          { range: '60–70%', description: 'Good utilization rate' },
+          { range: '70–85%', description: 'Great utilization rate' },
+          { range: '85%+', description: "It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected" }
+        ]
       }
     ]
   },
@@ -149,8 +140,8 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         <div className="mt-3 space-y-2">
           {content.definitions.map((def, index) => (
             <div key={index} className="text-xs">
-              {def.definition === '' && !def.formulaType ? (
-                // Section header (no definition text, no formula)
+              {def.definition === '' && !def.formulaType && !def.tableData ? (
+                // Section header (no definition text, no formula, no table)
                 <h4 className="font-semibold text-foreground mt-3 mb-1.5 text-sm">
                   {def.term}
                 </h4>
@@ -158,6 +149,34 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
                 // Formula visualization - no label, just the visual
                 <div className="mt-1.5">
                   <FormulaVisual type={def.formulaType} />
+                </div>
+              ) : def.tableData ? (
+                // Table display
+                <div className="mt-1.5">
+                  <h4 className="font-semibold text-foreground mb-2 text-sm">
+                    {def.term}
+                  </h4>
+                  <div className="overflow-hidden rounded-md border border-border">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-border bg-muted/50">
+                          <th className="px-2 py-1.5 text-left font-semibold text-foreground">Rate</th>
+                          <th className="px-2 py-1.5 text-left font-semibold text-foreground">Assessment</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {def.tableData.map((row, rowIndex) => (
+                          <tr key={rowIndex} className={cn(
+                            "border-b border-border last:border-0",
+                            rowIndex % 2 === 0 ? "bg-background" : "bg-muted/30"
+                          )}>
+                            <td className="px-2 py-1.5 font-medium text-foreground whitespace-nowrap">{row.range}</td>
+                            <td className="px-2 py-1.5 text-muted-foreground leading-relaxed">{row.description}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               ) : (
                 // Regular definition
