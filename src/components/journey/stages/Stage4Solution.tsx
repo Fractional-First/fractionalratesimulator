@@ -272,7 +272,23 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             
             <div>
               <h4 className="text-sm font-semibold text-foreground mb-2">Recommendations:</h4>
-              <p className="text-sm text-muted-foreground">{recommendation.recommendations}</p>
+              <div className="text-sm text-muted-foreground space-y-2">
+                {recommendation.recommendations.split('\n').map((line, idx) => {
+                  if (!line.trim()) return null;
+                  if (line.startsWith('Consider:')) {
+                    return <p key={idx} className="font-medium">{line}</p>;
+                  }
+                  if (line.startsWith('•')) {
+                    return (
+                      <div key={idx} className="flex items-start gap-2 ml-2">
+                        <span className="text-primary mt-0.5">•</span>
+                        <span>{line.substring(1).trim()}</span>
+                      </div>
+                    );
+                  }
+                  return <p key={idx}>{line}</p>;
+                })}
+              </div>
             </div>
           </div>
         </div>
