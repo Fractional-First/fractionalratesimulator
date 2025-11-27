@@ -93,7 +93,10 @@ export const JourneyContainer: React.FC = () => {
       
       // Determine which segment should be active
       if (intersectingSegmentsRef.current.size > 0) {
-        // Find the segment with the best intersection ratio and position
+        // Define segment order for prioritization
+        const segmentOrder = ['establishing-rate', 'assumptions', 'utilization', 'path-forward'];
+        
+        // Find the segment with the best score
         let bestSegment: string | null = null;
         let bestScore = -1;
         
@@ -101,11 +104,20 @@ export const JourneyContainer: React.FC = () => {
           const rect = entry.boundingClientRect;
           const intersectionRatio = entry.intersectionRatio;
           
-          // Calculate a score based on intersection ratio and position
-          // Higher intersection ratio = more visible = higher priority
-          // Segments in the active zone (near top but not too far) get bonus
-          const positionScore = rect.top < 200 && rect.top > -100 ? 1 : 0.5;
-          const score = intersectionRatio * 100 + positionScore * 10;
+          // Prioritize segments near the top of viewport
+          // Strong penalty for segments that are below the fold
+          const distanceFromTop = Math.abs(rect.top);
+          const isNearTop = rect.top >= -100 && rect.top <= 300;
+          
+          // Calculate score prioritizing:
+          // 1. Segments in the active viewing zone (near top)
+          // 2. Higher intersection ratio
+          // 3. Earlier segments when tied (for proper scroll-up behavior)
+          const orderBonus = (segmentOrder.length - segmentOrder.indexOf(segmentId)) * 0.1;
+          const topProximityScore = isNearTop ? (300 - distanceFromTop) / 300 * 100 : 0;
+          const intersectionScore = intersectionRatio * 50;
+          
+          const score = topProximityScore + intersectionScore + orderBonus;
           
           if (score > bestScore) {
             bestScore = score;
