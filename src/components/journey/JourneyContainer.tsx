@@ -251,7 +251,7 @@ export const JourneyContainer: React.FC = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-12 xl:gap-16">
           {/* Left: Journey Stages */}
           <div className="flex-1 space-y-6 lg:max-w-2xl">
             {/* Disclaimer */}
