@@ -22,7 +22,7 @@ interface SegmentContent {
 const segmentContent: Record<SegmentType, SegmentContent> = {
   'establishing-rate': {
     title: 'Benchmarking Your Rate',
-    description: 'We start with a (rather arbitrary) anchor: A full-time compensation package you may have earned or may consider to be reflective of your earning power.',
+    description: 'The Goal: We aren\'t here to dictate your market price or hand you a single "magic number." Instead, this tool provides a directional stress-test for your business model. Use it to explore the financial mechanics of your next chapter and see how the right pricing strategy unlocks long-term freedom.',
     icon: DollarSign,
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',

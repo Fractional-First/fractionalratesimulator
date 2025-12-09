@@ -258,10 +258,10 @@ export const JourneyContainer: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left: Journey Stages */}
           <div className="flex-1 space-y-6 lg:max-w-3xl">
-            {/* Disclaimer */}
-            <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <p className="text-sm text-amber-700 dark:text-amber-400">
-                <strong>Note:</strong> Your results are only as good as your inputs. This simulator provides estimates based on the data you provide.
+            {/* Introduction */}
+            <div className="p-4 bg-muted/30 border border-border rounded-lg">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Leaving a full-time role requires a shift in mindset — from "salary" to "value." We designed this three-stage simulator to guide you through the mechanics of that shift. From "unseen" business development time to the realities of utilization, this tool helps you navigate the hidden variables that define a sustainable practice, balancing your income goals with the reality of your time.
               </p>
             </div>
 
