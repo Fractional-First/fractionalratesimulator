@@ -97,7 +97,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         tableData: [
           { range: '40–60%', description: 'Ramp-up Phase: Normal for leaders building their initial pipeline.' },
           { range: '60–70%', description: 'The Sweet Spot: Sustainable balance between delivery and growth.' },
-          { range: '70–85%', description: 'Great utilization rate' },
+          { range: '70–85%', description: 'High Efficiency: Strong revenue, with little room for error.' },
           { range: '85%+', description: "It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected" }
         ]
       }
