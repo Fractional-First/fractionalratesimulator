@@ -103,7 +103,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <NumberInput
                 label={
                   <div className="flex items-center gap-2">
-                    Project Work / Utilization Rate
+                    Billable Project Work
                     <InfoTooltip content={
                       <>
                         The <strong>percentage of your working hours</strong> that are directly billable to clients. This is the core metric that determines your billing rate.
