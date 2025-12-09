@@ -87,7 +87,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
             Why Utilization Rate Matters
           </p>
           <p className="text-sm text-muted-foreground">
-            Fractional work isn&apos;t typically 100% billable. You need time for business development, invoicing, and administration. Most new fractional leaders start with 30-60% utilization rate as they build their client base.
+            In a fractional model, you are the CEO, the product, and the sales team. The time you spend on business development and operations is essential, but it isn&apos;t billable. The Reality: Most fractional leaders start with 30-60% utilization rate. To maintain your income, your billable hours must subsidize this behind-the-scenes work.
           </p>
         </div>
 
