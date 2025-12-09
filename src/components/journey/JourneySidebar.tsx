@@ -73,7 +73,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
   },
   'utilization': {
     title: 'Understanding Utilization',
-    description: 'We also reveal the effects of utilization rates (the proportion of your time spent on billable hours) on your effective hourly rate.',
+    description: 'Your billable hours must cover your non-billable time. As utilization drops, your hourly rate must rise to maintain the same income.',
     icon: PieChart,
     colorClass: 'text-blue-600 dark:text-blue-400',
     bgClass: 'bg-blue-500/10',
