@@ -95,7 +95,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         term: "What's a Realistic Utilization Rate?",
         definition: '',
         tableData: [
-          { range: '40–60%', description: 'Acceptable for new fractional leaders' },
+          { range: '40–60%', description: 'Ramp-up Phase: Normal for leaders building their initial pipeline.' },
           { range: '60–70%', description: 'Good utilization rate' },
           { range: '70–85%', description: 'Great utilization rate' },
           { range: '85%+', description: "It depends—excellent if you've outsourced pipeline development, but risky if pipeline development is neglected" }
