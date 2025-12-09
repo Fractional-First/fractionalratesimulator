@@ -202,7 +202,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <span className="text-lg font-normal text-muted-foreground">/hr</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              At {utilizationRate.toFixed(0)}% utilization rate, you would need to bill {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr in order to achieve an equivalent of your full-time annual fully-loaded pay. This means at a billing rate of {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
+              At {utilizationRate.toFixed(0)}% utilization rate, you would need to bill {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr in order to achieve an equivalent of your full-time annual cash + benefits pay. This means at a billing rate of {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}/hr, you are making an effective hourly rate of {formatCurrencyDecimal(results.fullyLoadedHourly)}/hr.
             </p>
           </div>
         </div>
