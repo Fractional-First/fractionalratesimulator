@@ -128,7 +128,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold mb-3">
                   <DollarSign className="h-4 w-4 text-foreground" />
-                  Adjust Overhead Cost
+                  Adjust Your Overhead Cost
                 </div>
 
                 <div className="space-y-3">
@@ -153,7 +153,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm font-semibold mb-3">
                   <Clock className="h-4 w-4 text-foreground" />
-                  Adjust Working Time
+                  Adjust Your Working Time
                 </div>
 
                 <div className="space-y-3">
