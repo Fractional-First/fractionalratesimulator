@@ -58,7 +58,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     definitions: [
       {
         term: 'Overhead Cost',
-        definition: 'Overhead % represents additional costs beyond direct compensation (benefits, equipment, office space, etc.)'
+        definition: 'Employers typically pay an extra % on top of salary for insurance, taxes, and benefits. As a Fractional Leader, you need to bake this into your rate.'
       },
       {
         term: 'Annual Working Hours',
