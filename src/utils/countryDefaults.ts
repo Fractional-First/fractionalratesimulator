@@ -195,7 +195,7 @@ export const countryDefaults: Record<string, CountryDefaults> = {
 };
 
 export const countryOptions = [
-  { value: 'GLOBAL', label: 'Global' },
+  { value: 'AR', label: 'Argentina' },
   { value: 'AR', label: 'Argentina' },
   { value: 'AU', label: 'Australia' },
   { value: 'BR', label: 'Brazil' },
