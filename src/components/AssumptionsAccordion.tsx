@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { NumberInput } from './NumberInput';
 import { InfoTooltip } from './InfoTooltip';
-import { Settings, RotateCcw, ChevronDown, Globe, DollarSign, Clock, MapPin } from 'lucide-react';
+import { Settings, ChevronDown, Globe, DollarSign, Clock, MapPin } from 'lucide-react';
 import { type Inputs } from '@/utils/calculator';
 import { countryOptions } from '@/utils/countryDefaults';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -29,15 +29,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
   // Calculate working hours per year dynamically
   const workingDaysPerYear = 52 * 5 - ((inputs.vacationDays || 0) + (inputs.publicHolidays || 0) + (inputs.otherLeaveDays || 0) + (inputs.trainingDays || 0));
   const workingHoursPerYear = workingDaysPerYear * (inputs.hoursPerDay || 8);
-  const handleResetToDefaults = () => {
-    updateInput('overheadPct')(0.25);
-    updateInput('hoursPerDay')(8);
-    updateInput('vacationDays')(21);
-    updateInput('publicHolidays')(15);
-    updateInput('otherLeaveDays')(10);
-    updateInput('trainingDays')(4);
-    updateInput('nonBillablePct')(0.40);
-  };
+
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <CollapsibleTrigger className="w-full group">
         <div className="flex items-center justify-between p-4 bg-muted/50 hover:bg-muted rounded-lg border border-border transition-colors">
@@ -226,13 +218,6 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             </div> {/* Close right column */}
           </div> {/* Close grid */}
 
-          {/* Reset Button */}
-          <div className="pt-6 border-t border-border">
-            <Button onClick={handleResetToDefaults} variant="outline" className="w-full">
-              <RotateCcw className="h-4 w-4 mr-2" />
-              Reset to Default Values (Global)
-            </Button>
-          </div>
         </div> {/* Close main content div */}
       </CollapsibleContent>
     </Collapsible>;
