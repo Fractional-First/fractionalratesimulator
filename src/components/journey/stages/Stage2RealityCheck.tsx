@@ -195,7 +195,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           {/* Purple Card - Fully-loaded Rate Based */}
           <div className="p-6 bg-purple-500/10 rounded-xl border-2 border-purple-500/20">
             <p className="text-sm font-medium text-muted-foreground mb-2">
-              Billing Rate (Fully-loaded Based)
+              Benchmarked Billing Rate (FT Cash+Benefits Compensation Based)
             </p>
             <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-3">
               {formatCurrencyDecimal(results.fullyLoadedHourly / projectWorkPct)}
