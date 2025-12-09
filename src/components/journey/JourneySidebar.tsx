@@ -8,6 +8,7 @@ export type SegmentType = 'establishing-rate' | 'assumptions' | 'utilization' | 
 interface SegmentContent {
   title: string;
   description: string;
+  goal?: string;
   icon: React.ElementType;
   colorClass: string;
   bgClass: string;
@@ -22,7 +23,8 @@ interface SegmentContent {
 const segmentContent: Record<SegmentType, SegmentContent> = {
   'establishing-rate': {
     title: 'Benchmarking Your Rate',
-    description: 'The Goal: We aren\'t here to dictate your market price or hand you a single "magic number." Instead, this tool provides a directional stress-test for your business model. Use it to explore the financial mechanics of your next chapter and see how the right pricing strategy unlocks long-term freedom.',
+    goal: 'We aren\'t here to dictate your market price or hand you a single "magic number." Instead, this tool provides a directional stress-test for your business model. Use it to explore the financial mechanics of your next chapter and see how the right pricing strategy unlocks long-term freedom.',
+    description: 'We start by anchoring to the market value of a full-time role. This allows us to calculate your Price Anchor — the true economic cost a company pays for your expertise before you even send your first invoice.',
     icon: DollarSign,
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
@@ -121,6 +123,13 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
   return (
     <div className="p-4 bg-muted/30 border border-border rounded-xl max-h-[calc(100vh-8rem)] overflow-y-auto">
       <div key={activeSegment} className="animate-fade-in">
+        {/* Goal - shown above title if present */}
+        {content.goal && (
+          <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+            <strong>The Goal:</strong> {content.goal}
+          </p>
+        )}
+
         {/* Icon */}
         <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", content.bgClass)}>
           <Icon className={cn("w-5 h-5", content.colorClass)} />
@@ -133,11 +142,7 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
 
         {/* Description */}
         <p className="text-xs text-muted-foreground leading-relaxed">
-          {content.description.startsWith('The Goal:') ? (
-            <>
-              <strong>The Goal:</strong>{content.description.substring(9)}
-            </>
-          ) : content.description}
+          {content.description}
         </p>
 
         {/* Definitions - if available */}
