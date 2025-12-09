@@ -181,7 +181,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
           {/* Green Card - Take-home Rate Based */}
           <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
             <p className="text-sm font-medium text-muted-foreground mb-2">
-              Billing Rate (Take-home Based)
+              Benchmarked Billing Rate (Full-time Cash Compensation Based)
             </p>
             <div className="text-4xl font-bold text-primary mb-3">
               {formatCurrencyDecimal(results.directHourly / projectWorkPct)}
