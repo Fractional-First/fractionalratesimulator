@@ -133,7 +133,11 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
 
         {/* Description */}
         <p className="text-xs text-muted-foreground leading-relaxed">
-          {content.description}
+          {content.description.startsWith('The Goal:') ? (
+            <>
+              <strong>The Goal:</strong>{content.description.substring(9)}
+            </>
+          ) : content.description}
         </p>
 
         {/* Definitions - if available */}
