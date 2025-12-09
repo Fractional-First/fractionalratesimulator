@@ -21,7 +21,7 @@ interface SegmentContent {
 
 const segmentContent: Record<SegmentType, SegmentContent> = {
   'establishing-rate': {
-    title: 'Establishing Your Rate',
+    title: 'Benchmarking Your Rate',
     description: 'We start with a (rather arbitrary) anchor: A full-time compensation package you may have earned or may consider to be reflective of your earning power.',
     icon: DollarSign,
     colorClass: 'text-primary',
