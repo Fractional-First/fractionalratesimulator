@@ -39,7 +39,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
         formulaType: 'take-home-rate'
       },
       {
-        term: 'Fully Loaded Rate',
+        term: 'Equivalent Cash + Benefits Compensation Rate',
         definition: 'This is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour.'
       },
       {
