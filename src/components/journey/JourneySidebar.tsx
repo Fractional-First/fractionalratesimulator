@@ -24,7 +24,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
   'establishing-rate': {
     title: 'Benchmarking Your Rate',
     goal: 'We aren\'t here to dictate your market price or hand you a single "magic number." Instead, this tool provides a directional stress-test for your business model. Use it to explore the financial mechanics of your next chapter and see how the right pricing strategy unlocks long-term freedom.',
-    description: 'We start by anchoring to the market value of a full-time role. This allows us to calculate your Price Anchor — the true economic cost a company pays for your expertise before you even send your first invoice.',
+    description: "This is the simple hourly translation of your paycheck — your total earnings divided by the number of hours worked annually. Note: This represents your earnings as an employee, but it ignores the added costs you absorb as a solopreneur.",
     icon: DollarSign,
     colorClass: 'text-primary',
     bgClass: 'bg-primary/10',
