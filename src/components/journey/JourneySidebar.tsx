@@ -40,7 +40,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Equivalent Cash + Benefits Compensation Rate',
-        definition: 'This is an estimate of cash compensation plus all other benefits, perks, equipment, and statutory rewards an employee receives per hour.'
+        definition: 'This is the total cost a company actually incurs to employ you. This accounts for benefits, taxes, insurance, and equipment. As a fractional leader, you must cover these costs yourself.'
       },
       {
         term: 'Formula',
