@@ -84,7 +84,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
       },
       {
         term: 'Billing Rate',
-        definition: 'Billing Rate needed to achieve target compensation'
+        definition: 'The billing rate needed to achieve your target compensation.'
       },
       {
         term: 'Formula',
