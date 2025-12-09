@@ -29,7 +29,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               
               {/* Denominator */}
               <div className="text-center py-1">
-                <span className="text-xs font-medium text-foreground">Working Days</span>
+                <span className="text-xs font-medium text-foreground">Working Days in a Year</span>
                 <span className="text-muted-foreground mx-1">×</span>
                 <span className="text-xs font-medium text-foreground">Hours Per Day</span>
               </div>
