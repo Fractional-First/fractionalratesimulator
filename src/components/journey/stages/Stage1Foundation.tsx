@@ -154,7 +154,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                   {/* Fully-Loaded Rate */}
                   <div className="p-6 bg-purple-500/10 rounded-xl border-2 border-purple-500/20">
                     <p className="text-sm font-medium text-muted-foreground mb-2">
-                      Fully-Loaded Rate
+                      Equivalent Cash + Benefits Compensation Rate
                     </p>
                     <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                       {formatCurrencyDecimal(results.fullyLoadedHourly)}
