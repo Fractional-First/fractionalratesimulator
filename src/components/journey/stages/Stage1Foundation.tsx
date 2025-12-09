@@ -139,12 +139,12 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                       Equivalent Cash Compensation Rate
                     </p>
                     <div className="text-4xl font-bold text-primary mb-2">
-                      {formatCurrencyDecimal(results.directHourly)}
-                      <span className="text-lg font-normal text-muted-foreground">/hr</span>
+                      {formatCurrencyDecimal(results.totalAnnualComp)}
+                      <span className="text-lg font-normal text-muted-foreground">/year</span>
                     </div>
                     <div className="text-lg font-semibold text-primary/80 mb-3">
-                      {formatCurrencyDecimal(results.totalAnnualComp)}
-                      <span className="text-sm font-normal text-muted-foreground">/year</span>
+                      {formatCurrencyDecimal(results.directHourly)}
+                      <span className="text-sm font-normal text-muted-foreground">/hr</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
                       As a full-time employee, you make an equivalent of {formatCurrencyDecimal(results.directHourly)}/hour in direct cash compensation.
@@ -157,12 +157,12 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                       Equivalent Cash + Benefits Compensation Rate
                     </p>
                     <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-                      {formatCurrencyDecimal(results.fullyLoadedHourly)}
-                      <span className="text-lg font-normal text-muted-foreground">/hr</span>
+                      {formatCurrencyDecimal(results.annualCostIncludingOH)}
+                      <span className="text-lg font-normal text-muted-foreground">/year</span>
                     </div>
                     <div className="text-lg font-semibold text-purple-600/80 dark:text-purple-400/80 mb-3">
-                      {formatCurrencyDecimal(results.annualCostIncludingOH)}
-                      <span className="text-sm font-normal text-muted-foreground">/year</span>
+                      {formatCurrencyDecimal(results.fullyLoadedHourly)}
+                      <span className="text-sm font-normal text-muted-foreground">/hr</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
                       As a full-time employee, you make {formatCurrencyDecimal(results.fullyLoadedHourly)}/hour in direct cash compensation plus indirect compensation which includes benefits, perks and other cost paid by your employer. This is the true cost of employing you.
