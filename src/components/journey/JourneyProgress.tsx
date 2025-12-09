@@ -10,7 +10,7 @@ interface JourneyProgressProps {
 }
 
 const stages: { id: JourneyStage; label: string; number: number }[] = [
-  { id: 'foundation', label: 'Establishing Your Rate', number: 1 },
+  { id: 'foundation', label: 'Benchmarking Your Rate', number: 1 },
   { id: 'reality', label: 'Understanding Utilization', number: 2 },
   { id: 'solution', label: 'Path Forward', number: 3 },
 ];
