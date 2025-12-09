@@ -83,7 +83,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
     <JourneyStage
       stageNumber={1}
       title="Benchmarking Your Rate"
-      subtitle="Enter your full-time compensation as an anchor to calculate your equivalent hourly rate"
+      subtitle="Enter your full-time (expected) compensation to calculate your equivalent hourly rates"
       status={status}
       isActive={isActive}
       onEdit={onEdit}
