@@ -8,7 +8,6 @@ import { Settings, RotateCcw, ChevronDown, Globe, DollarSign, Clock, MapPin } fr
 import { type Inputs } from '@/utils/calculator';
 import { countryOptions } from '@/utils/countryDefaults';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
 interface AssumptionsAccordionProps {
   inputs: Inputs;
   updateInput: (field: keyof Inputs) => (value: number) => void;
@@ -17,7 +16,6 @@ interface AssumptionsAccordionProps {
   currentCountryLabel?: string;
   isDetectingLocation?: boolean;
 }
-
 export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
   inputs,
   updateInput,
@@ -27,16 +25,10 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
   isDetectingLocation = false
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  
+
   // Calculate working hours per year dynamically
-  const workingDaysPerYear = 52 * 5 - (
-    (inputs.vacationDays || 0) + 
-    (inputs.publicHolidays || 0) + 
-    (inputs.otherLeaveDays || 0) + 
-    (inputs.trainingDays || 0)
-  );
+  const workingDaysPerYear = 52 * 5 - ((inputs.vacationDays || 0) + (inputs.publicHolidays || 0) + (inputs.otherLeaveDays || 0) + (inputs.trainingDays || 0));
   const workingHoursPerYear = workingDaysPerYear * (inputs.hoursPerDay || 8);
-  
   const handleResetToDefaults = () => {
     updateInput('overheadPct')(0.25);
     updateInput('hoursPerDay')(8);
@@ -46,9 +38,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
     updateInput('trainingDays')(4);
     updateInput('nonBillablePct')(0.40);
   };
-
-  return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+  return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <CollapsibleTrigger className="w-full group">
         <div className="flex items-center justify-between p-4 bg-muted/50 hover:bg-muted rounded-lg border border-border transition-colors">
           <div className="flex items-center gap-3">
@@ -60,11 +50,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               <div className="flex items-center gap-2 mt-1">
                 <MapPin className="h-3 w-3 text-muted-foreground" />
                 <p className="text-xs text-muted-foreground">
-                  {isDetectingLocation ? (
-                    "Detecting location..."
-                  ) : (
-                    <>Current country setting: <span className="font-medium text-foreground">{currentCountryLabel || 'Global'}</span></>
-                  )}
+                  {isDetectingLocation ? "Detecting location..." : <>Current country setting: <span className="font-medium text-foreground">{currentCountryLabel || 'Global'}</span></>}
                 </p>
               </div>
             </div>
@@ -88,11 +74,9 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border z-50">
-                  {countryOptions.map(option => 
-                    <SelectItem key={option.value} value={option.value}>
+                  {countryOptions.map(option => <SelectItem key={option.value} value={option.value}>
                       {option.label}
-                    </SelectItem>
-                  )}
+                    </SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
@@ -142,8 +126,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             {/* LEFT COLUMN - Overhead Parameters */}
             <div className="p-4 rounded-lg border border-border/50">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-                  <DollarSign className="h-4 w-4 text-foreground" />
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">Adjust Your Overhead Cost<DollarSign className="h-4 w-4 text-foreground" />
                   Adjust Overhead Cost
                 </div>
 
@@ -157,15 +140,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.overheadPct || 0.25}
-                        onChange={updateInput('overheadPct')}
-                        min={0}
-                        max={2}
-                        step={0.01}
-                        suffix="%"
-                        compact
-                      />
+                      <NumberInput value={inputs.overheadPct || 0.25} onChange={updateInput('overheadPct')} min={0} max={2} step={0.01} suffix="%" compact />
                     </div>
                   </div>
                 </div>
@@ -175,8 +150,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             {/* RIGHT COLUMN - Working Hours Parameters */}
             <div className="p-4 rounded-lg border border-border/50">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-                  <Clock className="h-4 w-4 text-foreground" />
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">Adjust Your Working Time<Clock className="h-4 w-4 text-foreground" />
                   Adjust Working Time
                 </div>
 
@@ -190,15 +164,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.hoursPerDay || 8}
-                        onChange={updateInput('hoursPerDay')}
-                        min={1}
-                        max={24}
-                        step={0.5}
-                        suffix="hrs"
-                        compact
-                      />
+                      <NumberInput value={inputs.hoursPerDay || 8} onChange={updateInput('hoursPerDay')} min={1} max={24} step={0.5} suffix="hrs" compact />
                     </div>
                   </div>
 
@@ -211,15 +177,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.vacationDays || 15}
-                        onChange={updateInput('vacationDays')}
-                        min={0}
-                        max={365}
-                        step={1}
-                        suffix="days"
-                        compact
-                      />
+                      <NumberInput value={inputs.vacationDays || 15} onChange={updateInput('vacationDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -232,15 +190,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.publicHolidays || 10}
-                        onChange={updateInput('publicHolidays')}
-                        min={0}
-                        max={365}
-                        step={1}
-                        suffix="days"
-                        compact
-                      />
+                      <NumberInput value={inputs.publicHolidays || 10} onChange={updateInput('publicHolidays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -253,15 +203,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.otherLeaveDays || 5}
-                        onChange={updateInput('otherLeaveDays')}
-                        min={0}
-                        max={365}
-                        step={1}
-                        suffix="days"
-                        compact
-                      />
+                      <NumberInput value={inputs.otherLeaveDays || 5} onChange={updateInput('otherLeaveDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -274,15 +216,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput
-                        value={inputs.trainingDays || 5}
-                        onChange={updateInput('trainingDays')}
-                        min={0}
-                        max={365}
-                        step={1}
-                        suffix="days"
-                        compact
-                      />
+                      <NumberInput value={inputs.trainingDays || 5} onChange={updateInput('trainingDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
                 </div>
@@ -292,17 +226,12 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
 
           {/* Reset Button */}
           <div className="pt-6 border-t border-border">
-            <Button
-              onClick={handleResetToDefaults}
-              variant="outline"
-              className="w-full"
-            >
+            <Button onClick={handleResetToDefaults} variant="outline" className="w-full">
               <RotateCcw className="h-4 w-4 mr-2" />
               Reset to Default Values (Global)
             </Button>
           </div>
         </div> {/* Close main content div */}
       </CollapsibleContent>
-    </Collapsible>
-  );
+    </Collapsible>;
 };
