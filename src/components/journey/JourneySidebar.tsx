@@ -31,7 +31,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     definitions: [
       {
         term: 'Cash-Equivalent Rate',
-        definition: 'This is the simple hourly translation of your paycheck — your total earnings divided by the number of hours worked annually. Note: This represents your earnings as an employee, but it ignores the added costs you absorb as a solopreneur.'
+        definition: 'This is the simple hourly translation of your paycheck — your total earnings divided by the number of hours worked annually. This represents your earnings as an employee, but it ignores the added costs you absorb as a solopreneur.'
       },
       {
         term: 'Formula',
