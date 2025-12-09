@@ -126,7 +126,8 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             {/* LEFT COLUMN - Overhead Parameters */}
             <div className="p-4 rounded-lg border border-border/50">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-semibold mb-3">Adjust Your Overhead Cost<DollarSign className="h-4 w-4 text-foreground" />
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+                  <DollarSign className="h-4 w-4 text-foreground" />
                   Adjust Overhead Cost
                 </div>
 
@@ -150,7 +151,8 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
             {/* RIGHT COLUMN - Working Hours Parameters */}
             <div className="p-4 rounded-lg border border-border/50">
               <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm font-semibold mb-3">Adjust Your Working Time<Clock className="h-4 w-4 text-foreground" />
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+                  <Clock className="h-4 w-4 text-foreground" />
                   Adjust Working Time
                 </div>
 
