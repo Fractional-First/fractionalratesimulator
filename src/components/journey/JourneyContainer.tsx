@@ -261,7 +261,7 @@ export const JourneyContainer: React.FC = () => {
             {/* Disclaimer */}
             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
               <p className="text-sm text-amber-700 dark:text-amber-400">
-                <strong>Note:</strong> Your results are only as good as your inputs. This calculator provides estimates based on the data you provide.
+                <strong>Note:</strong> Your results are only as good as your inputs. This simulator provides estimates based on the data you provide.
               </p>
             </div>
 
