@@ -136,7 +136,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
                   {/* Your Effective Rate */}
                   <div className="p-6 bg-primary/10 rounded-xl border-2 border-primary/20">
                     <p className="text-sm font-medium text-muted-foreground mb-2">
-                      Your Take-home Rate
+                      Equivalent Cash Compensation Rate
                     </p>
                     <div className="text-4xl font-bold text-primary mb-2">
                       {formatCurrencyDecimal(results.directHourly)}
