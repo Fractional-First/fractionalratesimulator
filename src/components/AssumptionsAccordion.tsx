@@ -82,7 +82,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
               Country Selection
             </div>
             <div className="space-y-3">
-              <label className="text-xs text-muted-foreground">Select your country to pre-fill overhead costs and working days.</label>
+              <label className="text-xs text-muted-foreground">Select your country / primary market to auto-fill standard employer costs and holidays.<br /><br />If your country is not listed, please select the nearest equivalent region — edit freely to fit your circumstances.</label>
               <Select value={selectedCountry} onValueChange={onCountryChange}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select country" />
