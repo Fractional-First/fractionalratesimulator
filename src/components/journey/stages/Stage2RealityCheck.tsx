@@ -155,7 +155,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 <NumberInput
                   label={
                     <div className="flex items-center gap-2">
-                      Admin/Networking
+                      Business Operations
                       <InfoTooltip content="General admin and relationship building" />
                     </div>
                   }
