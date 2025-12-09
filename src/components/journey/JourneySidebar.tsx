@@ -30,7 +30,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
     bgClass: 'bg-primary/10',
     definitions: [
       {
-        term: 'Take-home Rate',
+        term: 'Cash-Equivalent Rate',
         definition: 'Your total earnings divided by the number of hours worked across the same period.'
       },
       {
