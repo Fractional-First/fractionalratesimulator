@@ -175,7 +175,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   
   // Replace XX% with actual utilization rate in the situation text
   const situationWithRate = recommendation ? recommendation.situation.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`) : '';
-  const recommendationsWithRate = recommendation ? recommendation.recommendations.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`) : '';
+  const recommendationsWithRate = recommendation ? recommendation.recommendations.map(rec => rec.replace(/\(XX\)%/g, `${Math.round(utilizationRate)}%`)) : [];
   
   const advice = pipelineHealth ? getAdviceMatrix(utilizationRate, pipelineHealth) : null;
   
@@ -322,21 +322,12 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             <div>
               <h4 className="text-sm font-semibold text-foreground mb-3">Consider:</h4>
               <div className="text-sm text-muted-foreground space-y-2">
-                {recommendationsWithRate.split('\n').map((line, idx) => {
-                  if (!line.trim()) return null;
-                  if (line.startsWith('Consider:')) {
-                    return null; // Skip the "Consider:" line as we have it as heading
-                  }
-                  if (line.startsWith('•')) {
-                    return (
-                      <div key={idx} className="flex items-start gap-2 ml-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        <span>{line.substring(1).trim()}</span>
-                      </div>
-                    );
-                  }
-                  return <p key={idx}>{line}</p>;
-                })}
+                {recommendationsWithRate.map((rec, idx) => (
+                  <div key={idx} className="flex items-start gap-2 ml-2">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>{rec}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
