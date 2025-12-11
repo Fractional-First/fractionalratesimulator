@@ -83,65 +83,98 @@ const getUtilizationFeedback = (utilizationRate: number): UtilizationFeedback =>
   }
 };
 const getAdviceMatrix = (utilizationRate: number, pipelineHealth: BDPipelineHealth): AdviceContent => {
-  // Utilization ranges: 0-50%, 50-70%, 70%+
+  // Utilization ranges: <50%, 50-70%, 70%+
   const isLowUtil = utilizationRate < 50;
   const isMedUtil = utilizationRate >= 50 && utilizationRate < 70;
   const isHighUtil = utilizationRate >= 70;
 
-  // Matrix logic
+  // Matrix logic based on the 6 scenarios
+  
+  // Row 1: <50% + Poor/Fair
   if (isLowUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
     return {
-      title: 'Critical: You Need Comprehensive Support',
-      description: 'With low utilization and a struggling pipeline, you\'re spending too much time on non-billable work while also struggling to find clients. This is the exact situation Fractional First was built to solve.',
-      recommendations: ['Immediate access to qualified client opportunities through our marketplace', 'Structured BD support to build a consistent pipeline', 'Administrative offloading to free up 20-30% more billable time', 'Rate optimization coaching to ensure you\'re charging appropriately'],
-      ctaText: 'Get Immediate Support from Fractional First',
+      title: 'Critical: You Are Undervalued & Undersold',
+      description: 'You\'re in the "Danger Zone." With low billable hours and no clear pipeline, you aren\'t just independent — you\'re isolated. You need immediate deal flow to validate your independence.',
+      recommendations: [
+        'Structured BD support to build a consistent pipeline',
+        'Administrative offloading to free up more billable time',
+        'Rate optimization'
+      ],
+      ctaText: 'Get Support from Fractional First',
       severity: 'critical'
     };
   }
+  
+  // Row 2: <50% + Good/Excellent
   if (isLowUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
     return {
       title: 'Opportunity: Convert Pipeline to Billable Hours',
-      description: 'You have a strong pipeline, but you\'re losing too much time to admin and operational tasks. Let\'s help you convert that strong pipeline into more billable revenue.',
-      recommendations: ['Operational support to reduce admin time by 50%+', 'Contract and invoicing automation', 'Client onboarding streamlining', 'Focus your time on converting your strong pipeline'],
+      description: 'You have the demand, but you\'re spending too much time running the business instead of billing for your expertise. Let\'s help you convert that strong pipeline into more billable revenue.',
+      recommendations: [
+        'Operational support to increase billable hours',
+        'Contract and invoicing support',
+        'Streamlined client onboarding',
+        'Time back to focus on converting your strong pipeline'
+      ],
       ctaText: 'Maximize Your Strong Pipeline',
       severity: 'warning'
     };
   }
+  
+  // Row 3: 50-70% + Poor/Fair
   if (isMedUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
     return {
       title: 'Let\'s Build Your Foundation',
-      description: 'You\'re achieving decent utilization, but your pipeline health suggests this may not be sustainable. Let\'s build a foundation for consistent, long-term success.',
-      recommendations: ['Pipeline development and lead generation support', 'Client qualification and matching services', 'Build a sustainable, recurring client base'],
-      ctaText: 'Build a Sustainable Practice',
+      description: 'You\'re earning today, but your pipeline and future earnings are at risk. Fractional First can help you build a foundation for consistent, long-term success.',
+      recommendations: [
+        'Pipeline development and lead-generation support',
+        'Client qualification and matching services',
+        'Build a sustainable, recurring client base'
+      ],
+      ctaText: 'Secure Your Future Pipeline',
       severity: 'warning'
     };
   }
+  
+  // Row 4: 50-70% + Good/Excellent
   if (isMedUtil && (pipelineHealth === 'good' || pipelineHealth === 'excellent')) {
     return {
       title: 'Good Position: Optimize for Excellence',
-      description: 'You\'re in a solid position with good utilization and a healthy pipeline. Fractional First can help you reach elite performance levels (75%+ utilization).',
-      recommendations: ['Premium client matching for higher-value engagements', 'Advanced operational efficiency tools', 'Strategic growth consulting', 'Network access to expand into new markets'],
+      description: 'You\'ve achieved "Smart Scaling," with a healthy balance of work and demand. Now, the goal isn\'t more hours — it\'s reaching elite performance levels, meaning higher-impact hours at better rates.',
+      recommendations: [
+        'Premium client-matching opportunities for higher-value engagements',
+        'Strategic growth consulting and coaching',
+        'Possible network access to expand into new markets'
+      ],
       ctaText: 'Reach Elite Performance',
       severity: 'success'
     };
   }
 
-  // High utilization cases
+  // Row 5: 70%+ + Poor/Fair
   if (isHighUtil && (pipelineHealth === 'poor' || pipelineHealth === 'fair')) {
     return {
       title: 'Caution: Unsustainable Pace',
-      description: 'You\'re achieving excellent utilization, but a weak pipeline suggests you may be overworked on current clients without planning for the future. This creates burnout risk and income volatility.',
-      recommendations: ['Build a sustainable pipeline while maintaining current work', 'Strategic BD support that doesn\'t require your time', 'Succession planning for current engagements', 'Work-life balance optimization'],
-      ctaText: 'Create Sustainable Success',
+      description: 'You\'re busy, but you aren\'t safe. High utilization with a weak pipeline suggests you may be overworked with current clients without planning for the future. This creates burnout risk and income volatility.',
+      recommendations: [
+        'Build a sustainable pipeline while maintaining current work',
+        'Strategic BD support that doesn\'t require your time',
+        'Succession planning for current engagements'
+      ],
+      ctaText: 'Create Sustainable Income',
       severity: 'warning'
     };
   }
 
-  // High utilization + good/excellent pipeline (ideal state)
+  // Row 6: 70%+ + Good/Excellent (ideal state)
   return {
     title: 'Excellent: You\'re in Elite Territory',
-    description: 'You\'ve achieved what most fractional leaders aspire to: high utilization with a strong pipeline. Fractional First can help you maintain this position and explore premium opportunities.',
-    recommendations: ['Access to premium, high-value client engagements', 'Peer network of elite fractional leaders', 'Strategic growth and scaling opportunities', 'Maintain your position with minimal effort'],
+    description: 'You are in the top 1% of independent operators. The challenge now is capacity. Fractional First can help you maintain this momentum and explore premium opportunities.',
+    recommendations: [
+      'Peer network of elite fractional leaders',
+      'Strategic growth and scaling opportunities',
+      'Maintain your position with minimal effort'
+    ],
     ctaText: 'Join Our Elite Network',
     severity: 'success'
   };
