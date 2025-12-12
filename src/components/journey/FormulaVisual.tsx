@@ -114,7 +114,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               
               {/* Example */}
               <div className="text-center pt-2 border-t border-border/30 mt-2 w-full">
-                <p className="sidebar-formula-text">
+                <p className="sidebar-caption">
                   <span className="font-semibold">Example:</span> To earn $150/hr while working 60% of the time, you must bill the client $250/hr ($150 ÷ 0.60).
                 </p>
               </div>
