@@ -94,23 +94,24 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'billing-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
-            <div className="flex flex-col space-y-2">
-              {/* The Math label */}
-              <p className="sidebar-caption font-semibold text-left">The Math:</p>
-              
-              {/* Formula as single line */}
+            <div className="flex flex-col items-center space-y-1">
+              {/* Numerator */}
               <div className="text-center py-1">
-                <span className="sidebar-formula-text">Target Hourly Rate</span>
-                <span className="sidebar-formula-text text-muted-foreground mx-1">÷</span>
-                <span className="sidebar-formula-text">Utilization %</span>
-                <span className="sidebar-formula-text text-muted-foreground mx-1">=</span>
-                <span className="sidebar-formula-text">Billing Rate</span>
+                <span className="sidebar-formula-text">Hourly Rate</span>
+              </div>
+              
+              {/* Divider - 50% width */}
+              <div className="w-1/2 border-t border-foreground/30" />
+              
+              {/* Denominator */}
+              <div className="text-center py-1">
+                <span className="sidebar-formula-text">Utilization Rate</span>
               </div>
               
               {/* Example */}
-              <div className="text-left pt-2 border-t border-border/30">
-                <p className="sidebar-caption">
-                  <span className="font-semibold">Example:</span> To earn $150/hr while working 60% of the time, you must bill the client $250/hr ($150 ÷ 0.60).
+              <div className="text-center pt-2 border-t border-border/30 mt-2 w-full">
+                <p className="sidebar-caption font-mono">
+                  <span className="font-semibold">Example:</span> At 60% utilization, a $150/hr target requires billing $250/hr ($150 ÷ 0.60)
                 </p>
               </div>
             </div>
