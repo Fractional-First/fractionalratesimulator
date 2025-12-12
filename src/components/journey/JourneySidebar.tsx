@@ -129,8 +129,8 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
       <div key={activeSegment} className="animate-fade-in">
         {/* Goal - shown above title if present */}
         {content.goal && (
-          <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-            <strong>The Goal:</strong> {content.goal}
+          <p className="sidebar-body mb-3">
+            <strong className="text-foreground">The Goal:</strong> {content.goal}
           </p>
         )}
 
@@ -140,7 +140,7 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-foreground mb-2">
+        <h3 className="sidebar-title mb-2">
           {content.title}
         </h3>
 
@@ -148,13 +148,13 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         {Array.isArray(content.description) ? (
           <div className="space-y-3">
             {content.description.map((paragraph, index) => (
-              <p key={index} className="text-xs text-muted-foreground leading-relaxed">
+              <p key={index} className="sidebar-body">
                 {paragraph}
               </p>
             ))}
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground leading-relaxed">
+          <p className="sidebar-body">
             {content.description}
           </p>
         )}
@@ -163,10 +163,10 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         {content.definitions && content.definitions.length > 0 && (
           <div className="mt-3 space-y-2">
             {content.definitions.map((def, index) => (
-              <div key={index} className="text-xs">
+              <div key={index}>
                 {def.definition === '' && !def.formulaType && !def.tableData ? (
                   // Section header (no definition text, no formula, no table)
-                  <h4 className="font-semibold text-foreground mt-3 mb-1.5 text-sm">
+                  <h4 className="sidebar-section-header mt-3 mb-1.5">
                     {def.term}
                   </h4>
                 ) : def.formulaType ? (
@@ -177,15 +177,15 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
                 ) : def.tableData ? (
                   // Table display
                   <div className="mt-1.5">
-                    <h4 className="font-semibold text-foreground mb-2 text-sm">
+                    <h4 className="sidebar-section-header mb-2">
                       {def.term}
                     </h4>
                     <div className="overflow-hidden rounded-md border border-border">
-                      <table className="w-full text-xs">
+                      <table className="w-full">
                         <thead>
                           <tr className="border-b border-border bg-muted/50">
-                            <th className="px-2 py-1.5 text-left font-semibold text-foreground">Rate</th>
-                            <th className="px-2 py-1.5 text-left font-semibold text-foreground">Assessment</th>
+                            <th className="sidebar-table-header px-2 py-1.5">Rate</th>
+                            <th className="sidebar-table-header px-2 py-1.5">Assessment</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -194,8 +194,8 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
                               "border-b border-border last:border-0",
                               rowIndex % 2 === 0 ? "bg-background" : "bg-muted/30"
                             )}>
-                              <td className="px-2 py-1.5 font-medium text-foreground whitespace-nowrap">{row.range}</td>
-                              <td className="px-2 py-1.5 text-muted-foreground leading-relaxed">{row.description}</td>
+                              <td className="sidebar-term px-2 py-1.5 whitespace-nowrap">{row.range}</td>
+                              <td className="sidebar-body px-2 py-1.5">{row.description}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -205,11 +205,11 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
                 ) : (
                   // Regular definition
                   <>
-                    <dt className="font-semibold text-foreground mb-0.5 text-xs">
+                    <dt className="sidebar-term mb-0.5">
                       {def.term}
                     </dt>
                     <dd className={cn(
-                      "text-muted-foreground leading-relaxed text-xs",
+                      "sidebar-body",
                       def.term === 'Example' ? "font-mono text-[10px] bg-muted/50 p-1.5 rounded border border-border" : ""
                     )}>
                       {def.definition}
