@@ -14,7 +14,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'take-home-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">The Math</p>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1">
@@ -41,7 +41,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'fully-loaded-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">The Math</p>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1 flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5">
@@ -70,7 +70,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'working-hours':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">The Math</p>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1.5">
               {/* Days Calculation */}
               <div className="text-center flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5">
@@ -97,7 +97,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'billing-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
-            <p className="text-sm font-semibold text-muted-foreground mb-2">The Math</p>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1">
@@ -114,7 +114,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               
               {/* Example */}
               <div className="text-center pt-2 border-t border-border/30 mt-2 w-full">
-                <p className="text-sm text-muted-foreground">
+                <p className="sidebar-caption">
                   <span className="font-semibold">Example:</span> To earn $150/hr while working 60% of the time, you must bill the client $250/hr ($150 ÷ 0.60).
                 </p>
               </div>
