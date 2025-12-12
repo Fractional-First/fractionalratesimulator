@@ -97,7 +97,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1">
-                <span className="sidebar-formula-text">Target Hourly Rate</span>
+                <span className="sidebar-formula-text">Hourly Rate</span>
               </div>
               
               {/* Divider - 50% width */}
@@ -105,7 +105,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
               
               {/* Denominator */}
               <div className="text-center py-1">
-                <span className="sidebar-formula-text">Utilization %</span>
+                <span className="sidebar-formula-text">Utilization Rate</span>
               </div>
               
               {/* Example */}
