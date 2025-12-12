@@ -14,6 +14,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'take-home-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1">
@@ -40,6 +41,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'fully-loaded-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1 flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5">
@@ -68,6 +70,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'working-hours':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1.5">
               {/* Days Calculation */}
               <div className="text-center flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5">
@@ -94,6 +97,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
       case 'billing-rate':
         return (
           <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+            <p className="sidebar-caption font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
               <div className="text-center py-1">
