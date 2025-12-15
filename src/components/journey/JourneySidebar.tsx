@@ -163,7 +163,9 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
         {content.definitions && content.definitions.length > 0 && (
           <div className="mt-5 space-y-4">
             {content.definitions.map((def, index) => (
-              <div key={index}>
+              <div key={index} className={cn(
+                def.term === 'Equivalent Cash + Benefits Compensation Rate' && 'mt-6 pt-4 border-t border-border/50'
+              )}>
                 {def.definition === '' && !def.formulaType && !def.tableData ? (
                   // Section header (no definition text, no formula, no table)
                   <h4 className="sidebar-section-header mt-3 mb-1.5">
