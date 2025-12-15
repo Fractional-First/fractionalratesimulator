@@ -1,4 +1,6 @@
 import { JourneyContainer } from "@/components/journey/JourneyContainer";
+import { Badge } from "@/components/ui/badge";
+
 const Index = () => {
   return <div className="min-h-screen bg-background section-spacing">
       <div className="max-w-7xl mx-auto">
@@ -8,6 +10,7 @@ const Index = () => {
             <h1 className="text-foreground">
               The Fractional Rate Simulator
             </h1>
+            <Badge variant="secondary" className="text-xs font-medium">Beta</Badge>
           </div>
           
           {/* Journey description */}
