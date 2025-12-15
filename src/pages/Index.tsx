@@ -6,11 +6,11 @@ const Index = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 md:mb-12 pt-12 md:pt-16 animate-fade-in">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <h1 className="text-foreground">
+          <div className="flex items-baseline justify-center gap-3 mb-6">
+            <h1 className="text-foreground leading-none">
               The Fractional Rate Simulator
             </h1>
-            <Badge variant="secondary" className="text-xs font-medium">Beta</Badge>
+            <Badge variant="secondary" className="text-xs font-medium translate-y-[-2px]">Beta</Badge>
           </div>
           
           {/* Journey description */}
