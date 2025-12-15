@@ -6,6 +6,7 @@ import { type StageStatus } from '../JourneyContainer';
 import { type Inputs, type Results, formatCurrencyDecimal } from '@/utils/calculator';
 import { NumberInput } from '@/components/NumberInput';
 import { InfoTooltip } from '@/components/InfoTooltip';
+import { MobileSidebarContent } from '../MobileSidebarContent';
 
 interface Stage2RealityCheckProps {
   isActive: boolean;
@@ -81,6 +82,9 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
+        {/* Mobile Sidebar Content */}
+        <MobileSidebarContent segment="utilization" />
+        
         {/* Educational Context */}
         <div className="mt-4 p-4 bg-muted/30 rounded-lg border border-border">
           <p className="text-sm text-foreground font-medium mb-2">
