@@ -90,7 +90,7 @@
 
   /* Fractional First Typography Scale */
   h1 {
-    @apply text-4xl md:text-5xl font-bold leading-tight;
+    @apply text-3xl md:text-[2.7rem] font-bold leading-tight;
   }
 
   h2 {
