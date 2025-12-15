@@ -140,33 +140,33 @@
     color: hsl(var(--formula-text));
   }
 
-  /* Sidebar Typography System */
+  /* Sidebar Typography System - Matches main content hierarchy */
   .sidebar-title {
-    @apply text-lg font-semibold tracking-tight leading-snug text-left text-foreground;
+    @apply text-2xl font-bold tracking-tight leading-snug text-left text-foreground;
   }
 
   .sidebar-section-header {
-    @apply text-sm font-semibold tracking-normal leading-normal text-left text-foreground;
+    @apply text-base font-semibold tracking-normal leading-normal text-left text-foreground;
   }
 
   .sidebar-body {
-    @apply text-xs tracking-normal leading-relaxed text-left text-muted-foreground;
+    @apply text-sm tracking-normal leading-relaxed text-left text-muted-foreground;
   }
 
   .sidebar-term {
-    @apply text-xs font-semibold tracking-normal leading-normal text-left text-foreground;
+    @apply text-sm font-semibold tracking-normal leading-normal text-left text-foreground;
   }
 
   .sidebar-caption {
-    @apply text-[10px] tracking-normal leading-relaxed text-left text-muted-foreground;
+    @apply text-xs tracking-normal leading-relaxed text-left text-muted-foreground;
   }
 
   .sidebar-table-header {
-    @apply text-xs font-semibold tracking-wide leading-normal text-left text-foreground;
+    @apply text-sm font-semibold tracking-wide leading-normal text-left text-foreground;
   }
 
   .sidebar-formula-text {
-    @apply text-xs font-medium tracking-normal leading-normal text-foreground;
+    @apply text-sm font-medium tracking-normal leading-normal text-foreground;
   }
 
   /* Mobile-first spacing */
