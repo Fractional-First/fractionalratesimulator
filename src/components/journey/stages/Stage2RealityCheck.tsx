@@ -91,7 +91,10 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
             Why Utilization Rate Matters
           </p>
           <p className="text-sm text-muted-foreground">
-            In a fractional model, you are the CEO, the product, and the sales team. The time you spend on business development and operations is essential, but it isn&apos;t billable. The Reality: Most fractional leaders start with 30-60% utilization rate. To maintain your income, your billable hours must subsidize this behind-the-scenes work.
+            In a fractional model, you are the CEO, the product, and the sales team. The time you spend on business development and operations is essential, but it isn&apos;t billable.
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            <strong>The Reality:</strong> Most fractional leaders start with 30-60% utilization rate. To maintain your income, your billable hours must subsidize this behind-the-scenes work.
           </p>
         </div>
 
