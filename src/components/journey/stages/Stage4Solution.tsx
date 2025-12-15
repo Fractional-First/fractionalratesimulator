@@ -7,6 +7,7 @@ import { type Inputs, type Results, formatCurrency, formatCurrencyDecimal } from
 import { type JourneyStage as JourneyStageType } from '../JourneyContainer';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { MobileSidebarContent } from '../MobileSidebarContent';
 interface Stage4SolutionProps {
   isActive: boolean;
   status: StageStatus;
@@ -251,6 +252,9 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
   
   return <JourneyStage stageNumber={3} title="Your Path Forward" subtitle="Personalized analysis and actionable next steps" status={status} isActive={isActive}>
       <div className="space-y-6 mt-6">
+        {/* Mobile Sidebar Content */}
+        <MobileSidebarContent segment="path-forward" />
+        
         {/* Utilization Rate Feedback */}
         <div className={`p-6 rounded-xl border-2 ${utilizationFeedback.bgColor}`}>
           <div className="flex items-start gap-3 mb-3">

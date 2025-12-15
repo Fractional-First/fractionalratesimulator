@@ -8,6 +8,7 @@ import { CurrencyInput } from '@/components/CurrencyInput';
 import { formatCurrencyDecimal } from '@/utils/calculator';
 import { AssumptionsAccordion } from '@/components/AssumptionsAccordion';
 import { countryDefaults, countryOptions } from '@/utils/countryDefaults';
+import { MobileSidebarContent } from '../MobileSidebarContent';
 
 interface Stage1FoundationProps {
   isActive: boolean;
@@ -89,6 +90,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
       onEdit={onEdit}
     >
       <div className="space-y-6 mt-6">
+        {/* Mobile Sidebar Content - Establishing Rate */}
+        <MobileSidebarContent segment="establishing-rate" />
         {/* Input Fields Section */}
         <div className="space-y-4">
           <div className="grid gap-4">
@@ -116,6 +119,8 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
           {/* Assumptions Section - Now above rate cards */}
           {hasFullTimeInputs && (
             <div className="animate-fade-in">
+              {/* Mobile Sidebar Content - Assumptions */}
+              <MobileSidebarContent segment="assumptions" />
               <div ref={assumptionsRef} data-segment="assumptions" />
               <AssumptionsAccordion
                 inputs={inputs}
