@@ -13,7 +13,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
     switch (type) {
       case 'take-home-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
             <p className="sidebar-body font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
@@ -40,7 +40,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'fully-loaded-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
             <p className="sidebar-body font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
@@ -69,7 +69,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'working-hours':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
             <p className="sidebar-body font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1.5">
               {/* Days Calculation */}
@@ -96,7 +96,7 @@ export const FormulaVisual: React.FC<FormulaVisualProps> = ({ type, className })
 
       case 'billing-rate':
         return (
-          <div className={cn("bg-muted/40 rounded-lg p-2 border border-border/50", className)}>
+          <div className={cn("bg-muted/40 rounded-lg p-4 border border-border/50", className)}>
             <p className="sidebar-body font-semibold text-muted-foreground mb-2">The Math</p>
             <div className="flex flex-col items-center space-y-1">
               {/* Numerator */}
