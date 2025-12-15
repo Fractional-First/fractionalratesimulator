@@ -129,24 +129,24 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
       <div key={activeSegment} className="animate-fade-in">
         {/* Goal - shown above title if present */}
         {content.goal && (
-          <p className="sidebar-body mb-3">
+          <p className="sidebar-body mb-5">
             <strong className="text-foreground">The Goal:</strong> {content.goal}
           </p>
         )}
 
         {/* Icon */}
-        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-3", content.bgClass)}>
+        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center mb-4", content.bgClass)}>
           <Icon className={cn("w-5 h-5", content.colorClass)} />
         </div>
 
         {/* Title */}
-        <h3 className="sidebar-title mb-2">
+        <h3 className="sidebar-title mb-3">
           {content.title}
         </h3>
 
         {/* Description */}
         {Array.isArray(content.description) ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {content.description.map((paragraph, index) => (
               <p key={index} className="sidebar-body">
                 {paragraph}
@@ -161,7 +161,7 @@ export const JourneySidebar: React.FC<JourneySidebarProps> = ({ activeSegment })
 
         {/* Definitions - if available */}
         {content.definitions && content.definitions.length > 0 && (
-          <div className="mt-3 space-y-2">
+          <div className="mt-5 space-y-4">
             {content.definitions.map((def, index) => (
               <div key={index}>
                 {def.definition === '' && !def.formulaType && !def.tableData ? (
