@@ -10,7 +10,7 @@ const Index = () => {
             <h1 className="text-foreground text-[clamp(1.5rem,4vw,2.4rem)] leading-tight">
               The Fractional Rate Simulator
             </h1>
-            <Badge variant="secondary" className="text-xs font-medium">Beta</Badge>
+            <Badge className="text-xs font-medium bg-accent text-accent-foreground">Beta</Badge>
           </div>
           
           {/* Journey description */}
