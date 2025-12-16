@@ -142,7 +142,7 @@ export const getRecommendation = (
         situation: "Your current (XX)% utilization rate is strong, supported by a steady pipeline. You are in a very healthy state; the time for optimization and leverage is now.",
         recommendations: [
           "Systematically increasing your rates for new clients.",
-          "Your high demand and steady pipeline justify a premium price point.",
+          "Evaluating your rates for new clients, as your high demand and steady pipeline may justify a premium price point.",
           "Productizing your core service offerings to increase efficiency and margin, allowing you to grow without adding more hours.",
           "Setting clear, non-negotiable boundaries to protect your BD and personal time from sales and delivery creep.",
           "Being highly selective with new projects, only accepting those that align with your highest long-term goals or provide excellent case studies."
