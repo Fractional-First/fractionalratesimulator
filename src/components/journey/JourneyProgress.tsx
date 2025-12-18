@@ -62,7 +62,7 @@ export const JourneyProgress: React.FC<JourneyProgressProps> = ({
                 <div className="text-left">
                   <div
                     className={cn(
-                      "text-xs font-medium transition-colors",
+                      "text-sm font-medium transition-colors",
                       isActive && "text-primary",
                       isCompleted && "text-foreground",
                       isLocked && "text-muted-foreground"
@@ -72,7 +72,7 @@ export const JourneyProgress: React.FC<JourneyProgressProps> = ({
                   </div>
                   <div
                     className={cn(
-                      "text-sm font-semibold transition-colors",
+                      "text-base font-semibold transition-colors",
                       isActive && "text-foreground",
                       isCompleted && "text-foreground",
                       isLocked && "text-muted-foreground"
