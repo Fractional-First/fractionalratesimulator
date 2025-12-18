@@ -133,7 +133,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <NumberInput
                   label={
-                    <div className="flex items-start justify-between gap-2 w-full">
+                    <div className="flex items-start gap-1">
                       <span>Business Development / Networking</span>
                       <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
                     </div>
@@ -147,7 +147,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-start justify-between gap-2 w-full">
+                    <div className="flex items-start gap-1">
                       <span>Finance & Billing</span>
                       <InfoTooltip content="Billing, accounting, and financial management" />
                     </div>
@@ -161,7 +161,7 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-start justify-between gap-2 w-full">
+                    <div className="flex items-start gap-1">
                       <span>Business Operations</span>
                       <InfoTooltip content="General admin and relationship building" />
                     </div>
