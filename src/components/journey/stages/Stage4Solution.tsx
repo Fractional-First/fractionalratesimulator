@@ -401,6 +401,15 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
           </div>
         )}
 
+        {/* Disclaimer / Additional Information */}
+        {pipelineHealth && (
+          <div className="p-4 bg-muted/50 rounded-lg border border-border">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Note:</strong> Converting a full-time compensation package (used as an anchor in this simulator) into a utilization-adjusted hourly rate is only one method of arriving at indicative fractional rates. There are other methods, including assessing the value delivered for your clientele and understanding how much they are willing to pay for an equivalent service. Ultimately, triangulating across several techniques and comparing competitive benchmarks can help you determine a defensible hourly rate or, alternatively, a value-based project rate that isn't tied to the number of hours you work.
+            </p>
+          </div>
+        )}
+
         {/* Additional Actions */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <Button size="lg" variant="outline" onClick={onReset} className="flex-1">
