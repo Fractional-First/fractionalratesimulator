@@ -121,7 +121,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   return (
     <div className={cn("space-y-3 flex flex-col", className)}>
       {label && (
-        <Label className="text-sm font-medium text-foreground min-h-[40px] flex items-start">
+        <Label className="text-sm font-medium text-foreground min-h-[40px] flex items-start w-full">
           {label}
         </Label>
       )}

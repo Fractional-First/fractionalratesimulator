@@ -130,11 +130,11 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
             {/* Non-billable Time Breakdown */}
             <div className="pt-4 border-t border-border">
               <h4 className="text-xs font-medium text-muted-foreground mb-3">Non-Billable Time Allocation</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Business Development / Networking
+                    <div className="flex items-start justify-between gap-2 w-full">
+                      <span>Business Development / Networking</span>
                       <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
                     </div>
                   }
@@ -147,8 +147,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Finance & Billing
+                    <div className="flex items-start justify-between gap-2 w-full">
+                      <span>Finance & Billing</span>
                       <InfoTooltip content="Billing, accounting, and financial management" />
                     </div>
                   }
@@ -161,8 +161,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Business Operations
+                    <div className="flex items-start justify-between gap-2 w-full">
+                      <span>Business Operations</span>
                       <InfoTooltip content="General admin and relationship building" />
                     </div>
                   }
