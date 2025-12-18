@@ -70,6 +70,7 @@ export const JourneyStage: React.FC<JourneyStageProps> = ({
           {/* Stage Info */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
+              <span className="text-xl font-semibold text-primary">Stage {stageNumber}:</span>
               <h2 className="text-3xl font-bold text-foreground">{title}</h2>
               {isCompleted && (
                 <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded-full whitespace-nowrap">
@@ -77,7 +78,7 @@ export const JourneyStage: React.FC<JourneyStageProps> = ({
                 </span>
               )}
             </div>
-            <p className="text-sm text-muted-foreground">{subtitle}</p>
+            <p className="text-base text-muted-foreground">{subtitle}</p>
           </div>
 
           {/* Expand/Collapse Indicator */}
