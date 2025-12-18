@@ -133,10 +133,10 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Business Development / Networking
-                      <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
-                    </div>
+                    <>
+                      Business Development / Networking{' '}
+                      <span className="inline-flex align-middle"><InfoTooltip content="Time spent on sales, proposals, and winning new clients" /></span>
+                    </>
                   }
                   value={bdPct}
                   onChange={handleBdChange}
@@ -147,10 +147,10 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Finance & Billing
-                      <InfoTooltip content="Billing, accounting, and financial management" />
-                    </div>
+                    <>
+                      Finance & Billing{' '}
+                      <span className="inline-flex align-middle"><InfoTooltip content="Billing, accounting, and financial management" /></span>
+                    </>
                   }
                   value={invoicingPct}
                   onChange={handleInvoicingChange}
@@ -161,10 +161,10 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      Business Operations
-                      <InfoTooltip content="General admin and relationship building" />
-                    </div>
+                    <>
+                      Business Operations{' '}
+                      <span className="inline-flex align-middle"><InfoTooltip content="General admin and relationship building" /></span>
+                    </>
                   }
                   value={adminPct}
                   onChange={handleAdminChange}
