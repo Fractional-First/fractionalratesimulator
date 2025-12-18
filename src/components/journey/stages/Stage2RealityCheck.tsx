@@ -133,10 +133,10 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <NumberInput
                   label={
-                    <div className="flex items-center gap-2">
-                      <span>Business Development / Networking</span>
+                    <span className="inline-flex items-center gap-2">
+                      Business Development / Networking
                       <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
-                    </div>
+                    </span>
                   }
                   value={bdPct}
                   onChange={handleBdChange}
