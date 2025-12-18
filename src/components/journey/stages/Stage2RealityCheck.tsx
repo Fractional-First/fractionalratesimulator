@@ -134,7 +134,8 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 <NumberInput
                   label={
                     <>
-                      Business Development / Networking<span className="inline-flex items-center ml-2"><InfoTooltip content="Time spent on sales, proposals, and winning new clients" /></span>
+                      Business Development /<br />
+                      <span className="inline-flex items-center gap-2">Networking <InfoTooltip content="Time spent on sales, proposals, and winning new clients" /></span>
                     </>
                   }
                   value={bdPct}
