@@ -133,10 +133,9 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <NumberInput
                   label={
-                    <div className="flex items-start gap-1">
-                      <span>Business Development / Networking</span>
-                      <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
-                    </div>
+                    <span>
+                      Business Development / Networking <InfoTooltip content="Time spent on sales, proposals, and winning new clients" />
+                    </span>
                   }
                   value={bdPct}
                   onChange={handleBdChange}
@@ -147,10 +146,9 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-start gap-1">
-                      <span>Finance & Billing</span>
-                      <InfoTooltip content="Billing, accounting, and financial management" />
-                    </div>
+                    <span>
+                      Finance & Billing <InfoTooltip content="Billing, accounting, and financial management" />
+                    </span>
                   }
                   value={invoicingPct}
                   onChange={handleInvoicingChange}
@@ -161,10 +159,9 @@ export const Stage2RealityCheck: React.FC<Stage2RealityCheckProps> = ({
                 />
                 <NumberInput
                   label={
-                    <div className="flex items-start gap-1">
-                      <span>Business Operations</span>
-                      <InfoTooltip content="General admin and relationship building" />
-                    </div>
+                    <span>
+                      Business Operations <InfoTooltip content="General admin and relationship building" />
+                    </span>
                   }
                   value={adminPct}
                   onChange={handleAdminChange}
