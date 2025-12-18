@@ -105,11 +105,7 @@ const segmentContent: Record<SegmentType, SegmentContent> = {
   },
   'path-forward': {
     title: 'Your Path Forward',
-    description: [
-      'Based on your inputs, we help you understand what comes next in building a sustainable fractional practice.',
-      'Converting a full-time compensation package (used as an anchor in this simulator) into a utilization-adjusted hourly rate is only one method of arriving at indicative fractional rates. There are other methods, including assessing the value delivered for your clientele and understanding how much they are willing to pay for an equivalent service.',
-      'Ultimately, triangulating across several techniques and comparing competitive benchmarks can help you determine a defensible hourly rate or, alternatively, a value-based project rate that isn\'t tied to the number of hours you work.'
-    ],
+    description: 'Based on your inputs, we help you understand what comes next in building a sustainable fractional practice.',
     icon: ArrowRight,
     colorClass: 'text-green-600 dark:text-green-400',
     bgClass: 'bg-green-500/10'
