@@ -16,7 +16,7 @@ const Index = () => {
           {/* Journey description */}
           <div className="max-w-4xl mx-auto mb-8">
             <p className="body-text text-muted-foreground leading-relaxed">
-              Leaving a full-time role requires a shift in mindset — from "salary" to "value." We designed this three-stage simulator to guide you through the mechanics of that shift. From "unseen" business development time to the realities of utilization, this tool helps you navigate the hidden variables that define a sustainable practice, balancing your income goals with the reality of your time.
+              Leaving a full-time role requires a shift in mindset — from salary to value. We designed this three-stage simulator to guide you through the mechanics of that shift. From unseen business development time to the realities of utilization, this tool helps you navigate the hidden variables that define a sustainable practice, balancing your income goals with the reality of your time.
             </p>
           </div>
         </div>
