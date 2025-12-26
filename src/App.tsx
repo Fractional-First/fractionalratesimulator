@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { initGA } from "@/utils/analytics";
 import { PageTracker } from "@/components/PageTracker";
+import { FeedbackTab } from "@/components/FeedbackTab";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <FeedbackTab />
         <BrowserRouter>
           <PageTracker />
           <Routes>
