@@ -8,6 +8,7 @@ import { type JourneyStage as JourneyStageType } from '../JourneyContainer';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { MobileSidebarContent } from '../MobileSidebarContent';
+import { trackPipelineSelected, trackCtaClicked } from '@/utils/analytics';
 interface Stage4SolutionProps {
   isActive: boolean;
   status: StageStatus;
@@ -276,7 +277,11 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
             How would you describe the current health of your client pipeline and business development efforts?
           </p>
           
-          <RadioGroup value={pipelineHealth || undefined} onValueChange={value => setPipelineHealth(value as BDPipelineHealth)}>
+          <RadioGroup value={pipelineHealth || undefined} onValueChange={value => {
+            const health = value as BDPipelineHealth;
+            setPipelineHealth(health);
+            trackPipelineSelected(health);
+          }}>
             <div className="space-y-3">
               <div className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                 <RadioGroupItem value="poor" id="poor" className="mt-0.5" />
@@ -390,7 +395,7 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               </div>
 
               <div className="pt-4 border-t border-border">
-                <Button size="lg" className="w-full" asChild>
+                <Button size="lg" className="w-full" asChild onClick={() => trackCtaClicked(advice.ctaText)}>
                   <a href="https://talent.fractionalfirst.com/signup" target="_blank" rel="noopener noreferrer">
                     {advice.ctaText}
                     <ExternalLink className="ml-2 w-4 h-4" />
