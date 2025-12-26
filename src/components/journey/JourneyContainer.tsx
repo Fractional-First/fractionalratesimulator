@@ -5,6 +5,7 @@ import { JourneySidebar } from './JourneySidebar';
 import { Stage1Foundation } from './stages/Stage1Foundation';
 import { Stage2RealityCheck } from './stages/Stage2RealityCheck';
 import { Stage4Solution } from './stages/Stage4Solution';
+import { trackStageCompleted } from '@/utils/analytics';
 
 export type JourneyStage = 'foundation' | 'reality' | 'solution';
 export type StageStatus = 'locked' | 'active' | 'completed';
@@ -189,6 +190,14 @@ export const JourneyContainer: React.FC = () => {
   };
 
   const completeStage = (stage: JourneyStage) => {
+    // Track stage completion in GA4
+    const stageNames: Record<JourneyStage, string> = {
+      foundation: 'Stage 1 - Foundation',
+      reality: 'Stage 2 - Reality Check',
+      solution: 'Stage 3 - Solution'
+    };
+    trackStageCompleted(stageNames[stage]);
+
     setJourneyState(prev => {
       const newStatus = { ...prev.stageStatus };
       newStatus[stage] = 'completed';
