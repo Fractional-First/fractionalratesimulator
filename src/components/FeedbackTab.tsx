@@ -1,4 +1,4 @@
-import { MessageSquare, X } from "lucide-react";
+import { X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -21,14 +21,12 @@ export const FeedbackTab = () => {
         onClick={() => setIsOpen(true)}
         className="fixed right-0 top-1/2 -translate-y-1/2 z-50 
                    bg-accent text-accent-foreground 
-                   px-2 py-4 rounded-l-md
+                   px-2 py-4 rounded-l-md rounded-r-none
                    shadow-lg hover:bg-accent/90 
                    transition-colors duration-200
-                   flex items-center gap-1
                    [writing-mode:vertical-rl] rotate-180"
         aria-label="Open feedback form"
       >
-        <MessageSquare className="h-4 w-4 rotate-90" />
         <span className="text-sm font-medium">Feedback</span>
       </button>
 
