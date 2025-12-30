@@ -21,7 +21,7 @@ export const FeedbackTab = () => {
         onClick={() => setIsOpen(true)}
         className="fixed right-0 top-1/2 -translate-y-1/2 z-50 
                    bg-accent text-accent-foreground 
-                   px-2 py-4 rounded-l-none rounded-r-md
+                   px-1.5 py-4 rounded-l-none rounded-r-md
                    shadow-lg hover:bg-accent/90 
                    transition-colors duration-200
                    [writing-mode:vertical-rl] rotate-180"
