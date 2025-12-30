@@ -41,8 +41,8 @@ export const FeedbackTab = () => {
             <DialogTitle>Share Your Feedback</DialogTitle>
           </DialogHeader>
           
-          <DialogClose className="absolute right-2 top-2 z-10 rounded-sm bg-background/80 p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-            <X className="h-5 w-5" />
+          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-background border border-border shadow-md p-1.5 ring-offset-background transition-all hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </DialogClose>
 
