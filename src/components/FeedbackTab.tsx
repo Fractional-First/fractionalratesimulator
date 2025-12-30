@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 
@@ -40,13 +41,10 @@ export const FeedbackTab = () => {
             <DialogTitle>Share Your Feedback</DialogTitle>
           </DialogHeader>
           
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute right-3 top-3 z-50 rounded-full bg-white border border-gray-300 shadow-lg p-2 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-ring"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5 text-gray-700" />
-          </button>
+          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-background border border-border shadow-md p-1.5 ring-offset-background transition-all hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
 
           <iframe
             src={GOOGLE_FORM_URL}
