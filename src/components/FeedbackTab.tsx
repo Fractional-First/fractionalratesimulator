@@ -33,28 +33,25 @@ export const FeedbackTab = () => {
       {/* Modal with embedded Google Form */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent
-          className="sm:max-w-[600px] h-[85vh] sm:h-[600px] 
+          className="sm:max-w-[600px] h-[90vh] sm:h-[700px] 
                      max-sm:w-screen max-sm:h-screen max-sm:max-w-none max-sm:rounded-none
                      p-0 gap-0 overflow-hidden [&>button]:hidden"
         >
-          <DialogHeader className="px-4 py-2 border-b flex flex-row items-center justify-between">
-            <DialogTitle className="text-lg font-semibold">
-              Share Your Feedback
-            </DialogTitle>
-            <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-              <X className="h-5 w-5" />
-              <span className="sr-only">Close</span>
-            </DialogClose>
+          <DialogHeader className="sr-only">
+            <DialogTitle>Share Your Feedback</DialogTitle>
           </DialogHeader>
+          
+          <DialogClose className="absolute right-2 top-2 z-10 rounded-sm bg-background/80 p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <X className="h-5 w-5" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
 
-          <div className="flex-1 overflow-hidden">
-            <iframe
-              src={GOOGLE_FORM_URL}
-              className="w-full h-full border-0"
-              title="Feedback Form"
-              loading="lazy"
-            />
-          </div>
+          <iframe
+            src={GOOGLE_FORM_URL}
+            className="w-full h-full border-0"
+            title="Feedback Form"
+            loading="lazy"
+          />
         </DialogContent>
       </Dialog>
     </>
