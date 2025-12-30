@@ -87,7 +87,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
 
   const handleFocus = () => {
     setIsFocused(true);
-    setLocalValue(numericValue === 0 ? '' : numericValue.toString());
+    setLocalValue(numericValue.toString());
   };
 
   const handleBlur = () => {
