@@ -1,10 +1,8 @@
-import { X } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 
@@ -37,14 +35,8 @@ export const FeedbackTab = () => {
                      max-sm:w-screen max-sm:h-screen max-sm:max-w-none max-sm:rounded-none
                      p-0 gap-0 overflow-hidden"
         >
-          <DialogHeader className="p-4 pb-2 border-b">
-            <DialogTitle className="text-lg font-semibold">
-              Share Your Feedback
-            </DialogTitle>
-            <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-              <X className="h-5 w-5" />
-              <span className="sr-only">Close</span>
-            </DialogClose>
+          <DialogHeader className="px-4 py-2 border-b">
+            <DialogTitle>Share Your Feedback</DialogTitle>
           </DialogHeader>
 
           <div className="flex-1 overflow-hidden">
