@@ -21,21 +21,52 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   className,
   helperText
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/[^0-9.]/g, '');
-    const numericValue = parseFloat(inputValue) || 0;
-    onChange(numericValue);
-  };
+  const [localValue, setLocalValue] = React.useState('');
+  const [isFocused, setIsFocused] = React.useState(false);
+  const [hasInteracted, setHasInteracted] = React.useState(false);
 
   const formatNumber = (num: number): string => {
-    if (num === 0) return '';
     return new Intl.NumberFormat('en-US', {
       maximumFractionDigits: 2,
-      minimumFractionDigits: 0
+      minimumFractionDigits: 0,
     }).format(num);
   };
 
-  const displayValue = formatNumber(value);
+  const formattedValue = value === 0 ? (hasInteracted ? '0' : '') : formatNumber(value);
+
+  React.useEffect(() => {
+    if (!isFocused) setLocalValue(formattedValue);
+  }, [formattedValue, isFocused]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    setHasInteracted(true);
+    setLocalValue(rawValue);
+
+    if (rawValue === '' || rawValue === '.') {
+      onChange(0);
+      return;
+    }
+
+    const cleanedValue = rawValue.replace(/[^0-9.]/g, '');
+    const numericValue = parseFloat(cleanedValue);
+
+    if (Number.isNaN(numericValue)) {
+      onChange(0);
+      return;
+    }
+
+    onChange(numericValue);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+    setLocalValue(value === 0 && !hasInteracted ? '' : value.toString());
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   return (
     <div className={cn("space-y-3", className)}>
@@ -48,8 +79,10 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
         </span>
         <Input
           type="text"
-          value={displayValue}
+          value={localValue}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           placeholder={placeholder}
           className="pl-8 pr-4 h-12 text-right transition-all duration-200 hover:border-primary/50 focus:border-primary border-border bg-background touch-target rounded-xl"
         />
