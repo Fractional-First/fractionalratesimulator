@@ -28,7 +28,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
 
   // Calculate working hours per year dynamically
   const workingDaysPerYear = 52 * 5 - ((inputs.vacationDays || 0) + (inputs.publicHolidays || 0) + (inputs.otherLeaveDays || 0) + (inputs.trainingDays || 0));
-  const workingHoursPerYear = workingDaysPerYear * (inputs.hoursPerDay || 8);
+  const workingHoursPerYear = workingDaysPerYear * (inputs.hoursPerDay ?? 8);
 
   return <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <CollapsibleTrigger className="w-full group">
@@ -88,7 +88,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                 </div>
               </div>
               <div className="text-3xl font-bold text-foreground mt-2">
-                {Math.round((inputs.overheadPct || 0.25) * 100)}%
+                {Math.round((inputs.overheadPct ?? 0.25) * 100)}%
               </div>
             </div>
 
@@ -107,7 +107,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                 {workingHoursPerYear.toLocaleString()}
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                {workingDaysPerYear} days × {inputs.hoursPerDay || 8} hrs/day
+                {workingDaysPerYear} days × {inputs.hoursPerDay ?? 8} hrs/day
               </p>
             </div>
           </div>
@@ -133,7 +133,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.overheadPct || 0.25} onChange={updateInput('overheadPct')} min={0} max={2} step={0.01} suffix="%" compact />
+                      <NumberInput value={inputs.overheadPct ?? 0.25} onChange={updateInput('overheadPct')} min={0} max={2} step={0.01} suffix="%" compact />
                     </div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.hoursPerDay || 8} onChange={updateInput('hoursPerDay')} min={1} max={24} step={0.5} suffix="hrs" compact />
+                      <NumberInput value={inputs.hoursPerDay ?? 8} onChange={updateInput('hoursPerDay')} min={1} max={24} step={0.5} suffix="hrs" compact />
                     </div>
                   </div>
 
@@ -171,7 +171,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.vacationDays || 15} onChange={updateInput('vacationDays')} min={0} max={365} step={1} suffix="days" compact />
+                      <NumberInput value={inputs.vacationDays ?? 15} onChange={updateInput('vacationDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -184,7 +184,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.publicHolidays || 10} onChange={updateInput('publicHolidays')} min={0} max={365} step={1} suffix="days" compact />
+                      <NumberInput value={inputs.publicHolidays ?? 10} onChange={updateInput('publicHolidays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -197,7 +197,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.otherLeaveDays || 5} onChange={updateInput('otherLeaveDays')} min={0} max={365} step={1} suffix="days" compact />
+                      <NumberInput value={inputs.otherLeaveDays ?? 5} onChange={updateInput('otherLeaveDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
 
@@ -210,7 +210,7 @@ export const AssumptionsAccordion: React.FC<AssumptionsAccordionProps> = ({
                       </div>
                     </div>
                     <div className="w-24">
-                      <NumberInput value={inputs.trainingDays || 5} onChange={updateInput('trainingDays')} min={0} max={365} step={1} suffix="days" compact />
+                      <NumberInput value={inputs.trainingDays ?? 5} onChange={updateInput('trainingDays')} min={0} max={365} step={1} suffix="days" compact />
                     </div>
                   </div>
                 </div>
