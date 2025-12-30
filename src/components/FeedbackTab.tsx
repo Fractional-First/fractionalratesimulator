@@ -35,13 +35,13 @@ export const FeedbackTab = () => {
         <DialogContent
           className="sm:max-w-[600px] h-[85vh] sm:h-[600px] 
                      max-sm:w-screen max-sm:h-screen max-sm:max-w-none max-sm:rounded-none
-                     p-0 gap-0 overflow-hidden"
+                     p-0 gap-0 overflow-hidden [&>button]:hidden"
         >
-          <DialogHeader className="p-4 pb-2 border-b">
+          <DialogHeader className="px-4 py-2 border-b flex flex-row items-center justify-between">
             <DialogTitle className="text-lg font-semibold">
               Share Your Feedback
             </DialogTitle>
-            <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+            <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
               <X className="h-5 w-5" />
               <span className="sr-only">Close</span>
             </DialogClose>
