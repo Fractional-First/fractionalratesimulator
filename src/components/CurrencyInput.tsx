@@ -28,7 +28,7 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
   };
 
   const formatNumber = (num: number): string => {
-    if (num === 0) return '0';
+    if (num === 0) return '';
     return new Intl.NumberFormat('en-US', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 0
