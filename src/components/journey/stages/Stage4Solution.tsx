@@ -264,6 +264,11 @@ export const Stage4Solution: React.FC<Stage4SolutionProps> = ({
               <h3 className="text-lg font-bold text-foreground mb-1">Your Utilization Rate: {Math.round(utilizationRate)}%</h3>
               <p className="text-sm font-medium text-foreground mb-2">{utilizationFeedback.label}</p>
               <p className="text-sm text-muted-foreground">{utilizationFeedback.message}</p>
+              {utilizationRate < 40 && (
+                <p className="text-sm text-red-600 dark:text-red-400 mt-3 font-medium italic">
+                  Please note: Your benchmark billing rates are high to compensate for the low utilization rate and may not be realistic in the market.
+                </p>
+              )}
             </div>
           </div>
         </div>
