@@ -35,7 +35,7 @@ export const FeedbackTab = () => {
         <DialogContent
           className="sm:max-w-[600px] h-[90vh] sm:h-[700px] 
                      max-sm:w-screen max-sm:h-screen max-sm:max-w-none max-sm:rounded-none
-                     p-0 gap-0 overflow-hidden [&>button]:hidden"
+                     p-0 gap-0 overflow-hidden"
         >
           <DialogHeader className="sr-only">
             <DialogTitle>Share Your Feedback</DialogTitle>
