@@ -19,7 +19,7 @@ export const FeedbackTab = () => {
       {/* Fixed tab on the right side of the screen */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-50 
+        className="fixed right-0 top-3/4 -translate-y-1/2 z-50 
                    bg-accent text-accent-foreground 
                    px-1.5 py-4 rounded-l-none rounded-r-md
                    shadow-lg hover:bg-accent/90 
