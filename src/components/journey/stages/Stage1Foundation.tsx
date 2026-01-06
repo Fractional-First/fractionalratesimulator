@@ -31,7 +31,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   onEdit,
   assumptionsRef,
 }) => {
-  const [selectedCountry, setSelectedCountry] = useState('GLOBAL');
+  const [selectedCountry, setSelectedCountry] = useState('OTHER');
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
 
   // Auto-detect user location on mount
@@ -48,12 +48,12 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
         if (countryExists) {
           handleCountryChange(countryCode);
         } else {
-          // Keep GLOBAL as default if country not found
-          setSelectedCountry('GLOBAL');
+          // Keep OTHER as default if country not found
+          setSelectedCountry('OTHER');
         }
       } catch (error) {
-        // Silently fail and keep GLOBAL as default
-        console.log('Location detection not available, using Global defaults');
+        // Silently fail and keep OTHER as default
+        console.log('Location detection not available, using Other defaults');
       } finally {
         setIsDetectingLocation(false);
       }
@@ -64,7 +64,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
 
   const handleCountryChange = (countryCode: string) => {
     setSelectedCountry(countryCode);
-    const defaults = countryDefaults[countryCode] || countryDefaults['GLOBAL'];
+    const defaults = countryDefaults[countryCode] || countryDefaults['OTHER'];
     updateInput('overheadPct')(defaults.overheadPct);
     updateInput('hoursPerDay')(defaults.hoursPerDay);
     updateInput('vacationDays')(defaults.vacationDays);
@@ -74,7 +74,7 @@ export const Stage1Foundation: React.FC<Stage1FoundationProps> = ({
   };
 
   const getCurrentCountryLabel = () => {
-    return countryOptions.find(opt => opt.value === selectedCountry)?.label || 'Global';
+    return countryOptions.find(opt => opt.value === selectedCountry)?.label || 'Other';
   };
 
   const hasFullTimeInputs = (inputs.baseSalary || 0) > 0;
